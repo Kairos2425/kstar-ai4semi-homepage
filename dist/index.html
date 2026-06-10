@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="柯星澜的公开主页：AI4Semi 独立研究者与开发者，聚焦半导体器件可靠性、AI 仿真智能体和自动化数据分析系统。"
+    />
+    <title>柯星澜 | AI4Semi Independent Researcher & Tool Builder</title>
+    <link rel="stylesheet" href="styles.css?v=20260602c" />
+  </head>
+  <body>
+    <div class="progress" id="progress"></div>
+    <header class="topbar">
+      <a class="brand" id="site-brand" href="#top">柯星澜</a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#projects">工具</a>
+        <a href="#gallery">项目</a>
+        <a href="#resume">履历</a>
+        <a href="#notes">分享</a>
+        <a href="#research">研究</a>
+        <a href="#contact">联系</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section">
+        <div class="hero__copy reveal">
+          <p class="eyebrow" id="profile-eyebrow"></p>
+          <p class="hero__name" id="profile-name"></p>
+          <h1 id="profile-headline"></h1>
+          <p class="hero__intro" id="profile-intro"></p>
+          <div class="hero__actions" id="hero-actions"></div>
+          <div class="hero__metrics" id="hero-metrics" aria-label="主页内容摘要"></div>
+        </div>
+        <aside class="hero__panel reveal" aria-label="个人摘要">
+          <div class="portrait" id="portrait" aria-hidden="true">
+            <img src="assets/showcase/hero-ai4semi-cyber-doctor.png" alt="AI4Semi 赛博博士主题海报" />
+          </div>
+          <dl class="facts" id="profile-facts"></dl>
+        </aside>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="section__head reveal">
+          <p class="eyebrow">AI4Semi Tooling Projects</p>
+          <h2>从物理直觉到可运行系统</h2>
+          <p>
+            这些项目连接了材料科研训练、半导体可靠性分析、仿真自动化、知识组织和公开表达，展示从问题理解到工具化产出的能力。
+          </p>
+        </div>
+        <div class="project-grid" id="project-grid"></div>
+      </section>
+
+      <section class="section" id="gallery">
+        <div class="section__head reveal">
+          <p class="eyebrow">Project Gallery</p>
+          <h2>系统截图、仿真结果与知识图谱</h2>
+          <p>这里汇总可直接访问的项目入口和代表性界面，快速看到每个系统的实际形态。</p>
+        </div>
+        <div class="evidence-links" id="evidence-links"></div>
+      </section>
+
+      <section class="section" id="resume">
+        <div class="section__head reveal">
+          <p class="eyebrow">Resume</p>
+          <h2>硬核科研训练与工程转身</h2>
+          <p>
+            教育、研究经历、技能、荣誉与代表性论文放在这里，作为项目之外的履历背景，而不是首页单独主打的成果栏目。
+          </p>
+        </div>
+        <div class="resume-grid">
+          <div>
+            <h3 class="subhead reveal">教育与研究经历</h3>
+            <ol class="timeline" id="timeline"></ol>
+          </div>
+          <div>
+            <h3 class="subhead reveal">技能与荣誉</h3>
+            <div class="capability-clusters" id="capability-clusters"></div>
+            <div class="honor-list reveal" id="honor-list"></div>
+          </div>
+          <div>
+            <h3 class="subhead reveal">代表性论文</h3>
+            <div class="publication-list" id="publication-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="notes">
+        <div class="section__head reveal">
+          <p class="eyebrow">Kstar Topics</p>
+          <h2>小红书主题内容</h2>
+          <p>按主题整理的小红书图文内容，分别覆盖可靠性理解、AI4Semi 工具观察和仿真智能体方向，每个主题都进入独立详情页查看。</p>
+        </div>
+        <div class="list-stack" id="note-list"></div>
+      </section>
+
+      <section class="section" id="research">
+        <div class="section__head reveal">
+          <p class="eyebrow">Research Directions</p>
+          <h2>研究与工程方向</h2>
+          <p>围绕 AI4Semi、器件可靠性、仿真智能体和 AI 技能训练平台，持续沉淀可复用的工程科研基础设施。</p>
+        </div>
+        <div class="research-grid" id="research-grid"></div>
+      </section>
+    </main>
+
+    <footer class="footer" id="contact">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-title"></h2>
+        <ul class="contact-list" id="contact-list"></ul>
+      </div>
+      <a class="button button--ghost" id="contact-action" href="#top">回到顶部</a>
+    </footer>
+
+    <script src="content/site-data.js?v=20260602c"></script>
+    <script src="script.js?v=20260602c"></script>
+  </body>
+</html>
