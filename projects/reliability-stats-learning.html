@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>可靠性器件测试统计方法交互学习页</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#1f2937;--muted:#64748b;--primary:#1d4ed8;--primary2:#3b82f6;--ok:#059669;--warn:#d97706;--danger:#dc2626;--line:#d8e1ef;--soft:#eef5ff;--purple:#7c3aed}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}.layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}.side{position:sticky;top:0;height:100vh;overflow:auto;padding:20px 16px;background:#0f172a;color:white}.brand{font-weight:800;font-size:20px;line-height:1.25;margin-bottom:8px}.sub{font-size:12px;color:#cbd5e1;margin-bottom:16px}.side a{display:block;color:#e5e7eb;text-decoration:none;padding:8px 10px;border-radius:10px;font-size:14px;margin:2px 0}.side a:hover{background:#1e293b;color:#fff}.main{padding:28px;max-width:1280px}.hero{background:linear-gradient(135deg,#1d4ed8,#7c3aed);color:white;border-radius:24px;padding:34px;margin-bottom:24px;box-shadow:0 16px 34px rgba(30,64,175,.22)}.hero h1{margin:0 0 10px;font-size:34px}.hero p{margin:4px 0;color:#eef2ff}.pillbox{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);padding:6px 10px;border-radius:999px;font-size:13px}.section{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;margin:22px 0;box-shadow:0 8px 18px rgba(15,23,42,.05)}h2{margin:0 0 14px;font-size:25px;color:#0f172a}h3{margin-top:18px;color:#1e3a8a}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}.soft{background:var(--soft);border-color:#bfdbfe}.warn{background:#fff7ed;border-left:5px solid var(--warn)}.danger{background:#fef2f2;border-left:5px solid var(--danger)}.ok{background:#ecfdf5;border-left:5px solid var(--ok)}.controls{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:12px;margin:10px 0 14px}.control{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px}.control label{display:block;font-size:13px;color:#334155;font-weight:700}.control input,.control select{width:100%;margin-top:6px}input[type="range"]{accent-color:var(--primary)}canvas{width:100%;height:280px;border:1px solid #dbe4f0;border-radius:14px;background:white}.result{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}.metric{background:#f8fafc;border:1px solid var(--line);padding:10px 12px;border-radius:12px}.metric b{display:block;color:#0f172a;font-size:18px}.metric span{font-size:12px;color:var(--muted)}table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}th,td{border:1px solid #dbe4f0;padding:9px;vertical-align:top}th{background:#eff6ff;color:#1e3a8a}.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:#0f172a;color:#e0f2fe;padding:10px 12px;border-radius:12px;overflow:auto}.note{font-size:14px;color:#475569}.tag{display:inline-block;background:#e0ecff;color:#1d4ed8;padding:2px 8px;border-radius:999px;font-size:12px;margin:2px}.small{font-size:13px;color:#64748b}.footer{color:#64748b;text-align:center;padding:32px}.twoCol{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}@media(max-width:980px){.layout{display:block}.side{position:relative;height:auto}.main{padding:14px}.grid,.grid3,.twoCol{grid-template-columns:1fr}.controls{grid-template-columns:repeat(2,minmax(0,1fr))}.result{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="side">
+  <div class="brand">可靠性统计方法学习页</div>
+  <div class="sub">离线单文件 · 交互演示 · 工程注意事项</div>
+  <a href="../index.html#projects">← 返回主页</a>
+  <a href="#overview">1. 学习目标与数据类型</a>
+  <a href="#cdf-basic">2. CDF 基础</a>
+  <a href="#empirical-cdf">3. 经验 CDF 与 CDF 图</a>
+  <a href="#normal">4. 正态分布</a>
+  <a href="#lognormal">5. Lognormal 分布</a>
+  <a href="#weibull">6. Weibull 分布</a>
+  <a href="#probplot">7. 概率图与分布识别</a>
+  <a href="#least-squares">8. 最小二乘法</a>
+  <a href="#interpolation">9. 插值法</a>
+  <a href="#degradation">10. 退化趋势外推</a>
+  <a href="#case">11. 综合案例</a>
+  <a href="#checklist">12. 误区与检查清单</a>
+</nav>
+<main class="main">
+<section class="hero">
+  <h1>可靠性器件测试中的统计方法与数据分析演示</h1>
+  <p>从寿命数据、CDF、分布拟合，到最小二乘、插值与退化外推的交互式教学网页。</p>
+  <p>本页所有图表和计算均在浏览器本地完成，不依赖外部网络资源。</p>
+  <div class="pillbox"><span class="pill">退化趋势外推</span><span class="pill">插值法</span><span class="pill">最小二乘法</span><span class="pill">正态分布</span><span class="pill">Weibull</span><span class="pill">Lognormal</span><span class="pill">累积失效函数</span><span class="pill">CDF 图</span></div>
+</section>
+
+<section id="overview" class="section">
+<h2>1. 学习目标与数据类型</h2>
+<div class="grid">
+<div class="card soft"><h3>你会学到什么</h3><ul><li>如何区分寿命数据、退化数据、参数波动数据与删失数据。</li><li>如何使用 CDF 图表达“到某时间为止已经失效的比例”。</li><li>何时选择正态、对数正态或 Weibull 分布。</li><li>如何用最小二乘拟合趋势，用插值估计范围内中间值，用外推预测阈值寿命。</li></ul></div>
+<div class="card warn"><h3>工程前提</h3><p>所有演示结果用于学习方法原理，不能直接替代正式可靠性认证。真实项目中还需要考虑样本量、删失、置信区间、失效模式一致性、应力换算与物理机理。</p></div>
+</div>
+<table><thead><tr><th>数据类型</th><th>例子</th><th>常用方法</th><th>核心输出</th></tr></thead><tbody>
+<tr><td>寿命/失效时间</td><td>继电器失效循环数、风扇失效小时</td><td>Weibull、Lognormal、CDF 图</td><td>B10、B50、F(t)、R(t)</td></tr>
+<tr><td>退化数据</td><td>LED 光通量衰减、电容容量保持率</td><td>最小二乘、插值、退化外推</td><td>退化速率、阈值穿越时间</td></tr>
+<tr><td>参数波动</td><td>MOSFET 阈值电压、尺寸误差</td><td>正态分布、规格限概率</td><td>均值、标准差、超规格概率</td></tr>
+<tr><td>删失数据</td><td>试验结束仍未失效样品</td><td>带删失寿命分析</td><td>避免删除未失效样本导致偏差</td></tr>
+</tbody></table>
+</section>
+
+<section id="cdf-basic" class="section">
+<h2>2. 累积失效分布函数 CDF：F(t) 与 R(t)</h2>
+<p>CDF 表示器件寿命 T 不超过时间 t 的概率：<b>F(t)=P(T≤t)</b>。可靠度为 <b>R(t)=P(T&gt;t)=1-F(t)</b>。</p>
+<div class="formula">F(t)=P(T≤t)　　　R(t)=1-F(t)</div>
+<div class="controls">
+  <div class="control"><label>分布类型</label><select id="cdfType"><option value="weibull">Weibull</option><option value="lognormal">Lognormal</option><option value="normal">Normal</option></select></div>
+  <div class="control"><label>任务时间 t：<span id="cdfTVal"></span></label><input id="cdfT" type="range" min="1" max="5000" value="1800"></div>
+  <div class="control"><label>参数 A</label><input id="cdfA" type="range" min="1" max="5" step="0.1" value="2.2"></div>
+  <div class="control"><label>参数 B</label><input id="cdfB" type="range" min="300" max="4500" step="50" value="2300"></div>
+</div>
+<canvas id="cdfCanvas" width="900" height="320"></canvas>
+<div class="result"><div class="metric"><b id="cdfF">-</b><span>累计失效概率 F(t)</span></div><div class="metric"><b id="cdfR">-</b><span>可靠度 R(t)</span></div><div class="metric"><b id="cdfSum">-</b><span>校验：F(t)+R(t)</span></div><div class="metric"><b id="cdfExplain">-</b><span>结果解释</span></div></div>
+<div class="card danger"><b>风险提示：</b>CDF 是累计概率，不是瞬时失效率；若图线下降、概率小于 0 或大于 1，就说明计算或输入有问题。</div>
+</section>
+
+<section id="empirical-cdf" class="section">
+<h2>3. 经验 CDF 与 CDF 图：从失效时间到曲线</h2>
+<p>经验 CDF 将失效时间排序后，为每个失效点分配累计失效概率。简单演示可用 i/n 或中位秩近似 (i-0.3)/(n+0.4)。</p>
+<div class="controls"><div class="control"><label>目标时间：<span id="fanTVal"></span> h</label><input id="fanT" type="range" min="500" max="5000" step="100" value="2000"></div><div class="control"><label>显示方案</label><select id="fanMode"><option value="both">方案 A + B</option><option value="A">只看方案 A</option><option value="B">只看方案 B</option></select></div></div>
+<canvas id="empCdfCanvas" width="900" height="320"></canvas>
+<div class="result"><div class="metric"><b id="fanFA">-</b><span>方案 A 在目标时间前失效比例</span></div><div class="metric"><b id="fanFB">-</b><span>方案 B 在目标时间前失效比例</span></div><div class="metric"><b id="fanBetter">-</b><span>可靠性对比</span></div><div class="metric"><b>B10/B50</b><span>可在第 11 章综合案例读取</span></div></div>
+<div class="card ok"><b>图表读法：</b>同一时间下 CDF 越低，表示累计失效比例越低，可靠性越好；同一失效比例下，所需时间越长，寿命表现越好。</div>
+</section>
+
+<section id="normal" class="section">
+<h2>4. 正态分布：参数波动与规格限风险</h2>
+<p>正态分布适合描述围绕均值对称波动的连续变量，如阈值电压、尺寸误差、测量噪声等。寿命数据通常非负且右偏，不宜默认正态。</p>
+<div class="controls"><div class="control"><label>均值 μ：<span id="nMuVal"></span> V</label><input id="nMu" type="range" min="2.3" max="2.7" step="0.01" value="2.50"></div><div class="control"><label>标准差 σ：<span id="nSigVal"></span> V</label><input id="nSig" type="range" min="0.02" max="0.18" step="0.01" value="0.08"></div><div class="control"><label>规格下限 LSL：<span id="nLslVal"></span></label><input id="nLsl" type="range" min="2.1" max="2.5" step="0.01" value="2.30"></div><div class="control"><label>规格上限 USL：<span id="nUslVal"></span></label><input id="nUsl" type="range" min="2.5" max="2.9" step="0.01" value="2.70"></div></div>
+<canvas id="normalCanvas" width="900" height="320"></canvas>
+<div class="result"><div class="metric"><b id="nPBelow">-</b><span>P(X&lt;LSL)</span></div><div class="metric"><b id="nPAbove">-</b><span>P(X&gt;USL)</span></div><div class="metric"><b id="nPYield">-</b><span>规格内概率</span></div><div class="metric"><b id="nComment">-</b><span>学习反馈</span></div></div>
+<div class="card danger"><b>误区：</b>正态分布理论上允许负值，因此不能不加判断地套到非负寿命数据上。</div>
+</section>
+
+<section id="lognormal" class="section">
+<h2>5. 对数正态 Lognormal 分布：正值右偏寿命</h2>
+<p>若 Y=ln(T) 近似服从正态分布，则 T 服从对数正态分布。它适合正值、右偏、受多个乘法因素影响的寿命数据。</p>
+<div class="controls"><div class="control"><label>对数均值 μ：<span id="lnMuVal"></span></label><input id="lnMu" type="range" min="5.8" max="7.8" step="0.05" value="6.85"></div><div class="control"><label>对数标准差 σ：<span id="lnSigVal"></span></label><input id="lnSig" type="range" min="0.1" max="0.9" step="0.05" value="0.38"></div><div class="control"><label>任务时间 t：<span id="lnTVal"></span></label><input id="lnT" type="range" min="100" max="3000" step="50" value="1000"></div><div class="control"><label>图形</label><select id="lnView"><option value="pdf">PDF 概率密度</option><option value="cdf">CDF 累积失效</option></select></div></div>
+<canvas id="lognormalCanvas" width="900" height="320"></canvas>
+<div class="result"><div class="metric"><b id="lnF">-</b><span>F(t)</span></div><div class="metric"><b id="lnR">-</b><span>R(t)</span></div><div class="metric"><b id="lnMedian">-</b><span>中位寿命 exp(μ)</span></div><div class="metric"><b id="lnExplain">-</b><span>结果解释</span></div></div>
+<div class="card warn"><b>风险提示：</b>对数正态要求寿命 T&gt;0；对数均值反变换通常对应原始尺度中位数，不是原始均值。</div>
+</section>
+
+<section id="weibull" class="section">
+<h2>6. Weibull 分布：寿命分析与失效率趋势</h2>
+<p>二参数 Weibull 的 CDF 为 F(t)=1-exp[-(t/η)^β]。β 是形状参数，η 是尺度参数。</p>
+<div class="formula">F(t)=1-exp[-(t/η)^β]　　　R(t)=exp[-(t/η)^β]</div>
+<div class="controls"><div class="control"><label>形状参数 β：<span id="wBetaVal"></span></label><input id="wBeta" type="range" min="0.5" max="5" step="0.1" value="2.2"></div><div class="control"><label>尺度参数 η：<span id="wEtaVal"></span></label><input id="wEta" type="range" min="500" max="5000" step="100" value="2500"></div><div class="control"><label>任务时间 t：<span id="wTVal"></span></label><input id="wT" type="range" min="100" max="6000" step="100" value="2000"></div><div class="control"><label>图形</label><select id="wView"><option value="cdf">CDF + R(t)</option><option value="pdf">PDF</option></select></div></div>
+<canvas id="weibullCanvas" width="900" height="320"></canvas>
+<div class="result"><div class="metric"><b id="wF">-</b><span>F(t)</span></div><div class="metric"><b id="wR">-</b><span>R(t)</span></div><div class="metric"><b id="wB10">-</b><span>B10 寿命</span></div><div class="metric"><b id="wBetaExplain">-</b><span>β 含义</span></div></div>
+<div class="card danger"><b>误区：</b>η 对应约 63.2% 累计失效位置，不等于平均寿命；混合失效模式后强行拟合单一 Weibull 会让参数失去工程意义。</div>
+</section>
+
+<section id="probplot" class="section">
+<h2>7. CDF 图与概率图的分布识别</h2>
+<p>概率图通过坐标变换将特定分布线性化。若数据点在某类概率图上更接近直线，说明该分布可能较合理，但仍需结合失效机理和样本量。</p>
+<div class="grid3"><div class="card"><h3>正态概率图</h3><p>横轴为数据值，纵轴为正态分位变换后的累计概率。适合对称型变量。</p></div><div class="card"><h3>Lognormal 概率图</h3><p>横轴常用 ln(t)，若点接近直线，说明对数尺度下近似正态。</p></div><div class="card"><h3>Weibull 概率图</h3><p>常用 ln(t) 与 ln[-ln(1-F)] 作图，斜率可关联 β。</p></div></div>
+<table><thead><tr><th>判断维度</th><th>应观察什么</th><th>注意事项</th></tr></thead><tbody><tr><td>整体线性</td><td>数据点是否大致落在一条线附近</td><td>小样本很容易误判</td></tr><tr><td>尾部偏离</td><td>低失效概率和高失效概率端是否明显弯曲</td><td>B1、B10 对尾部非常敏感</td></tr><tr><td>失效模式</td><td>是否混合了不同失效机理</td><td>混合样本可能形成假曲线</td></tr></tbody></table>
+</section>
+
+<section id="least-squares" class="section">
+<h2>8. 最小二乘法：从散点到拟合线</h2>
+<p>最小二乘法通过最小化残差平方和来估计模型参数。它是拟合工具，不是可靠性分布本身。</p>
+<div class="formula">min Σ(yᵢ-ŷᵢ)²　　　线性模型：y=a+b x</div>
+<div class="controls"><div class="control"><label>模型</label><select id="lsModel"><option value="linear">线性拟合</option><option value="quadratic">二次拟合</option></select></div><div class="control"><label>加入异常点</label><select id="lsOutlier"><option value="no">否</option><option value="yes">是</option></select></div><div class="control"><label>显示残差</label><select id="lsResidual"><option value="yes">显示</option><option value="no">隐藏</option></select></div><div class="control"><label>噪声倍率：<span id="lsNoiseVal"></span></label><input id="lsNoise" type="range" min="0" max="2" step="0.1" value="1"></div></div>
+<canvas id="lsCanvas" width="900" height="320"></canvas>
+<div class="result"><div class="metric"><b id="lsParam">-</b><span>拟合参数</span></div><div class="metric"><b id="lsSSE">-</b><span>残差平方和 SSE</span></div><div class="metric"><b id="lsR2">-</b><span>R²</span></div><div class="metric"><b id="lsHint">-</b><span>学习反馈</span></div></div>
+<div class="card warn"><b>风险提示：</b>高 R² 不代表模型物理正确；异常值会显著影响普通最小二乘拟合。</div>
+</section>
+
+<section id="interpolation" class="section">
+<h2>9. 插值法：观测范围内估算</h2>
+<p>插值用于估算已有数据点之间的值。线性插值公式为：y=y1+(y2-y1)(x-x1)/(x2-x1)。</p>
+<div class="formula">y = y1 + (y2-y1) × (x-x1)/(x2-x1)</div>
+<div class="controls"><div class="control"><label>目标时间：<span id="ipTVal"></span> h</label><input id="ipT" type="range" min="0" max="1800" step="10" value="750"></div><div class="control"><label>方法</label><select id="ipMethod"><option value="linear">分段线性插值</option><option value="nearest">邻近点参考</option></select></div></div>
+<canvas id="ipCanvas" width="900" height="320"></canvas>
+<div class="result"><div class="metric"><b id="ipY">-</b><span>估计容量保持率</span></div><div class="metric"><b id="ipPair">-</b><span>使用区间</span></div><div class="metric"><b id="ipType">-</b><span>插值/外推判断</span></div><div class="metric"><b id="ipHint">-</b><span>结果解释</span></div></div>
+<div class="card danger"><b>误区：</b>当目标点超出已知数据范围时，已经不再是插值，而是外推，风险明显增加。</div>
+</section>
+
+<section id="degradation" class="section">
+<h2>10. 退化趋势外推：从短期测试预测阈值寿命</h2>
+<p>退化趋势外推适合“还没等到大量失效，但性能参数已经随时间变化”的场景。关键是退化指标必须与失效阈值有明确工程关系。</p>
+<div class="controls"><div class="control"><label>失效阈值：<span id="dgThrVal"></span></label><input id="dgThr" type="range" min="0.65" max="0.9" step="0.01" value="0.70"></div><div class="control"><label>退化模型</label><select id="dgModel"><option value="linear">线性 y=a+bt</option><option value="exp">指数 y=A·exp(bt)</option></select></div><div class="control"><label>外推上限 h：<span id="dgMaxVal"></span></label><input id="dgMax" type="range" min="2000" max="10000" step="500" value="6000"></div></div>
+<canvas id="dgCanvas" width="900" height="320"></canvas>
+<div class="result"><div class="metric"><b id="dgLife">-</b><span>预测阈值寿命</span></div><div class="metric"><b id="dgParam">-</b><span>模型参数</span></div><div class="metric"><b id="dgDist">-</b><span>外推距离</span></div><div class="metric"><b id="dgHint">-</b><span>风险解释</span></div></div>
+<div class="card danger"><b>重要提示：</b>外推结果是模型预测，不是实测寿命；外推越远，越需要更长时间验证、置信区间和物理机理支撑。</div>
+</section>
+
+<section id="case" class="section">
+<h2>11. 综合案例：把方法串起来</h2>
+<div class="twoCol"><div class="card soft"><h3>案例 A：寿命失效数据分析</h3><p>使用微型风扇方案数据：排序 → 经验 CDF → 读取 B10/B50 → 比较方案可靠性。</p><div class="controls"><div class="control"><label>方案</label><select id="caseScheme"><option value="A">方案 A</option><option value="B">方案 B</option></select></div><div class="control"><label>分位概率：<span id="caseQVal"></span>%</label><input id="caseQ" type="range" min="5" max="90" step="5" value="10"></div></div><canvas id="caseCanvas" width="600" height="260"></canvas><div class="result"><div class="metric"><b id="caseB">-</b><span>分位寿命</span></div><div class="metric"><b id="caseMed">-</b><span>B50 中位寿命</span></div></div></div>
+<div class="card soft"><h3>案例 B：退化数据分析流程</h3><ol><li>绘制时间-性能退化散点。</li><li>用最小二乘拟合退化趋势。</li><li>在测试范围内插值读取中间值。</li><li>在测试范围外外推到阈值。</li><li>输出寿命预测与风险说明。</li></ol><p class="note">本案例由第 8、9、10 章的交互模块共同完成。建议学习时先调整最小二乘异常点，再观察插值和退化外推结论如何变化。</p><div class="card warn">综合结论模板：在当前模型和阈值假设下，预测寿命为 X 小时；若 X 超出实测区间很多，应标注为高不确定性外推。</div></div></div>
+</section>
+
+<section id="checklist" class="section">
+<h2>12. 常见误区与检查清单</h2>
+<table><thead><tr><th>常见误区</th><th>为什么有问题</th><th>建议做法</th></tr></thead><tbody>
+<tr><td>把插值当外推</td><td>超出观测范围后模型不确定性急剧增加</td><td>明确目标点是否在数据范围内</td></tr>
+<tr><td>只看 R²</td><td>拟合好不代表机理正确，也不代表外推可靠</td><td>检查残差、异常值、物理意义和样本量</td></tr>
+<tr><td>寿命数据默认正态</td><td>寿命非负且常右偏，正态可能给出负寿命</td><td>优先检查 Weibull 或 Lognormal</td></tr>
+<tr><td>删除未失效样品</td><td>未失效样品携带右删失信息，删除会造成偏差</td><td>标注删失状态并采用合适方法处理</td></tr>
+<tr><td>混合失效模式</td><td>单一分布参数失去工程解释</td><td>先做失效分析，再分模式建模</td></tr>
+<tr><td>只报告平均寿命</td><td>可靠性常关注低分位早期失效</td><td>报告 B10、CDF、可靠度和置信区间</td></tr>
+<tr><td>把 CDF 当失效率</td><td>CDF 是累计概率，失效率是条件瞬时风险</td><td>分清 F(t)、R(t)、h(t)</td></tr>
+</tbody></table>
+<div class="grid3"><div class="card ok"><h3>建模前</h3><ul><li>失效判据明确吗？</li><li>时间起点一致吗？</li><li>数据单位统一吗？</li><li>是否有删失样本？</li></ul></div><div class="card ok"><h3>拟合中</h3><ul><li>先画图了吗？</li><li>残差有系统偏差吗？</li><li>异常点是否解释清楚？</li><li>分布假设有机理支持吗？</li></ul></div><div class="card ok"><h3>输出前</h3><ul><li>结论是否绑定工况？</li><li>是否说明样本量？</li><li>是否区分插值和外推？</li><li>是否说明不确定性？</li></ul></div></div>
+</section>
+<div class="footer">本页面为教学演示工具。正式可靠性结论应结合试验规范、样本量、删失处理、置信区间和失效机理。</div>
+</main>
+</div>
+<script>
+const $=id=>document.getElementById(id); const pct=x=>(100*x).toFixed(1)+'%'; const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+function erf(x){const s=x>=0?1:-1; x=Math.abs(x); const a1=.254829592,a2=-.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=.3275911; const t=1/(1+p*x); const y=1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x); return s*y}
+function normalCDF(x,mu=0,s=1){return .5*(1+erf((x-mu)/(s*Math.sqrt(2))))} function normalPDF(x,mu=0,s=1){return Math.exp(-.5*((x-mu)/s)**2)/(s*Math.sqrt(2*Math.PI))}
+function weibullF(t,b,e){return t<0?0:1-Math.exp(-((t/e)**b))} function weibullPdf(t,b,e){return t<=0?0:(b/e)*(t/e)**(b-1)*Math.exp(-((t/e)**b))}
+function lognormalF(t,mu,s){return t<=0?0:normalCDF(Math.log(t),mu,s)} function lognormalPdf(t,mu,s){return t<=0?0:Math.exp(-((Math.log(t)-mu)**2)/(2*s*s))/(t*s*Math.sqrt(2*Math.PI))}
+function setupCanvas(c){const ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);return{ctx,w,h,m:{l:58,r:20,t:24,b:46}}}
+function axes(c,xmin,xmax,ymin,ymax,xlab,ylab){const o=setupCanvas(c),{ctx,w,h,m}=o; const X=x=>m.l+(x-xmin)/(xmax-xmin)*(w-m.l-m.r),Y=y=>h-m.b-(y-ymin)/(ymax-ymin)*(h-m.t-m.b);ctx.strokeStyle='#cbd5e1';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(m.l,m.t);ctx.lineTo(m.l,h-m.b);ctx.lineTo(w-m.r,h-m.b);ctx.stroke();ctx.fillStyle='#475569';ctx.font='12px Microsoft YaHei,Arial';for(let i=0;i<=5;i++){let x=xmin+(xmax-xmin)*i/5;ctx.fillText(Math.round(x),X(x)-12,h-m.b+18);ctx.strokeStyle='#eef2f7';ctx.beginPath();ctx.moveTo(X(x),m.t);ctx.lineTo(X(x),h-m.b);ctx.stroke()}for(let i=0;i<=5;i++){let y=ymin+(ymax-ymin)*i/5;ctx.fillText(y.toFixed(ymax<=1.2?1:2),8,Y(y)+4);ctx.strokeStyle='#eef2f7';ctx.beginPath();ctx.moveTo(m.l,Y(y));ctx.lineTo(w-m.r,Y(y));ctx.stroke()}ctx.fillStyle='#334155';ctx.fillText(xlab,w/2-30,h-10);ctx.save();ctx.translate(14,h/2+30);ctx.rotate(-Math.PI/2);ctx.fillText(ylab,0,0);ctx.restore();return{ctx,X,Y,w,h,m}}
+function drawLine(ax,pts,color='#1d4ed8',width=2){const{ctx,X,Y}=ax;ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();pts.forEach((p,i)=>{if(i)ctx.lineTo(X(p[0]),Y(p[1]));else ctx.moveTo(X(p[0]),Y(p[1]))});ctx.stroke()}
+function drawPts(ax,pts,color='#1d4ed8',r=4){const{ctx,X,Y}=ax;ctx.fillStyle=color;pts.forEach(p=>{ctx.beginPath();ctx.arc(X(p[0]),Y(p[1]),r,0,7);ctx.fill()})}
+function drawV(ax,x,color='#f97316'){const{ctx,X,m,h}=ax;ctx.strokeStyle=color;ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(X(x),m.t);ctx.lineTo(X(x),h-m.b);ctx.stroke();ctx.setLineDash([])}
+function drawH(ax,y,color='#f97316'){const{ctx,Y,m,w}=ax;ctx.strokeStyle=color;ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(m.l,Y(y));ctx.lineTo(w-m.r,Y(y));ctx.stroke();ctx.setLineDash([])}
+function linFit(data){const n=data.length,sx=data.reduce((a,p)=>a+p[0],0),sy=data.reduce((a,p)=>a+p[1],0),sxx=data.reduce((a,p)=>a+p[0]*p[0],0),sxy=data.reduce((a,p)=>a+p[0]*p[1],0);const b=(n*sxy-sx*sy)/(n*sxx-sx*sx),a=(sy-b*sx)/n;return{a,b,predict:x=>a+b*x}}
+function quadFit(data){let S=[0,0,0,0,0],T=[0,0,0];data.forEach(p=>{let x=p[0],y=p[1];S[0]+=1;S[1]+=x;S[2]+=x*x;S[3]+=x*x*x;S[4]+=x*x*x*x;T[0]+=y;T[1]+=x*y;T[2]+=x*x*y});let A=[[S[0],S[1],S[2],T[0]],[S[1],S[2],S[3],T[1]],[S[2],S[3],S[4],T[2]]];for(let i=0;i<3;i++){let piv=A[i][i];for(let j=i;j<4;j++)A[i][j]/=piv;for(let k=0;k<3;k++)if(k!==i){let f=A[k][i];for(let j=i;j<4;j++)A[k][j]-=f*A[i][j]}}let a=A[0][3],b=A[1][3],c=A[2][3];return{a,b,c,predict:x=>a+b*x+c*x*x}}
+function r2(data,fit){const mean=data.reduce((a,p)=>a+p[1],0)/data.length;let sse=0,sst=0;data.forEach(p=>{sse+=(p[1]-fit.predict(p[0]))**2;sst+=(p[1]-mean)**2});return{sse,r2:1-sse/sst}}
+const fanA=[900,1100,1250,1400,1600,1750,1900,2100,2300,2600],fanB=[1300,1600,1850,2100,2400,2700,3100,3500,3900,4500];
+function empirical(data){return data.slice().sort((a,b)=>a-b).map((x,i)=>[x,(i+1)/data.length])}
+function updateCDF(){let type=$('cdfType').value,t=+$('cdfT').value,A=+$('cdfA').value,B=+$('cdfB').value;$('cdfTVal').textContent=t;let f; if(type==='weibull')f=weibullF(t,A,B);else if(type==='lognormal')f=lognormalF(t,Math.log(B),A/4);else f=normalCDF(t,B,A*250);f=clamp(f,0,1);let ax=axes($('cdfCanvas'),0,5000,0,1,'时间/寿命','概率');let pts=[];for(let x=0;x<=5000;x+=50){let y=type==='weibull'?weibullF(x,A,B):type==='lognormal'?lognormalF(x,Math.log(B),A/4):normalCDF(x,B,A*250);pts.push([x,clamp(y,0,1)])}drawLine(ax,pts,'#1d4ed8',3);drawLine(ax,pts.map(p=>[p[0],1-p[1]]),'#059669',2);drawV(ax,t);drawH(ax,f);$('cdfF').textContent=pct(f);$('cdfR').textContent=pct(1-f);$('cdfSum').textContent=(f+1-f).toFixed(2);$('cdfExplain').textContent=f>.5?'已有较高累计失效风险':'仍有较高可靠度'}
+function updateEmp(){let t=+$('fanT').value,mode=$('fanMode').value;$('fanTVal').textContent=t;let ax=axes($('empCdfCanvas'),500,4800,0,1,'寿命 h','累计失效概率');if(mode!=='B'){drawLine(ax,empirical(fanA),'#1d4ed8',3);drawPts(ax,empirical(fanA),'#1d4ed8')}if(mode!=='A'){drawLine(ax,empirical(fanB),'#7c3aed',3);drawPts(ax,empirical(fanB),'#7c3aed')}drawV(ax,t);let fA=fanA.filter(x=>x<=t).length/fanA.length,fB=fanB.filter(x=>x<=t).length/fanB.length;$('fanFA').textContent=pct(fA);$('fanFB').textContent=pct(fB);$('fanBetter').textContent=fA<fB?'方案 A 更低':fB<fA?'方案 B 更低':'两者相近'}
+function updateNormal(){let mu=+$('nMu').value,s=+$('nSig').value,lsl=+$('nLsl').value,usl=+$('nUsl').value;['nMu','nSig','nLsl','nUsl'].forEach(id=>$(id+'Val').textContent=(+$ (id).value).toFixed(2));let ax=axes($('normalCanvas'),2.0,3.0,0,6,'阈值电压 V','概率密度');let pts=[];for(let x=2.0;x<=3.0;x+=.005)pts.push([x,normalPDF(x,mu,s)]);drawLine(ax,pts,'#1d4ed8',3);drawV(ax,lsl,'#dc2626');drawV(ax,usl,'#dc2626');let pb=normalCDF(lsl,mu,s),pa=1-normalCDF(usl,mu,s);$('nPBelow').textContent=pct(pb);$('nPAbove').textContent=pct(pa);$('nPYield').textContent=pct(Math.max(0,1-pb-pa));$('nComment').textContent=s>.12?'分散性较大':'分散性较可控'}
+function updateLogN(){let mu=+$('lnMu').value,s=+$('lnSig').value,t=+$('lnT').value,view=$('lnView').value;$('lnMuVal').textContent=mu.toFixed(2);$('lnSigVal').textContent=s.toFixed(2);$('lnTVal').textContent=t;let max=3500, ymax=view==='pdf'?0.002:1, ax=axes($('lognormalCanvas'),0,max,0,ymax,'热循环次数','概率');let pts=[];for(let x=1;x<=max;x+=20)pts.push([x,view==='pdf'?lognormalPdf(x,mu,s):lognormalF(x,mu,s)]);drawLine(ax,pts,'#7c3aed',3);drawV(ax,t);let f=lognormalF(t,mu,s);$('lnF').textContent=pct(f);$('lnR').textContent=pct(1-f);$('lnMedian').textContent=Math.round(Math.exp(mu));$('lnExplain').textContent=s>.55?'长尾更明显':'分布相对集中'}
+function updateWeibull(){let b=+$('wBeta').value,e=+$('wEta').value,t=+$('wT').value,view=$('wView').value;$('wBetaVal').textContent=b.toFixed(1);$('wEtaVal').textContent=e;$('wTVal').textContent=t;let ax=axes($('weibullCanvas'),0,6000,0,view==='pdf'?0.0012:1,'寿命/循环数','概率');let pts=[];for(let x=1;x<=6000;x+=30)pts.push([x,view==='pdf'?weibullPdf(x,b,e):weibullF(x,b,e)]);drawLine(ax,pts,'#1d4ed8',3);if(view==='cdf')drawLine(ax,pts.map(p=>[p[0],1-p[1]]),'#059669',2);drawV(ax,t);let f=weibullF(t,b,e);$('wF').textContent=pct(f);$('wR').textContent=pct(1-f);$('wB10').textContent=Math.round(e*(-Math.log(.9))**(1/b));$('wBetaExplain').textContent=b<1?'早期失效倾向':b<1.2?'随机失效近似':'磨损/老化倾向'}
+function updateLS(){let base=[[0,0],[100,.05],[200,.11],[300,.17],[400,.19],[500,.26],[600,.31]],noise=+$('lsNoise').value;let data=base.map((p,i)=>[p[0],p[1]+(i%2?0.012:-0.008)*(noise-1)]);if($('lsOutlier').value==='yes')data.push([450,.45]);let fit=$('lsModel').value==='linear'?linFit(data):quadFit(data),stats=r2(data,fit);let ax=axes($('lsCanvas'),0,650,0,.5,'时间 h','阻值变化率 %');drawPts(ax,data,'#1d4ed8');let pts=[];for(let x=0;x<=650;x+=10)pts.push([x,fit.predict(x)]);drawLine(ax,pts,'#dc2626',3);if($('lsResidual').value==='yes'){ax.ctx.strokeStyle='#f97316';data.forEach(p=>{ax.ctx.beginPath();ax.ctx.moveTo(ax.X(p[0]),ax.Y(p[1]));ax.ctx.lineTo(ax.X(p[0]),ax.Y(fit.predict(p[0])));ax.ctx.stroke()})}$('lsNoiseVal').textContent=noise.toFixed(1);$('lsParam').textContent=$('lsModel').value==='linear'?`a=${fit.a.toFixed(3)}, b=${fit.b.toFixed(5)}`:`二次项=${fit.c.toExponential(1)}`;$('lsSSE').textContent=stats.sse.toFixed(4);$('lsR2').textContent=stats.r2.toFixed(3);$('lsHint').textContent=$('lsOutlier').value==='yes'?'异常点会拉动拟合':'观察残差是否随机'}
+function updateIP(){let data=[[0,1],[168,.992],[500,.978],[1000,.955],[1500,.934]],t=+$('ipT').value;$('ipTVal').textContent=t;let ax=axes($('ipCanvas'),0,1800,.9,1.01,'时间 h','容量保持率');drawLine(ax,data,'#1d4ed8',2);drawPts(ax,data,'#1d4ed8');let y,txt='';if(t<data[0][0]||t>data[data.length-1][0]){let fit=linFit(data);y=fit.predict(t);txt='超出观测范围'}else{for(let i=0;i<data.length-1;i++)if(t>=data[i][0]&&t<=data[i+1][0]){let [x1,y1]=data[i],[x2,y2]=data[i+1]; if($('ipMethod').value==='nearest'){y=(Math.abs(t-x1)<Math.abs(t-x2)?y1:y2)}else y=y1+(y2-y1)*(t-x1)/(x2-x1); txt=`${x1}-${x2} h`;break}}drawPts(ax,[[t,y]],'#dc2626',6);drawV(ax,t);$('ipY').textContent=y.toFixed(4);$('ipPair').textContent=txt;$('ipType').textContent=txt.includes('超出')?'外推':'插值';$('ipHint').textContent=txt.includes('超出')?'应谨慎，不是插值':'由相邻点估算'}
+function updateDG(){let data=[[0,1],[250,.982],[500,.963],[750,.946],[1000,.927],[1250,.909],[1500,.890]],thr=+$('dgThr').value,max=+$('dgMax').value,model=$('dgModel').value;$('dgThrVal').textContent=thr.toFixed(2);$('dgMaxVal').textContent=max;let fit,life,param;if(model==='linear'){fit=linFit(data);life=(thr-fit.a)/fit.b;param=`a=${fit.a.toFixed(3)}, b=${fit.b.toExponential(2)}`}else{let fd=linFit(data.map(p=>[p[0],Math.log(p[1])]));fit={predict:x=>Math.exp(fd.a+fd.b*x)};life=(Math.log(thr)-fd.a)/fd.b;param=`A=${Math.exp(fd.a).toFixed(3)}, b=${fd.b.toExponential(2)}`}let ax=axes($('dgCanvas'),0,max,.6,1.02,'时间 h','归一化性能');drawPts(ax,data,'#1d4ed8');let pts=[];for(let x=0;x<=max;x+=50)pts.push([x,fit.predict(x)]);drawLine(ax,pts,'#dc2626',3);drawH(ax,thr,'#f97316');if(life>0&&life<max)drawV(ax,life,'#f97316');$('dgLife').textContent=(life>0&&isFinite(life)?Math.round(life)+' h':'无法求得');$('dgParam').textContent=param;$('dgDist').textContent=(life-1500>0?Math.round(life-1500)+' h':'未超出');$('dgHint').textContent=life>4500?'外推较远，需谨慎':'外推距离相对有限'}
+function quantileEmp(data,q){let d=data.slice().sort((a,b)=>a-b),pos=q*(d.length-1),i=Math.floor(pos),f=pos-i;return d[i]*(1-f)+(d[Math.min(i+1,d.length-1)]||d[i])*f}
+function updateCase(){let scheme=$('caseScheme').value,q=+$('caseQ').value/100,data=scheme==='A'?fanA:fanB;$('caseQVal').textContent=Math.round(q*100);let ax=axes($('caseCanvas'),500,4800,0,1,'寿命 h','经验 CDF');let pts=empirical(data);drawLine(ax,pts,scheme==='A'?'#1d4ed8':'#7c3aed',3);drawPts(ax,pts,scheme==='A'?'#1d4ed8':'#7c3aed');let b=quantileEmp(data,q);drawH(ax,q);drawV(ax,b);$('caseB').textContent=`B${Math.round(q*100)} ≈ ${Math.round(b)} h`;$('caseMed').textContent=`${Math.round(quantileEmp(data,.5))} h`}
+function bind(ids,fn){ids.forEach(id=>$(id).addEventListener('input',fn));fn()}
+bind(['cdfType','cdfT','cdfA','cdfB'],updateCDF);bind(['fanT','fanMode'],updateEmp);bind(['nMu','nSig','nLsl','nUsl'],updateNormal);bind(['lnMu','lnSig','lnT','lnView'],updateLogN);bind(['wBeta','wEta','wT','wView'],updateWeibull);bind(['lsModel','lsOutlier','lsResidual','lsNoise'],updateLS);bind(['ipT','ipMethod'],updateIP);bind(['dgThr','dgModel','dgMax'],updateDG);bind(['caseScheme','caseQ'],updateCase);
+</script>
+</body>
+</html>
