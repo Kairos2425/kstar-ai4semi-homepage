@@ -228,7 +228,7 @@
       links: [
         { label: "工具详情", href: "tools/dcc-report-checker.html" },
         { label: "使用指南", href: "tools/dcc-guide.html" },
-        { label: "申请体验", href: "mailto:akstar2425@gmail.com?subject=DCC%E6%8A%A5%E5%91%8A%E6%A3%80%E6%9F%A5%E5%B7%A5%E5%85%B7%20%E4%BD%93%E9%AA%8C%E7%94%B3%E8%AF%B7" },
+        { label: "申请体验", href: "#contact-me" },
       ],
       access: "本工具为内部授权桌面软件，体验或试用请联系作者获取。",
     },
@@ -250,7 +250,7 @@
       detailUrl: "tools/hci-reliability-tool.html",
       links: [
         { label: "工具详情", href: "tools/hci-reliability-tool.html" },
-        { label: "申请体验", href: "mailto:akstar2425@gmail.com?subject=HCI%E5%8F%AF%E9%9D%A0%E6%80%A7%E5%B7%A5%E5%85%B7%20%E4%BD%93%E9%AA%8C%E7%94%B3%E8%AF%B7" },
+        { label: "申请体验", href: "#contact-me" },
       ],
       access: "本工具为内部授权桌面软件，体验或试用请联系作者获取。",
     },
@@ -272,7 +272,7 @@
       detailUrl: "tools/ppt-workbench.html",
       links: [
         { label: "工具详情", href: "tools/ppt-workbench.html" },
-        { label: "申请体验", href: "mailto:akstar2425@gmail.com?subject=PPT%E5%B7%A5%E4%BD%9C%E5%8F%B0%20%E4%BD%93%E9%AA%8C%E7%94%B3%E8%AF%B7" },
+        { label: "申请体验", href: "#contact-me" },
       ],
       access: "本工具为内部授权桌面软件，在线体验版筹备中，可邮件预约。",
     },

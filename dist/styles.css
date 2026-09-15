@@ -356,6 +356,114 @@ body::after {
   padding-top: 2px;
 }
 
+/* ---- contact modal ---- */
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  background: rgba(3, 7, 6, 0.72);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.contact-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.contact-modal__card {
+  position: relative;
+  width: min(420px, 90vw);
+  padding: 30px 30px 26px;
+  border: 1px solid rgba(57, 230, 163, 0.4);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(57, 230, 163, 0.12);
+  transform: translateY(10px);
+  transition: transform 0.25s ease;
+}
+
+.contact-modal.is-open .contact-modal__card {
+  transform: translateY(0);
+}
+
+.contact-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  background: none;
+  color: var(--faint);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.contact-modal__close:hover { color: var(--ink); }
+
+.contact-modal__title {
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.contact-modal__desc {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.contact-modal__email {
+  display: block;
+  padding: 12px 14px;
+  border: 1px dashed rgba(57, 230, 163, 0.45);
+  border-radius: 8px;
+  background: rgba(57, 230, 163, 0.07);
+  color: var(--accent);
+  font-family: Consolas, monospace;
+  font-size: 15px;
+  user-select: all;
+  text-align: center;
+}
+
+.contact-modal__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.contact-modal__copy,
+.contact-modal__mail {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+}
+
+.contact-modal__copy {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #06110c;
+}
+
+.contact-modal__mail {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.contact-modal__mail:hover { border-color: var(--accent); }
+
 .tool-card__body {
   padding: 20px 22px 22px;
   display: flex;
