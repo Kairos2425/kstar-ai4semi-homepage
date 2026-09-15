@@ -46,7 +46,7 @@ a {
   transform: translateZ(0);
 }
 
-body > :not(.ambient-canvas) {
+body > :not(.ambient-canvas):not(.contact-modal) {
   position: relative;
   z-index: 1;
 }
