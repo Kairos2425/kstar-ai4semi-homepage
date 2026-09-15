@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Layout Canvas | AI4Semi 项目介绍</title>
-    <link rel="stylesheet" href="../styles.css?v=20260914a" />
+    <link rel="stylesheet" href="../styles.css?v=20260915a" />
   </head>
   <body>
     <main class="detail-page">
@@ -14,6 +14,10 @@
         <h1>Agent 原生的版图编译工作台</h1>
         <p>Agent 说「给我一个 5 管 OTA，面积 &lt; 4000µm²」，系统迭代产出 DRC/LVS 干净、PPA 达标的 GDS。事务化编辑引擎 + 显式连接性 + fail-closed 验证。</p>
       </header>
+      <figure class="fx-hero">
+        <div class="fx-stage" data-fx="layout"></div>
+        <figcaption>compile → place → route：单元落位与布线的编译过程动画</figcaption>
+      </figure>
       <section class="detail-grid">
         <figure class="detail-shot detail-shot--wide detail-shot--screen">
           <img src="../assets/showcase/layout-canvas-cover.svg" alt="Layout Canvas 版图编译示意" />
@@ -34,6 +38,7 @@
         <p>原则：连接性是显式电气事实，画线交叉不产生连接；验证工具缺失时报 blocked，绝不报假 clean。</p>
       </section>
     </main>
-    <script src="../motion.js?v=20260914a"></script>
+    <script src="../motion.js?v=20260915a"></script>
+      <script src="../fx.js?v=20260915a"></script>
   </body>
 </html>

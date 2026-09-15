@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Agentic TCAD 全链条工作台 | AI4Semi 项目介绍</title>
-    <link rel="stylesheet" href="../styles.css?v=20260914a" />
+    <link rel="stylesheet" href="../styles.css?v=20260915a" />
   </head>
   <body>
     <main class="detail-page">
@@ -14,6 +14,10 @@
         <h1>工艺 → 器件 → 老化 → 寿命的一条链</h1>
         <p>自然语言描述验证需求，系统规划受控仿真、调用专业求解器、产出有据可查的证据包。三层资产 + 跨层编排，每个环节冻结计划、人工闸门、逐制品哈希与独立审计。</p>
       </header>
+      <figure class="fx-hero">
+        <div class="fx-stage" data-fx="chip"></div>
+        <figcaption>动态示意：die 上 1.46M 标准单元阵列与信号脉冲流——受控执行链的可视化隐喻</figcaption>
+      </figure>
       <section class="detail-grid">
         <figure class="detail-shot detail-shot--wide detail-shot--screen">
           <img src="../assets/showcase/reliability-workbench-architecture.png" alt="Agentic TCAD 三层架构图" />
@@ -34,6 +38,7 @@
         <p>原则：只编排、不重写内核；仿真证据不冒充硅校准；LLM 只提取意图，数值走确定性计算。</p>
       </section>
     </main>
-    <script src="../motion.js?v=20260914a"></script>
+    <script src="../motion.js?v=20260915a"></script>
+      <script src="../fx.js?v=20260915a"></script>
   </body>
 </html>

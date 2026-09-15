@@ -307,6 +307,51 @@ body::after {
   font-weight: 700;
 }
 
+/* ---- per-project animated canvas (fx.js) ---- */
+.fx-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.fx-stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.project-card__media {
+  position: relative;
+}
+
+.project-card__media .fx-stage {
+  background: radial-gradient(ellipse at 50% 40%, rgba(57, 230, 163, 0.08), transparent 70%), var(--night);
+}
+
+/* detail-page hero visual */
+.fx-hero {
+  margin: 0 0 34px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: radial-gradient(ellipse at 50% 30%, rgba(57, 230, 163, 0.10), transparent 70%), var(--night);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.fx-hero .fx-stage {
+  position: relative;
+  height: clamp(220px, 38vw, 360px);
+}
+
+.fx-hero figcaption {
+  padding: 14px 18px 16px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  border-top: 1px solid var(--line);
+}
+
 .progress {
   position: fixed;
   z-index: 10;

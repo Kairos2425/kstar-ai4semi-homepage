@@ -84,11 +84,17 @@ function renderProjects() {
     media.href = primaryHref;
     applyExternalLinkAttrs(media, primaryHref);
     media.setAttribute("aria-label", `查看${project.title}详情`);
-    const image = makeElement("img");
-    image.src = project.image;
-    image.alt = project.alt;
-    image.loading = "lazy";
-    media.appendChild(image);
+    if (project.fx) {
+      const stage = makeElement("div", "fx-stage");
+      stage.dataset.fx = project.fx;
+      media.appendChild(stage);
+    } else {
+      const image = makeElement("img");
+      image.src = project.image;
+      image.alt = project.alt;
+      image.loading = "lazy";
+      media.appendChild(image);
+    }
     card.appendChild(media);
 
     const body = makeElement("div", "project-card__body");

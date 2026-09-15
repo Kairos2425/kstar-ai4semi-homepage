@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Reliability-PINN-Lab | AI4Semi 项目介绍</title>
-    <link rel="stylesheet" href="../styles.css?v=20260914a" />
+    <link rel="stylesheet" href="../styles.css?v=20260915a" />
   </head>
   <body>
     <main class="detail-page">
@@ -14,6 +14,10 @@
         <h1>灰箱 PINN 寿命预测工作台</h1>
         <p>回答一个问题：测出来的应力数据，外推到使用工况能活多久、有多可信。物理骨干 + NN 残差 + 不确定度 + 域检查，输出永远是 diagnostic。</p>
       </header>
+      <figure class="fx-hero">
+        <div class="fx-stage" data-fx="pinn"></div>
+        <figcaption>物理主干 + 残差修正：散点逐点拟合、不确定度带呼吸、域外边界警戒</figcaption>
+      </figure>
       <section class="detail-grid">
         <figure class="detail-shot detail-shot--wide detail-shot--screen">
           <img src="../assets/showcase/reliability-workbench-ml-design.png" alt="PINN 工作台设计" />
@@ -34,6 +38,7 @@
         <p>红线：预测必须带不确定度区间与训练域检查；知识字典典型区间为占位参考，正式使用前必须按器件族校准。</p>
       </section>
     </main>
-    <script src="../motion.js?v=20260914a"></script>
+    <script src="../motion.js?v=20260915a"></script>
+      <script src="../fx.js?v=20260915a"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-window.HOMEPAGE_DATA = {
+﻿window.HOMEPAGE_DATA = {
   profile: {
     name: "柯星澜",
     nameEn: "Kstar Ke",
@@ -34,6 +34,7 @@ window.HOMEPAGE_DATA = {
     {
       title: "基于 AI 赋能的器件可靠性数据中台与寿命预测系统",
       category: "Reliability Data System",
+      fx: "flow",
       status: "核心展示",
       image: "assets/showcase/reliability-workbench-poster.png",
       alt: "Reliability Workbench 产品海报图",
@@ -54,6 +55,7 @@ window.HOMEPAGE_DATA = {
       title: "Agentic TCAD 全链条工作台",
       category: "Agentic TCAD",
       status: "串链中",
+      fx: "chip",
       image: "assets/showcase/reliability-workbench-architecture.png",
       alt: "Agentic TCAD 三层架构图",
       detailUrl: "projects/agentic-tcad.html",
@@ -73,6 +75,7 @@ window.HOMEPAGE_DATA = {
       title: "***REMOVED*** 老化预测流水线 · Reliability-Bench 雏形",
       category: "Reliability Benchmark",
       status: "***REMOVED*** 完成",
+      fx: "aging",
       image: "assets/showcase/ldmos-hci-aging-fit.png",
       alt: "LDMOS HCI 老化拟合图",
       detailUrl: "projects/reliability-bench.html",
@@ -91,6 +94,7 @@ window.HOMEPAGE_DATA = {
       title: "Reliability-PINN-Lab 寿命预测工作台",
       category: "Physics-Informed ML",
       status: "产品雏形",
+      fx: "pinn",
       image: "assets/showcase/reliability-workbench-ml-design.png",
       alt: "PINN 寿命预测工作台设计图",
       detailUrl: "projects/pinn-lab.html",
@@ -109,6 +113,7 @@ window.HOMEPAGE_DATA = {
       title: "Layout Canvas：Agent 原生的版图编译工作台",
       category: "Layout Compiler",
       status: "架构期",
+      fx: "layout",
       image: "assets/showcase/layout-canvas-cover.svg",
       alt: "Layout Canvas 版图编译示意",
       detailUrl: "projects/layout-canvas.html",
@@ -127,6 +132,7 @@ window.HOMEPAGE_DATA = {
       title: "面向半导体器件仿真的大语言模型智能体",
       category: "Simulation Agent",
       status: "进行中",
+      fx: "iv",
       image: "assets/showcase/simulation-agent-poster.png",
       alt: "Simulation Agent 产品海报图",
       detailUrl: "projects/simulation-agent.html",
