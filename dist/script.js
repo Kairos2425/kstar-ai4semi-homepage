@@ -155,11 +155,19 @@ function renderTools() {
   data.tools.forEach((tool) => {
     const card = makeElement("article", "tool-card reveal");
 
-    if (tool.fx) {
+    if (tool.fx || tool.image) {
       const media = makeElement("div", "tool-card__fx");
-      const stage = makeElement("div", "fx-stage");
-      stage.dataset.fx = tool.fx;
-      media.appendChild(stage);
+      if (tool.fx) {
+        const stage = makeElement("div", "fx-stage");
+        stage.dataset.fx = tool.fx;
+        media.appendChild(stage);
+      } else {
+        const image = makeElement("img");
+        image.src = tool.image;
+        image.alt = `${tool.name}界面`;
+        image.loading = "lazy";
+        media.appendChild(image);
+      }
       card.appendChild(media);
     }
 
@@ -182,10 +190,9 @@ function renderTools() {
     tool.links.forEach((link) => links.appendChild(makeLink(link)));
     body.appendChild(links);
 
-    const path = makeElement("div", "tool-card__path");
-    path.appendChild(makeElement("span", "", "本机路径"));
-    path.appendChild(makeElement("code", "", tool.path));
-    body.appendChild(path);
+    if (tool.access) {
+      body.appendChild(makeElement("p", "tool-card__access", tool.access));
+    }
     card.appendChild(body);
     grid.appendChild(card);
   });

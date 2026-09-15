@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="mixWbWzcaMZgALWBkBRV5D">
+<head data-page-node-id="499yEKl2DMRfW08GJABG75">
+<meta charset="utf-8" data-page-node-id="0iyc0h1iP5vozGT9wyNOON">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="aHwZtzMyq5CaVUMD8zvmYn">
+<title>PPT 离线工作台 · 使用指南</title>
+<style>
+  :root {
+    --bg: #f6f6f4;
+    --card: #ffffff;
+    --line: rgba(0,0,0,.12);
+    --text: #2c2c2a;
+    --muted: #5f5e5a;
+    --accent: #0f6e56;
+    --accent-soft: #e1f5ee;
+    --warn: #ba7517;
+    --warn-soft: #faeeda;
+    --danger: #a32d2d;
+    --danger-soft: #fcebeb;
+    --info: #185fa5;
+    --info-soft: #e6f1fb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 80px;
+    background: var(--bg); color: var(--text);
+    font: 15px/1.75 "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  header { margin-bottom: 28px; }
+  h1 { font-size: 26px; font-weight: 600; margin: 0 0 6px; letter-spacing: .5px; }
+  .sub { color: var(--muted); font-size: 14px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 22px 26px; margin-bottom: 18px;
+  }
+  h2 {
+    font-size: 18px; font-weight: 600; margin: 0 0 14px;
+    padding-bottom: 10px; border-bottom: 1px solid var(--line);
+  }
+  h3 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; color: var(--accent); }
+  p { margin: 8px 0; }
+  ul, ol { margin: 8px 0; padding-left: 22px; }
+  li { margin: 5px 0; }
+  code {
+    font-family: Consolas, "Courier New", monospace; font-size: 13px;
+    background: #f1efe8; padding: 1.5px 6px; border-radius: 5px;
+  }
+  pre {
+    font-family: Consolas, "Courier New", monospace; font-size: 13px;
+    background: #f1efe8; padding: 14px 16px; border-radius: 8px;
+    overflow-x: auto; line-height: 1.6; margin: 10px 0;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+  th { background: #f1efe8; font-weight: 600; }
+  .note, .warn, .danger {
+    border-radius: 8px; padding: 12px 16px; margin: 14px 0; font-size: 14px;
+    border-left: 3px solid;
+  }
+  .note { background: var(--info-soft); border-color: var(--info); }
+  .warn { background: var(--warn-soft); border-color: var(--warn); }
+  .danger { background: var(--danger-soft); border-color: var(--danger); }
+  .steps { counter-reset: s; list-style: none; padding-left: 0; }
+  .steps > li {
+    counter-increment: s; position: relative;
+    padding-left: 42px; margin: 12px 0;
+  }
+  .steps > li::before {
+    content: counter(s); position: absolute; left: 0; top: 2px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent);
+    font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pill {
+    display: inline-block; font-size: 12px; padding: 2px 9px;
+    border-radius: 10px; background: var(--accent-soft); color: var(--accent);
+    margin-right: 6px;
+  }
+  .toc { columns: 2; column-gap: 32px; font-size: 14px; }
+  .toc a { color: var(--info); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 32px; }
+  @media (max-width: 640px) { .toc { columns: 1; } }
+</style>
+</head>
+<body data-page-node-id="ygM3EU5JzlzAAbi7jh8bbB">
+<div class="wrap" data-page-node-id="cHlsHzWU5TS9Qg03A6nZBr">
+
+<header data-page-node-id="lcOuPCnBWzQ78ao4abHhj7">
+  <h1 data-page-node-id="CuoqDozOOVUQE5eB8CSXro">PPT 离线工作台 · 使用指南</h1>
+  <div class="sub" data-page-node-id="FZJRGrTSiONnhR01PNgkTZ">离线 PPT 生成 + 文献速读脑图工具 · 免安装 / 免管理员 / 不依赖 C 盘环境</div>
+</header>
+
+<div class="card" data-page-node-id="I4EgqPmJqh4OwDK4za99rS">
+  <h2 data-page-node-id="y7OHiwFRfgC4pf1JuPBkGG">目录</h2>
+  <div class="toc" data-page-node-id="nl8uyU7Or2arRQcpEmztOa">
+    <a href="#quick" data-page-node-id="Xa1lB28s5DcGcdbloBONo7">1. 三分钟上手</a><br data-page-node-id="BnSg4QDabcZBLOBcifAmG4">
+    <a href="#layout" data-page-node-id="B1Hg7QE80kNicaLCH0SVzt">2. 目录结构</a><br data-page-node-id="6hdDkCm9zm8E5M9aEKz4if">
+    <a href="#ppt" data-page-node-id="4XjJpJKVqr8frsmzowYtTl">3. 功能一：PPT 生成</a><br data-page-node-id="dUJuBGuNV3pC3KOXgedsxJ">
+    <a href="#lit" data-page-node-id="ixJ5BZ6WaSOja3NcZnkAgY">4. 功能二：文献速读与脑图</a><br data-page-node-id="IQcoPSWjuTLn6CrwMUvvdy">
+    <a href="#move" data-page-node-id="pzy2AEqkuA60s8ouxRfZM5">5. 换机部署四步</a><br data-page-node-id="WY2JfrZRC1eS8NGVoyc6UF">
+    <a href="#speed" data-page-node-id="RCJcY3KtTkqCtDWeOFrKEK">6. 速度预期与调优</a><br data-page-node-id="SAKymdbx21WogBp9AGqpS7">
+    <a href="#faq" data-page-node-id="UbSYudUj6eIGIMBADvG0gC">7. 常见问题排查</a><br data-page-node-id="DDxpy5MUUiPjELckn2Xatn">
+    <a href="#data" data-page-node-id="I089vmduGoPARSlth1q4fw">8. 数据位置与卸载</a><br data-page-node-id="uZq2LbNcpWqS4sRz8Xy1Ad">
+    <a href="#ocr" data-page-node-id="Vv3nQp8LmUx2JdRc7Kt4Ba">9. 扫描版 PDF 与 OCR</a><br data-page-node-id="Hn9sWf5YbQ3mKdTv2Xz8Ce">
+    <a href="#license" data-page-node-id="Pe6rTj4MbZ1nUcWq9Yd3Lf">10. 版权与代码保护</a>
+  </div>
+</div>
+
+<div class="card" id="quick" data-page-node-id="ZgVScNV0aKRQlxvsLraNxv">
+  <h2 data-page-node-id="dbGctxrnGlhutfwQT0PFDJ">1. 三分钟上手</h2>
+  <ol class="steps" data-page-node-id="l9J5RXsBEhGnJ3aAZNzj4Q">
+    <li data-page-node-id="Ox6ywFSUea200U7pHQFS1s">把压缩包用 <strong data-page-node-id="5pe6LGvmHg3ZIQtmZdktGN">7-Zip 完整解压</strong>到短路径（推荐 <code data-page-node-id="li7AVsF9ByRwqXGLi7ezNy">***REMOVED***</code>）。<br data-page-node-id="8tGKW1HTKpAC8sBKluD3sJ">
+      <span class="sub" data-page-node-id="uEon4uLC8x28LINN72ZsuM">不要用系统自带的解压功能，也不要解压到很深的目录。</span></li>
+    <li data-page-node-id="LqvAwTISxqi16BDJzEPybZ">双击包根目录下的 <code data-page-node-id="FLa5aPc0cEdMEoakxDJyH7">***REMOVED******REMOVED***</code>，会弹出桌面控制面板。</li>
+    <li data-page-node-id="E7D0ivuwG43KeEOozOsqEz">面板会自动启动服务（约 1~2 秒），状态变为 <span class="pill" data-page-node-id="fm4iUNn8LQM5cckft6BoK9">● 运行中</span> 后浏览器自动打开工作台页面。</li>
+    <li data-page-node-id="rxyoQ94WffbWe0gZAElCLc">关闭面板窗口不会停止服务。<strong data-page-node-id="dhGhVuJVYw9BOb5oVv3TyC">要彻底停止，请点面板上的「停止服务」</strong>。</li>
+  </ol>
+  <div class="note" data-page-node-id="dnDj1wl0pEJFyZzjMdTWFD">
+    <strong data-page-node-id="pvQaJXsvpMHRAycCkz16Hz">首次使用建议先点一次「换机自检」</strong>：它会检查组件完整性、写权限、端口占用、C 盘外写情况，并给出本机的速度预期，比事后排查省事得多。
+  </div>
+</div>
+
+<div class="card" id="layout" data-page-node-id="sMMVHe7SzV11Q7E9Ew7EGl">
+  <h2 data-page-node-id="iwUc94gADWuJ24kgafEOGb">2. 目录结构</h2>
+  <table data-page-node-id="sYqG1xP3m7sYCp8NvVHmU7">
+    <tr data-page-node-id="o6RQ9OTy2XtXOq1gE4322o"><th data-page-node-id="FZRjMEzA4Ff3EDYoAHTnDU">路径</th><th data-page-node-id="F2kcanwnx7cM7vFEyZBcZI">说明</th></tr>
+    <tr data-page-node-id="n8hZ4d2IuaMcUoKyiMXSVc"><td data-page-node-id="Wm8ghKUe1iEitmDo0sTxLB"><code data-page-node-id="laqCJW2fR82MH4fgINtfcG">***REMOVED******REMOVED***</code></td><td data-page-node-id="Ws0AQHMtKAnpx2PvC9pV7F"><strong data-page-node-id="himDwACIs7D0iMdMXjMAaZ">主入口</strong>，双击即弹出桌面控制面板（无黑框）</td></tr>
+    <tr data-page-node-id="CGFvD7xJRqykSXEYAasGio"><td data-page-node-id="XKxAPwk6Y6PAXsBu9TrM8t"><code data-page-node-id="3UvIscnM2LQkEMcEHj5IFu">***REMOVED***-cli***REMOVED***</code></td><td data-page-node-id="FAn4QKF0DBSBaCFWV24JqN">命令行入口，供脚本/诊断使用（带黑框，会打印详细日志）</td></tr>
+    <tr data-page-node-id="3KDPx6Oqhu9kAQbG2iNYNH"><td data-page-node-id="hev0wy3Pdz8nDNPCncWOBH"><code data-page-node-id="A7L3nUZ2p6LQhNPc9F78ki">***REMOVED***\</code></td><td data-page-node-id="pA1rJMollF7oI5w3kszYuu">程序本体：解释器、依赖库、业务代码、静态资源。请勿修改或删除</td></tr>
+    <tr data-page-node-id="m7JE6KeoVTEjMlBtmdw9Cv"><td data-page-node-id="XYdk3bk6HSAvJZqTt0RNGQ"><code data-page-node-id="pIzRQtV08BCPahr4TXzVTy">***REMOVED******REMOVED***\</code></td><td data-page-node-id="ucyXrteYNF75UiTUUrwLc4">内嵌 AI 引擎与模型（体积主要在这里）</td></tr>
+    <tr data-page-node-id="mQeKQHjNpZnToWkz4qamtc"><td data-page-node-id="ayBCG8wiOWBNAG9AoDY9Kg"><code data-page-node-id="Vti6q0r6vbuLfuaN2WRS8F">***REMOVED******REMOVED***\</code></td><td data-page-node-id="MsQQ5X2Ofpt5oKE8Cqap8y">PPT 预览与格式转换</td></tr>
+    <tr><td><code>***REMOVED***tesseract\</code></td><td>扫描版 PDF 的 OCR 引擎（***REMOVED***.5.3，约 108 MB）。语种看 <code>***REMOVED***\</code>：放进去哪个 <code>*.***REMOVED***</code> 就能识别哪个语种</td></tr>
+    <tr><td><code>***REMOVED***</code> / <code>***REMOVED***</code></td><td>使用许可与第三方组件许可声明。请勿删除，<code>***REMOVED***</code> 与面板「关于」都会引用它们</td></tr>
+    <tr data-page-node-id="02SYGqffVhBwKbeYOdHrGO"><td data-page-node-id="JiaXIguZQQva0VFcTVYFbu"><code data-page-node-id="WNYhQb64xu43svij1V5LiE">***REMOVED***</code></td><td data-page-node-id="y6DEsvcc1W313FcCfnsb8A">端口、模型名等配置，可直接用记事本修改</td></tr>
+    <tr data-page-node-id="6rMWTXE3EQ6JG3kpBL3AbE"><td data-page-node-id="2DeiH0BAs7ylGmEIkllWKl"><code data-page-node-id="V8k6xBP6DEIHtDql3Hk2Xc">templates_library\</code></td><td data-page-node-id="5QPJ0vgqqZDBpvzG4DovPh">PPT 模板库，把 <code data-page-node-id="byv8QMgnKjs9DKbVcb8BUc">.pptx</code> 丢进去即可在页面选用</td></tr>
+    <tr data-page-node-id="Zptu8JddHHmYGcpFElVBFo"><td data-page-node-id="0B3Eyc0QZw3tCsXniilKE6"><code data-page-node-id="8ucMrCNfBaa8cqUZu90L7v">output\</code></td><td data-page-node-id="zdu01b5ZGlwnOmoPfTA4Dx">生成的 PPT 与预览图</td></tr>
+    <tr data-page-node-id="VvcqBwADwR6SH0ebAhIm2R"><td data-page-node-id="cZPAxJ1NUtDsscZuefCdO6"><code data-page-node-id="gYDDGNhJxOnLMferPMK2KT">***REMOVED***</code></td><td data-page-node-id="U5gXRodXRtPHdNpSf2p9Vz">运行期数据：日志、上传、结果、缓存、临时文件</td></tr>
+    <tr data-page-node-id="WQzFLTTKZa7ovJ7JhghWwf"><td data-page-node-id="EbOsctdCpAZZ3rRGYRxjhC"><code data-page-node-id="BhbmShm0vQ6t3lMQw5nItT">***REMOVED***</code></td><td data-page-node-id="ykSRcn4PEV9vz1AmKi15px">备用运行时。<strong data-page-node-id="3GwUKBnGBrNH0jnZ7Ctdul">仅在 exe 无法运行时启用</strong>，正常情况用不到，请勿删除</td></tr>
+    <tr data-page-node-id="4TThXGmjAkEDQoFzjZZ9BX"><td data-page-node-id="DGitxDoxTKQHnDGenHs4RZ"><code data-page-node-id="wczB***REMOVED***lwQzYMPrmtDbEcn">***REMOVED***</code> / <code data-page-node-id="5KquAyP2bpEhsNvTeiR39z">stop.bat</code></td><td data-page-node-id="u5riEY4bGl6dVg0wSVJmMu">备用启停入口（exe 优先，exe 缺失时自动走 <code data-page-node-id="uqdd31Sxd9nxOC1IruSkWH">***REMOVED***</code>）</td></tr>
+    <tr data-page-node-id="yCVNlxHDycKlW8RK9qtKDu"><td data-page-node-id="xkA5SGJ5izJUTLrQ3FHMnB"><code data-page-node-id="p64rxN63iAoHqpzAZYKJXR">quick_check.bat</code> / <code data-page-node-id="g6CleENoIxlDOSNGEiwWrz">换机自检.bat</code></td><td data-page-node-id="EMk3bGYuMW5IB8jKsKXTlg">快速组件自检 / 换机可用性诊断</td></tr>
+    <tr data-page-node-id="137p7Mw4s9PvH4oRNDMOqT"><td data-page-node-id="H6JqUFJoDcHO3qgBe6zF04"><code data-page-node-id="BGyUQxImqDNWkOsiYmWBDb">verify_all_files.bat</code></td><td data-page-node-id="KGrHi8zPW3TqZCb23xX22R">逐文件 ***REMOVED*** 完整性校验（耗时较长）</td></tr>
+    <tr data-page-node-id="etnqqffepATjhPmqBcNnjQ"><td data-page-node-id="zp8WNTafzXtHhZL6FxZspc"><code data-page-node-id="2ua8Ikjc5Ei5PDQYKKiMwB">使用指南.html</code></td><td data-page-node-id="dxVc82rOKZoRpZOdEXl4cD">本文件，双击用浏览器打开</td></tr>
+  </table>
+  <div class="note" data-page-node-id="PwHSKO9hPZQ6s27QfoDxg5">
+    <strong data-page-node-id="bEdDuXBvCiA0KbReS8yDlH">两套入口怎么选</strong>：平时<strong data-page-node-id="IwvS9F2Mua0rcW2fmUBa57">只双击 <code data-page-node-id="ocGqKERXXO7jBl1lse58Cv">***REMOVED******REMOVED***</code></strong> 就够了。
+    包内 <code data-page-node-id="VW8slr0pHf722EQFPLnIEt">***REMOVED***</code> 与 <code data-page-node-id="kGVknFhIuLWYwGN2QC8bDz">***REMOVED***</code> 是保险绳——只有当 exe 被杀软误报拦截、
+    或目标机对可执行文件有额外管控时，才用 <code data-page-node-id="OW3MYDPh3nnidlbtXDHosp">***REMOVED***</code> 走回退通道（功能相同，只是没有图形面板）。
+  </div>
+  <div class="note" data-page-node-id="lNc4ZZpvUBDipuBmbEo1Dh">
+    <strong data-page-node-id="jhsIUYPCg0E3ngqdO2gZFY">关于 C 盘</strong>：所有临时文件、AI 家目录、***REMOVED*** 配置都被重定向到包内的
+    <code data-page-node-id="R4ati72iQTOIYVXdbH6IjD">***REMOVED***</code>，不会写 <code data-page-node-id="VIkHuqA8rHJ8xhul4rm9Lj">***REMOVED***</code>。全部服务只监听 <code data-page-node-id="MDm0D3GFyOkGgfcP0kYrQm">***REMOVED***</code>，
+    既不触发 Windows 防火墙弹窗，也不会被局域网访问到。
+  </div>
+</div>
+
+<div class="card" id="ppt" data-page-node-id="AX0JQ0mJYmrQayBoGemvgd">
+  <h2 data-page-node-id="oGOlY0thzIhMfMhxezBrMc">3. 功能一：PPT 生成</h2>
+  <p data-page-node-id="KQGiCEzA7umGd2Br5gKaik">工作台地址默认 <code data-page-node-id="WBpq8bqNr8YAxIqe2EcnGn">http://***REMOVED***:***REMOVED***</code>（端口被占用时会自动顺延，以面板显示的为准）。</p>
+  <h3 data-page-node-id="EbTRPATHUAnjAyLLpiL4nL">基本流程</h3>
+  <ol data-page-node-id="z6LVx3Aw8RAl5RWhN406s6">
+    <li data-page-node-id="EAh5jYEW6i5hNVvhPdtIQB">在模板库中选择一个模板（首次运行会自动生成一个示例模板）。</li>
+    <li data-page-node-id="BYjmALeWVV4cxZeud1Loa2">把大纲或原始素材粘进输入框，也可以上传参考图让视觉模型解读版面。</li>
+    <li data-page-node-id="lwa06SglGajQOUyc0t0A9d">点「AI 生成大纲」让本地模型整理结构，不满意可以再点「润色」。</li>
+    <li data-page-node-id="hLDLy0BF9vHCuQR48C6dgp">点「生成 PPT」，完成后可在线预览、下载，并附带一份质量自检报告。</li>
+  </ol>
+  <h3 data-page-node-id="9tYV5OEuaEA5Cqw5niiofO">模板怎么加</h3>
+  <p data-page-node-id="1BAJH8QNZ6ELI2nKNo5hY3">把公司的 <code data-page-node-id="BMHwxUAXgMSjp4OIBANc0A">.pptx</code> 直接复制到 <code data-page-node-id="vigGgVmHzazSaji8PtvPhr">templates_library\</code> 目录，回到页面点刷新即可。工具会读取模板的版式、字体与配色并沿用。</p>
+</div>
+
+<div class="card" id="lit" data-page-node-id="YupimvkzvIyiV90kmI1CEg">
+  <h2 data-page-node-id="gaTrzu5TauL7xNVKRQwza9">4. 功能二：文献速读与脑图</h2>
+  <p data-page-node-id="Okv2VwIsc9DmEArokj7mmB">地址默认 <code data-page-node-id="UZqsTu7IXCpQPuCRUUQtSF">http://***REMOVED***:***REMOVED***</code>，也可从面板点「打开文献脑图」直接进入。</p>
+  <h3 data-page-node-id="pLAUky0qOWkYXnxY8bySjK">用法</h3>
+  <ol data-page-node-id="CbmdOLIrqwDipHnYKdqDQ9">
+    <li data-page-node-id="nEvUyw5hcda6zvwSUXH3N2">一次上传 <strong data-page-node-id="fbU7Jc2XNC3cOxjFKoIrZc">3~5 篇</strong>（上限 6 篇；超出后会自动淘汰最旧的，避免测试残留占位）。</li>
+    <li data-page-node-id="eXD0bOEF4pFGTsr1LZPocG">点「开始分析」，页面会显示分阶段进度与预计剩余时间。</li>
+    <li data-page-node-id="YU4HWKwqqt0URP8sxGlzus">产出包含：逐篇结构化精读、跨文献综合评述、定量对比矩阵、研究方向与专利设计建议、可交互思维导图。</li>
+    <li data-page-node-id="GBZXVlkAA6K0KR0vrqG8LA">可导出 Markdown 综述、JSON 结果与脑图数据。</li>
+  </ol>
+  <h3 data-page-node-id="TQThsfmVUNbUchElS5SrbE">支持的文献格式</h3>
+  <table data-page-node-id="0yKTA9AwYRfSxuziGrjSGW">
+    <tr data-page-node-id="tYBjxONdt82wXSHn21onPk"><th data-page-node-id="Lva13hSJhDeQNFSyjLAWwF">格式</th><th data-page-node-id="okLzNqDQbQBkAQqO5thkMm">说明</th></tr>
+    <tr data-page-node-id="TxtGm9VEr7aWrBa0tc407Q"><td data-page-node-id="z0v6Z6mMjs0RJmAGZPr2wH"><code data-page-node-id="XxSftWhC2F4CYv8uJf0XC6">.pdf</code></td><td data-page-node-id="539AWSt1tMAZrVSVHrnRBH">主用格式。正文由随包分发的 <code data-page-node-id="lA1wchD2jyiqqiSnIUW5w1">pypdf 6.18.0</code> 解析（纯 Python、无外部依赖，比旧解析器完整度高、不丢正文）</td></tr>
+    <tr data-page-node-id="zECr0hP0jMBrFBO2gNzzTQ"><td data-page-node-id="L5LpIq3NaTr3oHHfA9864e"><code data-page-node-id="DjJLswhQu6GXel6YVPN7Xp">.txt</code> / <code data-page-node-id="7it28OBbkFOAMliJFXmU9m">.md</code> / <code data-page-node-id="5yjZDAjmzFXXEMXwxlTGgh">.markdown</code></td><td data-page-node-id="5E6TTvkYSrq21fuYmf9NZX">纯文本，直接读取</td></tr>
+  </table>
+  <div class="warn" data-page-node-id="iIleMMY7d6bVrOv7ZBQ14V">
+    <strong data-page-node-id="DscApQ9aBDZc7nYgjvGnNn">扫描版（图片型）PDF 没有文本层，解析结果会是空的。</strong>
+    判断方法：用鼠标在正文上拖一下，如果选不中文字，就是扫描版。
+    这类文件需要先用 OCR 处理成带文本层的 PDF，或把正文粘贴成 <code data-page-node-id="hwDJcdv7WxeEeWwnje5Nn9">.txt</code> 再上传。
+    这是 PDF 格式本身的限制，不是工具故障。
+  </div>
+  <h3 data-page-node-id="3tPXH6cQ2NTq4xEi9KJNdF">关于数值可信度</h3>
+  <p data-page-node-id="4VUfSdWc5RPXBUpoGsynfi">工具采用三层校验：只允许填写原文真实出现过的数值 → 逐条回原文检索标记是否命中 → 对比矩阵逐格标注是否已核验。
+    未能在原文中定位到的数值会明确标注「未核验」，请以原文为准。</p>
+  <div class="warn" data-page-node-id="6xZJSv7kNmD87y5JIzjGr2">
+    <strong data-page-node-id="Ld3wokGt5M7c1W5rleM13p">一次放 3~4 篇最划算。</strong>跨文献综述是固定成本（约占全流程 40%），分成多次单篇跑会把这份成本重复付好几遍。
+  </div>
+</div>
+
+<div class="card" id="move" data-page-node-id="HiGnUAAADf6eI1ZRHqecfQ">
+  <h2 data-page-node-id="IyYSqxhj2vnuk4Fl1RSfBc">5. 换机部署四步</h2>
+  <ol class="steps" data-page-node-id="TZiWX4CIdEyjpfgKZWu20F">
+    <li data-page-node-id="Ca8tuU5jbtc1odedHNzT3o"><strong data-page-node-id="gN7o1iV6d8kBnA57aEddgG">解压</strong>：用 7-Zip 解压到短路径，例如 <code data-page-node-id="YFZkScqO13xSbEYxC7VtWy">***REMOVED***</code>。目标盘预留 <strong data-page-node-id="wUACWT3SR1mEm1hM5jeaX1">10 GiB</strong> 以上空间。</li>
+    <li data-page-node-id="sZhGB6xnTG5bJGPo6AnLyT"><strong data-page-node-id="nzIEMOE54ogeEnCdH8yxX2">自检</strong>：双击 <code data-page-node-id="5bhKuTCuLB2sCcXDi0lKvm">***REMOVED******REMOVED***</code> → 点「换机自检」，逐项确认没有红色提示。</li>
+    <li data-page-node-id="g3B1GTqjYvk0gaw4udSXQC"><strong data-page-node-id="VDm514Gu90WKImDoAr4iYB">启动</strong>：在面板点「启动工作台」。若状态一直是「未运行」，看面板日志区的最后几行。</li>
+    <li data-page-node-id="AF83DsAD1RqRijSjuPcq8C"><strong data-page-node-id="8Qo7TrlTiC6aOJbEiFS1xj">收尾</strong>：用完点「停止服务」，避免 ***REMOVED*** 长时间占用内存。</li>
+  </ol>
+  <h3 data-page-node-id="Y5hzCTc1Z9nhF9P4kb9bB6">如果 exe 双击没反应 / 被拦截</h3>
+  <p data-page-node-id="w8f3qlKO78HXZeQ6uHXWO2">目标机如果装了带「可执行文件管控」的终端安全软件，可能会静默拦掉 <code data-page-node-id="0P1fcXT7z5Ix8SN1Zq2Fz0">***REMOVED***</code>。两个办法，任选其一：</p>
+  <ul data-page-node-id="pf8qG21DDfQoboGPDH74XP">
+    <li data-page-node-id="U7pdECceXtrpbRWK4qTEMJ">在包根目录执行一次 <code data-page-node-id="DVnOaY16R9tHe2zkpshGUN">powershell -NoProfile -Command "Get-ChildItem -Recurse | Unblock-File"</code>，然后重试。</li>
+    <li data-page-node-id="tKxq8Ej0b6u7dvTo1Io4KE">改用 <code data-page-node-id="vdIdowBQu87M7YCCrOMoTM">***REMOVED***</code> 启动——它会自动走包内 <code data-page-node-id="SmJVbq7dU8PwzpnjDVinIO">***REMOVED***</code> 运行时，功能和面板完全一样，只是没有图形界面（用 <code data-page-node-id="xwm8nkAA6vfnRpms4bS4Bk">stop.bat</code> 停止）。</li>
+  </ul>
+  <h3 data-page-node-id="miMoMa0K6LtJ0eZAcKDFBJ">不需要的东西</h3>
+  <ul data-page-node-id="PwycwL9eAWiSt5IxYfD8iQ">
+    <li data-page-node-id="wKA8vF2UDQ9OaUj8QnNS1p">不需要管理员权限、不需要装 Python、不需要联网下载任何组件。</li>
+    <li data-page-node-id="lhksuik63ZNP1s4WVnskdS">不需要改注册表、不改 PATH、不注册系统服务、不写入 Program Files。</li>
+    <li data-page-node-id="y8gyMIaOswmlQ5MynSgV9S">拷到 U 盘或移动硬盘同样可用（建议用较快的盘，慢盘会影响模型加载速度）。</li>
+  </ul>
+  <h3 data-page-node-id="yQF0IGee1gy7cdZN0YrGQr">如果被 SmartScreen 拦住</h3>
+  <p data-page-node-id="3XATxCIf81qKMNCQzo1ANF">从别的机器拷贝过来的文件可能带「来自其他计算机」标记。在包根目录执行一次下面的命令即可解除（<strong data-page-node-id="QszocDijtLmj1l7eBTHp1y">不需要管理员</strong>）：</p>
+  <pre data-page-node-id="3FU0JUAYXIqg47I4dsqcqv">powershell -NoProfile -Command "Get-ChildItem -Recurse | Unblock-File"</pre>
+</div>
+
+<div class="card" id="speed" data-page-node-id="vZktubPylZ8GbOdPvKZhyM">
+  <h2 data-page-node-id="DAqzSEONuk9C4OdXEwmZVi">6. 速度预期与调优</h2>
+  <table data-page-node-id="sNeBOrNJeOF2zxXwvCoJ1X">
+    <tr data-page-node-id="ToCFqqkXTXm1i9ADKX4Cgf"><th data-page-node-id="jkYQcyChZkHyajhDUvSQKH">机器配置</th><th data-page-node-id="XHWu1hCLmPCJ8qbARVL17y">模式</th><th data-page-node-id="lZozyWKeDNTEDZfCuRsMff">4 篇文献全流程</th></tr>
+    <tr data-page-node-id="LK4j1elrcajxg25QJBvi7F"><td data-page-node-id="XM64qO8fWNkyBEbn6sGnaC">有 NVIDIA 显卡</td><td data-page-node-id="Lvoyc9hFNcQbBBmjD5ZX5W">GPU</td><td data-page-node-id="TAvehF9PxS6epJgjTbY6eP">约 40 秒</td></tr>
+    <tr data-page-node-id="naO95XxZg6sbfAY7C0CfAt"><td data-page-node-id="eKGuhELMiTokUXumsDp100">28 核 CPU</td><td data-page-node-id="9JcgD7mpRXZnlCDVxMlhAd">精简模式</td><td data-page-node-id="AvR3bQtdsXZdQAmKMQLhyD">约 10 分钟</td></tr>
+    <tr data-page-node-id="wxbcJBk9NwlU5tPHoH36F7"><td data-page-node-id="rb8f9sUQTjgVrfi4zlvgDv">28 核 CPU</td><td data-page-node-id="9HQQopBo9f9yMvYhdJvB7A">完整模式</td><td data-page-node-id="a4xbbtxAIDNK88zbBcjHjS">约 16 分钟</td></tr>
+    <tr data-page-node-id="ETE5z2fYL4t5OtDfgl2Rvw"><td data-page-node-id="cKab6OhKkQAWdP6w6sCCdm">6 核 CPU（无独显）</td><td data-page-node-id="1CizF5AWA5IqQ9gngu2q49">精简模式</td><td data-page-node-id="rIyc1jzsGjkkqPABCy2v34">约 15~25 分钟</td></tr>
+  </table>
+  <div class="note" data-page-node-id="jBvXxOPEbCnqx4sdIYUtOi">
+    没有显卡时工具会<strong data-page-node-id="OXgFLTC1RcGvqtfOEpuf1k">自动进入 CPU 模式并默认开启「精简模式」</strong>：只收窄综述条目数与长文本字数，
+    不改变任何字段结构。页面上可以取消勾选切回完整模式。
+  </div>
+  <h3 data-page-node-id="yJ1lgGGce5FRtLNfJHdwlB">四个调优旋钮</h3>
+  <table data-page-node-id="ZS2ArfD7QxSlwvoeqRZjJW">
+    <tr data-page-node-id="qatNXGG2gB6WdZ1AW0GShD"><th data-page-node-id="zpFEjj8WsGbRh2gIE7FSd2">旋钮</th><th data-page-node-id="sAsttkhiLJEjVEIzhpu0Ha">做法</th><th data-page-node-id="1mppEFKIF25M9mzGmGVSyG">效果</th></tr>
+    <tr data-page-node-id="rZWG6xICaSkuSHbTTRbPIk"><td data-page-node-id="1adJ76sIQ78sj1IPpczCHN">精简模式</td><td data-page-node-id="iA9yhKjgn9WDvAn1bUDGrT">页面勾选框</td><td data-page-node-id="3Di6OJVmEWRFMFwXmbZ2Jv">输出更短，CPU 上约快 35~40%</td></tr>
+    <tr data-page-node-id="DqRHubWArMotUjeTrEcSmv"><td data-page-node-id="fwfEEenSEr8BHvh4vrqoFW">线程数</td><td data-page-node-id="aoeGupcHwSpdVwMiEUkRR2">环境变量 <code data-page-node-id="iai1EfzBEvlinUvthCqHBp">PPT_WORKBENCH_CPU_THREADS</code></td><td data-page-node-id="hM9WvNKOL7oQ7a8XpPvQfa">只加速长文本预填充；解码受内存带宽限制，加线程基本无效</td></tr>
+    <tr data-page-node-id="wjATGV0owaVSWqT3M1hcaD"><td data-page-node-id="MOIWMeG3kel3CzvCbjkY91">模型常驻</td><td data-page-node-id="FC1zo7Hxag2YOrForHmjeW"><code data-page-node-id="pBopBsAs9gOJYN4VjdC8lj">***REMOVED***</code> 的 <code data-page-node-id="41Fv65blJHwAooojhejHtY">***REMOVED***_keep_alive</code></td><td data-page-node-id="OXu2sHB2sOTGVj2kPaBmTP">保持 <code data-page-node-id="9rBMHs9cgS3KGRNu428Zr7">"30m"</code>，避免每次调用重载模型</td></tr>
+    <tr data-page-node-id="JdRKP7eMlP8oFnezUPh9iP"><td data-page-node-id="dY0vvYCDqWAEMvv5UPL9IG">上下文长度</td><td data-page-node-id="czkct3WevLuO2DuHngu2HO"><code data-page-node-id="CLg3oTrSPwdOq0x9Eb1Xxr">PPT_WORKBENCH_NUM_CTX</code></td><td data-page-node-id="H50mnIej6xHBRzILNIl422">默认 8192。<strong data-page-node-id="dBuJz0IO63rFnHS1ffyZOy">切勿设为 16384</strong>，该取值在本模型上会慢 17 倍</td></tr>
+  </table>
+  <p data-page-node-id="uzIMm3r52J8UGJv43QqkBT">结果有缓存（<code data-page-node-id="ksyNrqHE3ocyneYafdZDGA">***REMOVED***cache</code>），同一批文献重跑会秒出，反复调参不会重复付时间成本。</p>
+</div>
+
+<div class="card" id="faq" data-page-node-id="DCtVmVXGxhpDD1oT1oMBX6">
+  <h2 data-page-node-id="n3iRu3QGxa2PyRwVvE1Bu9">7. 常见问题排查</h2>
+
+  <h3 data-page-node-id="xQyDDpBbb1VHkbhB3VNvKV">双击 exe 没有任何反应</h3>
+  <ul data-page-node-id="gTMGctWEZP6FuENLnwtXmc">
+    <li data-page-node-id="qBVVAVbdXLzAYmvVwPDyJH">确认是<strong data-page-node-id="xB2o4ejavx4eXcBqooXWQL">完整解压</strong>而非直接在压缩包里双击——压缩包内双击只会解压出 exe，缺 <code data-page-node-id="g3yXfQgSnjDFQOJGg4xLki">***REMOVED***\</code> 无法运行。</li>
+    <li data-page-node-id="CnAtPYmyg0V5kO5akYj5pB">确认解压目录不是只读，也没有被杀软实时隔离。</li>
+    <li data-page-node-id="RGIY8lW9juc0Wk1gFciW2C">如果是从别的电脑拷来的，先跑一次 <code data-page-node-id="ceUeRVh20fxDoujea57gqE">Unblock-File</code>（见下一节）。</li>
+  </ul>
+
+  <h3 data-page-node-id="Lxg7ytDJ3BcOWahQYBobqA">exe 被安全软件拦了 / 文件不见了</h3>
+  <ul data-page-node-id="JpKHrKFJULthaYA6HLfL8K">
+    <li data-page-node-id="1H98Y3NoHYoyFHhdUTy8Qe">先确认根目录下 <code data-page-node-id="xFvX***REMOVED***nnDiVWWXpPBPKFY">***REMOVED******REMOVED***</code> 与 <code data-page-node-id="DbEuV6APBdNvhm49s2Byqv">***REMOVED***\</code> 都还在；被杀软隔离时 <code data-page-node-id="KBksYfKcigEz0h86hCM49j">***REMOVED***\</code> 往往也被一起删掉。</li>
+    <li data-page-node-id="tlEPpGSwa428gcoXUGBbiP">把整个目录加入杀软白名单后重新解压。</li>
+    <li data-page-node-id="N5E4ShmY2BneT37ivncanL">临时应急：直接双击 <code data-page-node-id="xPOGueI8cEO3iS9Yq8K084">***REMOVED***</code>，它会用包内 <code data-page-node-id="UHCqbBc36tfsDGfi8sE5AH">***REMOVED***</code> 把服务跑起来，不依赖任何 exe。</li>
+  </ul>
+
+  <h3 data-page-node-id="aw3yssmLkRKyvv14wfST5S">面板显示「未运行」</h3>
+  <ul data-page-node-id="PLSlh9EP4no0cjLp7ce7Dc">
+    <li data-page-node-id="frTvZhUFr8eK5F9RGrdKF4">看面板日志区的最后几行，那里有真实原因。</li>
+    <li data-page-node-id="m3JwjLFSc7EQhf5CTuoNY7">若提示端口占用，直接点「停止服务」再重新「启动工作台」；端口会自动顺延。</li>
+    <li data-page-node-id="NqafnxEwFov4EJfuFBFBPC">若提示缺少组件，说明解压不完整或路径过长，换短路径重新解压。</li>
+  </ul>
+
+  <h3 data-page-node-id="bAFDlXWd4oqjliKrESt3VM">浏览器打不开页面，但面板显示「运行中」</h3>
+  <ul data-page-node-id="ycHOxDMHeNZE4CAWV923VA">
+    <li data-page-node-id="W16EoazUDuFY78cp1c4Pz7"><strong data-page-node-id="dqlT67OITagRrL7gzXcHvX">最常见原因：系统代理没有排除 ***REMOVED***。</strong>关掉系统代理，或在代理绕过列表中加入 <code data-page-node-id="su7p4vjx8BX86AkIFSDwA5">***REMOVED***;***REMOVED***</code>。</li>
+    <li data-page-node-id="aD7WXlLCyvUANqLNAc8HFU">手动把面板上显示的真实地址复制到浏览器（端口可能已顺延，不是 ***REMOVED***）。</li>
+  </ul>
+
+  <h3 data-page-node-id="KkC62Kh0hv3UKRtksEtqj6">生成 PPT 时每次都要等很久</h3>
+  <ul data-page-node-id="Tyxse9vRP92Vpw16imaxiw">
+    <li data-page-node-id="pCI2ye6Za9wvv4KF1db33i">检查 <code data-page-node-id="vhN7FIFShf9PTFRGfbG5GO">***REMOVED***</code> 里的 <code data-page-node-id="cY3toAdplLJx4COQlyYK2f">***REMOVED***_keep_alive</code> 是否为 <code data-page-node-id="zfbDW9W0DClm9NLMSiJM0i">"30m"</code>。设为 <code data-page-node-id="5EBlPx8qeUFHoxnKVj6wYd">0</code> 会导致每次调用都重新加载模型。</li>
+  </ul>
+
+  <h3 data-page-node-id="iWwHHpnonaXQNsWtTEZAcY">文献脑图页面空白</h3>
+  <ul data-page-node-id="tefvs4BCR6iIUyHRfQRewu">
+    <li data-page-node-id="YfaGI0uGrsQfzYrRjSrAoY">多半是 <code data-page-node-id="H9gteCCfs6lPLENuDMCLXE">***REMOVED***\code\literature_tool\static\vendor\d3.v7.min.js</code> 缺失，说明包解压不完整，请重新完整解压。</li>
+  </ul>
+
+  <h3 data-page-node-id="aN8MKqWb1jgDKpsBVlpUBz">日志在哪里</h3>
+  <ul data-page-node-id="hpFjF9BVXxpL6WnvGEIo8r">
+    <li data-page-node-id="q5MBgD66NJDmmD7fGoHrtt"><code data-page-node-id="3zaA1qcnxddYKU52C9DrUo">***REMOVED***logs\</code> 下有 <code data-page-node-id="VBw9R9Bfdt0hB3wMtEt91i">launcher.log</code>、<code data-page-node-id="bW7QwBpCBxZwLe6mmEJQxC">workbench.log</code>、<code data-page-node-id="mhw7E9KnymxBd06N8PIXzr">literature.log</code>、<code data-page-node-id="BHrP8Zn8wG3Tj9GrClJK0K">***REMOVED***.log</code>。</li>
+  </ul>
+</div>
+
+<div class="card" id="data" data-page-node-id="I1kM52Qai0K1zBzEj7cTxr">
+  <h2 data-page-node-id="DGqs2fjlRbrHN1g0YHGc2z">8. 数据位置与卸载</h2>
+  <table data-page-node-id="YXvqiyXSIsoufLhLKRwhgm">
+    <tr data-page-node-id="aC9TXQqFGzqhXndBL7XVMV"><th data-page-node-id="3qRXfjPCQ4uFPck21q4vNu">内容</th><th data-page-node-id="SJCtRZGyr9FtB1e5Mb3XmF">位置</th></tr>
+    <tr data-page-node-id="WNvMLPV3xp0wshRvDzEcf7"><td data-page-node-id="zZIKxRGWyQBYiynuVbx8CR">生成的 PPT 与预览图</td><td data-page-node-id="qrVEOGAcIPHHHrydhCBIgo"><code data-page-node-id="iX2C5SWd2upLnrJl6ekbKU">output\</code></td></tr>
+    <tr data-page-node-id="TKeGcPAmE9QUfwL5Kaf6q8"><td data-page-node-id="TyuOdtxWO4Bzb2joUMKXtq">上传的文献</td><td data-page-node-id="kICdl1ddCgmapZPo4Um5DQ"><code data-page-node-id="Ofl6u8cmGhlI6cQ4VadHU4">***REMOVED***uploads\</code></td></tr>
+    <tr data-page-node-id="Y2auhBPXRLCzoD7gXe3BO3"><td data-page-node-id="fOHq8WK5AkjfhntaZqKuu8">导出的综述 / JSON / 脑图数据</td><td data-page-node-id="mjMGDycc476KzMOaONZbuH"><code data-page-node-id="eT3539JdyrbAyaYqbD2NJ0">***REMOVED***results\</code></td></tr>
+    <tr data-page-node-id="XWLeod1PuaAgiBaUovCsyg"><td data-page-node-id="iE1Md8JZb2bmvl9YKrYB28">分析结果缓存</td><td data-page-node-id="hIGbywxHLRN0V5tP6i7fKT"><code data-page-node-id="Exy9CiiADgHiBshcLxcJMY">***REMOVED***cache\</code></td></tr>
+    <tr data-page-node-id="5kZPQWWqX1u3XzzADJ928M"><td data-page-node-id="sSoRHV606q3pZoIYP3Num0">日志</td><td data-page-node-id="zSU3AnnPCOhXaorNRLWFkY"><code data-page-node-id="Mx5OIGQgAKy7qNx32cGQVN">***REMOVED***logs\</code></td></tr>
+    <tr data-page-node-id="JowGJ7xY8WnRHOPAYyBmQg"><td data-page-node-id="q7J7cHsKXte80AFrMnMorL">自己添加的模板</td><td data-page-node-id="SoqluUg2nIblGoOFMLSKkB"><code data-page-node-id="koGturQLj9okJXheJroatB">templates_library\</code></td></tr>
+    <tr data-page-node-id="hUc0UXXfgSrTJnc92D1acO"><td data-page-node-id="vISZsXl41kdOPzyVVFHzgv">自己添加的素材图</td><td data-page-node-id="O496tsWlAOfwtt7OMJ5LKc"><code data-page-node-id="Q8QNE1pJCEL5HiJGMkO9zi">assets\</code></td></tr>
+  </table>
+  <h3 data-page-node-id="dk6IBBSqiHPgvnesCGz3fJ">卸载</h3>
+  <p data-page-node-id="IgvBWAVDQEaFTc4EyvlPfo">先点面板「停止服务」，然后直接删除整个目录即可。工具不写注册表、不装服务，删除后系统里不留任何痕迹。</p>
+  <div class="warn" data-page-node-id="JUk4FibjFPifmLSYgdC2Vk">
+    在删除目录前，记得把 <code data-page-node-id="QgDEBqimObS9MIsT7pGuF9">output\</code>、<code data-page-node-id="HOQyPjQN4SSir5gKGZpw6A">templates_library\</code> 和 <code data-page-node-id="dV3keAE0uHSZvkXUzSHKC6">***REMOVED***</code> 里的自定义内容备份出来。
+  </div>
+</div>
+
+<div class="card" id="ocr">
+  <h2>9. 扫描版 PDF 与 OCR</h2>
+  <p>期刊的早年卷期、会议扫描件、专利与内部报告常常只有图像、没有文本层，直接提取会是空的。本工具随包带了 <strong>***REMOVED***.5.3</strong>，<strong>自动</strong>处理这类 PDF——不需要你手动切换模式，也不需要额外装任何东西。</p>
+
+  <h3>它是怎么判断的</h3>
+  <p>按<strong>每页的文本层密度</strong>判断，而不是看文本总量。这一点很关键：像「封面有文字层、正文全是扫描图」这种混合件，只看总量会被误判成正常 PDF，结果是静默地只返回封面那一页的文字——比"解析为空"更难发现。</p>
+  <ul>
+    <li><code>engine = pypdf</code>：正常文字版 PDF，用文本层（最快最准）。</li>
+    <li><code>engine = ocr(tesseract)</code>：扫描版／混合件，无文本层的页走 OCR。</li>
+  </ul>
+  <p>混合件是<strong>逐页择优</strong>的：本来就有文本层的页直接用原文（比 OCR 准），只有图像页才 OCR，最后合并。上传后文件列表会显示 <span class="pill">OCR</span> 徽标，鼠标悬停可看识别语种。</p>
+
+  <h3>速度</h3>
+  <p>200 dpi 下约 <strong>1.4 秒/页</strong>（本机 GPU 机型实测），单篇默认最多识别 25 页（<code>***REMOVED***</code> 的 <code>***REMOVED***</code> 可调）。第一次识别某篇会写入 <code>***REMOVED***ocr_cache\</code>，同一篇再上传是毫秒级。</p>
+
+  <h3>栅格化后端（判断是否降级）</h3>
+  <p>OCR 前要把 PDF 每页渲染成位图，这一步由 <strong>pypdfium2（PDFium，Chrome 同款内核）</strong>完成。若它不可用，程序会<strong>降级</strong>为只抽取页面里已嵌入的位图——扫描件通常仍然能识别，但混排页面可能漏内容。</p>
+  <p>为了让降级<strong>可见而不是静默发生</strong>，上传响应里带了 <code>ocr_raster</code> 字段：<code>pdfium</code> 为正常，<code>pypdf-embedded</code> 为降级。<code>***REMOVED***</code>（<code>换机自检.bat</code>）里也会直接显示「OCR 栅格化后端」与 <code>pypdfium2_cfg</code> 的存在与否。正常安装下应看到 <code>pdfium</code>。</p>
+
+  <h3>语种（已随包带中英文）</h3>
+  <p>随包带<strong>英文</strong>（<code>eng</code>）与<strong>简体中文</strong>（<code>chi_sim</code>）两个语言包，中英文文献都能直接识别，无需任何配置。</p>
+  <p>要再加别的语种（如日文 <code>jpn</code>、德文 <code>deu</code>），把对应的 <code>*.***REMOVED***</code> 放进 <code>***REMOVED***tesseract\***REMOVED***\</code> 即可，<strong>不需要改代码、不需要改配置</strong>——引擎按 <code>eng → chi_sim → jpn → deu → fra</code> 的顺序自动挑当前可用的那个。<code>***REMOVED***</code> 里能看到当前实际可用的语种。</p>
+  <p>中文识别结果会自动去掉汉字之间被 OCR 加上的<strong>逐字空格</strong>（<code>阈 值 电 压</code> → <code>阈值电压</code>），否则按关键词检索会全部失配、送进大模型的上下文也会多出成倍噪声。汉字与数字/英文之间的空格<strong>会保留</strong>（<code>28 nm</code>、<code>pMOS 器件</code> 不能被粘起来）。</p>
+  <div class="note">
+    <code>***REMOVED***</code> 的 <code>ocr</code> 段可以调 <code>dpi</code>（默认 200；300 更慢但没有精度收益）、<code>psm</code>（默认 3，对双栏论文最稳）、<code>lang</code>（留空 = 自动）。
+  </div>
+
+  <h3>如果包解压在中文路径下</h3>
+  <p>***REMOVED***.x 在 Windows 上遇到<strong>非 ASCII 路径</strong>会直接报 <code>Illegal byte sequence</code>，而且它的 <code>--version</code> 不会有任何异常——这个坑很容易漏。本工具做了三级自动规避，你不需要手动处理：</p>
+  <ol>
+    <li><strong>原地使用</strong>：路径本来就是纯英文，直接用。</li>
+    <li><strong>8.3 短名</strong>：用 Windows 短名换取 ASCII 路径，零拷贝。</li>
+    <li><strong>暂存副本</strong>：把引擎复制到纯英文目录。落点优先<strong>工具包自己所在的盘</strong>（如 <code>***REMOVED***</code>），<strong>不会默认写 C 盘</strong>。</li>
+  </ol>
+  <p>同时，因为启动器会把临时目录重定向到包内（做到零 C 盘落盘），包路径含中文时临时目录也会带中文，工具会自动把它一并切到 ASCII 目录——否则 Tesseract 连栅格图都读不进去。</p>
+  <div class="warn">
+    如果 <code>***REMOVED***</code> 显示「已暂存到 ASCII 目录」，说明确实走了第 3 级，在包所在盘根目录生成了一个 <code>PWB_OCR\</code>（约 108 MB）。它可以直接删，下次运行会按需重建。想避免这一步，把包解压到<strong>纯英文路径</strong>是最省事的做法。
+  </div>
+</div>
+
+<div class="card" id="license">
+  <h2>10. 版权与代码保护</h2>
+
+  <h3>授权范围</h3>
+  <p>本工具是<strong>授权范围内的内部工具</strong>，著作权归权利人所有。许可与禁止条款见包根 <code>***REMOVED***</code>；第三方开源组件的许可与致谢见 <code>***REMOVED***</code>。在命令行敲 <code>***REMOVED***-cli***REMOVED*** ***REMOVED***</code>，或点面板上的「关于 / 版权」，可以随时查看。</p>
+
+  <h3>业务代码是密文，磁盘上找不到源码</h3>
+  <p>包内<strong>不存在任何可直接阅读的 Python 业务源码</strong>：业务逻辑以 <code>.pwbx</code> 密文随包分发，运行时在内存中解密后执行。运行期也<strong>不会</strong>产生 <code>.pyc</code> 或 <code>__pycache__</code>。你在 <code>***REMOVED***\code\</code> 下能看到的只有 <code>.pwbx</code> 与 <code>static\</code> 静态资源。</p>
+
+  <h3>改过就会被发现</h3>
+  <p>核心文件的 ***REMOVED*** 记录在 <code>***REMOVED***\***REMOVED***.json</code> 里：</p>
+  <ul>
+    <li>启动时自动校验（毫秒级）；</li>
+    <li>密文被改动 → 该模块<strong>直接拒绝运行</strong>，并提示"重新用 7-Zip 完整解压"；</li>
+    <li><code>***REMOVED***-cli***REMOVED*** ***REMOVED***</code> 会报「被改动 N 个文件」并以非零码退出。</li>
+  </ul>
+  <p>这不是"防你自己"，而是<strong>防误触</strong>：用非 7-Zip 的解压工具、或手工改包内文件，都会导致程序行为不可预期——提前报错比事后玄学排查好。</p>
+
+  <h3>构建指纹</h3>
+  <p>每份交付带一个唯一指纹，出现在启动日志、面板页脚、<code>***REMOVED***</code> 与文献服务启动日志里，可用于溯源是哪一次交付的包：</p>
+  <ul>
+    <li>构建标识：<code>20260911b</code></li>
+    <li>交付指纹：<code>PWB-20260911b-KST-BBAB32AA</code></li>
+  </ul>
+  <div class="note">
+    请一并遵守：不要移除或篡改包内的版权声明、授权标识与完整性清单；不要修改 <code>***REMOVED***\code\</code> 下的文件。
+  </div>
+</div>
+
+<footer data-page-node-id="xd8pll9DKjKp4saTb1URjH">PPT 离线工作台 · 本指南为离线页面，不依赖任何网络资源<br>© 2026 柯星澜 (Kstar). 保留所有权利。构建 20260911b · 指纹 PWB-20260911b-KST-BBAB32AA</footer>
+
+</div>
+</body>
+</html>

@@ -212,7 +212,7 @@
     {
       name: "DCC 报告检查工具",
       en: "DCC Report Checker",
-      badge: "v5.1 便携版 · 免安装",
+      badge: "桌面版 · 免安装",
       fx: "flow",
       tagline: "可靠性认证报告的自动化规则审查器",
       summary:
@@ -220,7 +220,7 @@
       features: [
         "15 类检查器：必备项 / 术语字典 / 表格比对 / OCR / 版式 / 错别字等",
         "规则包 Excel 驱动，业务可自维护，命中例外可降级",
-        "内置 Tesseract OCR，报告内嵌曲线图与扫描表也能查",
+        "内置 OCR，报告内嵌曲线图与扫描表也能查",
       ],
       usecases:
         "器件领域应用：认证报告出具前预审——NBTI / TDDB / HCI / EM 小节必备内容缺漏、氧化层术语别名归一、表值对标 Qual Plan。",
@@ -228,29 +228,53 @@
       links: [
         { label: "工具详情", href: "tools/dcc-report-checker.html" },
         { label: "使用指南", href: "tools/dcc-guide.html" },
+        { label: "申请体验", href: "mailto:akstar2425@gmail.com?subject=DCC%E6%8A%A5%E5%91%8A%E6%A3%80%E6%9F%A5%E5%B7%A5%E5%85%B7%20%E4%BD%93%E9%AA%8C%E7%94%B3%E8%AF%B7" },
       ],
-      path: "***REMOVED***",
+      access: "本工具为内部授权桌面软件，体验或试用请联系作者获取。",
     },
     {
       name: "HCI 可靠性数据处理工具",
       en: "HCI Reliability Tool",
-      badge: "Release 2026-08 · onedir EXE",
+      badge: "桌面版 · 离线运行",
       fx: "aging",
       tagline: "HCI 应力数据：从机台原始文件到认证决策报告",
       summary:
-        "SQLite 不可变 Raw + Canonical 双层数据底座，***REMOVED*** 去重与排除/恢复审计；退化拟合 → 寿命外推 → CDF → 认证决策 → Excel/PPT 报告一键交付。",
+        "不可变原始数据底座 + 规范化分析层，全程溯源审计；退化拟合 → 寿命外推 → 统计分布 → 认证决策 → 资格报告一键交付。",
       features: [
-        "无损解析 ***REMOVED***/24 IP+OP、***REMOVED***/03、Auto tmpdatafile",
-        "Raw 不可变 + 双向溯源，Auto 时间轴需工程师确认",
-        "离线授权分发，可作为只读 EXE 交给产线/客户工程师",
+        "兼容主流机台导出格式，原始文件无损解析入库",
+        "原始数据不可变 + 排除/恢复留痕，分析可完全回溯",
+        "离线授权分发，可作为只读桌面端交给产线/客户工程师",
       ],
       usecases:
         "器件领域应用：HCI 应力测试数据的规范化入库、Δ 参数退化轨迹分析、失效判据寿命提取与资格报告生成——分析结果是决策支持，非签核依据。",
       detailUrl: "tools/hci-reliability-tool.html",
       links: [
         { label: "工具详情", href: "tools/hci-reliability-tool.html" },
+        { label: "申请体验", href: "mailto:akstar2425@gmail.com?subject=HCI%E5%8F%AF%E9%9D%A0%E6%80%A7%E5%B7%A5%E5%85%B7%20%E4%BD%93%E9%AA%8C%E7%94%B3%E8%AF%B7" },
       ],
-      path: "***REMOVED***",
+      access: "本工具为内部授权桌面软件，体验或试用请联系作者获取。",
+    },
+    {
+      name: "PPT 模板工作台",
+      en: "PPT Workbench",
+      badge: "桌面版 · 全离线",
+      image: "assets/showcase/ppt-workbench-ui.png",
+      tagline: "本地大模型驱动的 PPT 排版与文献速读工作台",
+      summary:
+        "上传自己的 PPT 模板，AI 生成大纲与润色，规则引擎产出原生可编辑的 PPTX——文本、图表、表格都能继续改。另带文献速读：多篇论文一次性结构化精读、跨文献综述与可拖拽脑图。全程离线，数据不出本机。",
+      features: [
+        "模板库：识别主题色/版式/页面尺寸，富版式引擎实际套用",
+        "14 种页面类型 + 原生图表/表格 + 生成后质量审计",
+        "扫描版 PDF 自动 OCR，中英文开箱可用",
+      ],
+      usecases:
+        "器件领域应用：可靠性评审汇报、项目立项 PPT 快速出稿；文献速读服务可把 3-5 篇器件可靠性论文一次抽成结构化精读 + 综述 + 专利点提示。",
+      detailUrl: "tools/ppt-workbench.html",
+      links: [
+        { label: "工具详情", href: "tools/ppt-workbench.html" },
+        { label: "申请体验", href: "mailto:akstar2425@gmail.com?subject=PPT%E5%B7%A5%E4%BD%9C%E5%8F%B0%20%E4%BD%93%E9%AA%8C%E7%94%B3%E8%AF%B7" },
+      ],
+      access: "本工具为内部授权桌面软件，在线体验版筹备中，可邮件预约。",
     },
   ],
 
