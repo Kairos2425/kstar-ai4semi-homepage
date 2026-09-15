@@ -100,7 +100,7 @@
     /* corner label */
     ctx.fillStyle = INK;
     ctx.font = "600 11px Consolas, monospace";
-    ctx.fillText("die · 1.46M std-cells · pulses live", x0 + 6, y0 + dh - 8);
+    ctx.fillText("device orchestration · live", x0 + 6, y0 + dh - 8);
   };
 
   /* ================= aging — ΔVth(t) draws itself, threshold, lifetime mark ================= */
@@ -233,7 +233,7 @@
   const fxFlow = ({ ctx, rect }, t) => {
     const { width: w, height: h } = rect();
     ctx.clearRect(0, 0, w, h);
-    const labels = ["NL 意图", "冻结计划", "人工闸", "求解执行", "证据包"];
+    const labels = ["需求理解", "方案规划", "可信执行", "结果验证", "报告交付"];
     const n = labels.length;
     const cy = h * 0.46;
     const gap = w / (n + 1);
@@ -286,12 +286,6 @@
       ctx.font = "600 11px 'Microsoft YaHei', sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(label, x, cy + R + 18);
-      ctx.textAlign = "left";
-      /* hash stub under node */
-      ctx.fillStyle = "rgba(214,240,255,0.4)";
-      ctx.font = "9px Consolas, monospace";
-      ctx.textAlign = "center";
-      ctx.fillText(`***REMOVED***:${(i * 7 + 3).toString(16)}f${(i * 13 + 5).toString(16)}…`, x, cy - R - 8);
       ctx.textAlign = "left";
     });
   };

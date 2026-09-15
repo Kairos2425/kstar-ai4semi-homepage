@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Reliability-Bench · ***REMOVED*** 老化流水线 | AI4Semi 项目介绍</title>
+    <title>Reliability-Bench · 器件老化预测基准 | AI4Semi 项目介绍</title>
     <link rel="stylesheet" href="../styles.css?v=20260915a" />
   </head>
   <body>
@@ -12,7 +12,7 @@
       <header class="detail-hero">
         <p class="eyebrow">Reliability Benchmark</p>
         <h1>开源 PDK 上的可复现老化基准</h1>
-        <p>***REMOVED***-46 + ***REMOVED*** SG13G2 开源 PDK：一轮 campaign 约 1 分钟、零 license 成本。fresh 电性 → 应力扫描 → PINN 轨迹 → 寿命外推 → 200 器件蒙特卡洛 → 敏感性分析 → 证据报告。</p>
+        <p>在开源工艺平台上跑通端到端器件老化预测：电性曲线提取 → 应力扫描 → 老化轨迹拟合 → 寿命外推 → 统计分布与敏感性分析 → 证据化报告。一轮完整实验分钟级完成、零授权成本。</p>
       </header>
       <figure class="fx-hero">
         <div class="fx-stage" data-fx="aging"></div>
@@ -20,22 +20,22 @@
       </figure>
       <section class="detail-grid">
         <figure class="detail-shot detail-shot--wide detail-shot--screen">
-          <img src="../assets/showcase/ldmos-hci-aging-fit.png" alt="***REMOVED*** 老化轨迹与 PINN 拟合" />
-          <figcaption>***REMOVED*** 代：solver_verified 仿真数据驱动 PINN 拟合，假设参数全部列入边界声明。</figcaption>
+          <img src="../assets/showcase/ldmos-hci-aging-fit.png" alt="老化轨迹与寿命拟合" />
+          <figcaption>老化轨迹与寿命拟合：所有假设参数显式登记，不静默生效。</figcaption>
         </figure>
         <figure class="detail-shot">
-          <img src="../assets/showcase/ldmos-transfer-curves.png" alt="fresh ID-Vg 提取" />
-          <figcaption>fresh ID-Vg 提取与 Vth0 max-gm 线性外推，逐制品 ***REMOVED*** 证据清单。</figcaption>
+          <img src="../assets/showcase/ldmos-transfer-curves.png" alt="电性曲线提取" />
+          <figcaption>电性曲线自动提取与阈值外推，全过程可复现、可回溯。</figcaption>
         </figure>
         <figure class="detail-shot">
-          <img src="../assets/showcase/reliability-workbench-poster.png" alt="基准包装概念图" />
-          <figcaption>Reliability-Bench v0 包装方向：任务池 + golden 解 + 客观评分 + 公开榜单。</figcaption>
+          <img src="../assets/showcase/reliability-workbench-poster.png" alt="基准任务集概念图" />
+          <figcaption>基准方向：标准任务集 + 参考解 + 客观评分，让可靠性分析能力可量化对比。</figcaption>
         </figure>
       </section>
       <section class="detail-notes">
-        <h2>当前进展</h2>
-        <p>***REMOVED***（普通 NMOS / HCI）完成并出报告；***REMOVED***（***REMOVED*** 真实 nLDMOS 基线）就绪；***REMOVED***（应力-恢复瞬态）阻塞于 deck 生成器；***REMOVED***（DoE + 代理模型）规划中。</p>
-        <p>纪律：仿真数据永远是 solver_verified，不冒充 silicon_calibrated；假设参数逐条登记。</p>
+        <h2>方向与价值</h2>
+        <p>「AI 能不能做器件可靠性分析」目前没人能客观回答——缺一个公开、可复现、能自动评分的基准。这条流水线用开源器件与求解器把成本压到分钟级，正在包装成公开的基准任务集。</p>
+        <p>纪律：仿真结论与实测校准严格分层，证据等级不越级；假设参数逐条登记，供评审者复核。</p>
       </section>
     </main>
     <script src="../motion.js?v=20260915a"></script>

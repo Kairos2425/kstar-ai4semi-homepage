@@ -121,8 +121,8 @@ function renderProjects() {
     if (project.progress) {
       const wrap = makeElement("div", "project-progress");
       const head = makeElement("div", "project-progress__head");
-      head.appendChild(makeElement("span", "", "进展"));
-      head.appendChild(makeElement("strong", "", `${project.progress.pct}%`));
+      head.appendChild(makeElement("span", "", "阶段"));
+      head.appendChild(makeElement("strong", "", project.status || ""));
       const bar = makeElement("div", "project-progress__bar");
       const fill = makeElement("i");
       fill.style.setProperty("--pct", `${project.progress.pct}%`);

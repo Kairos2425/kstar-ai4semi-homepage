@@ -24,16 +24,16 @@
           <h3 style="margin:0 0 10px">它解决什么问题</h3>
           <p style="color:var(--muted);line-height:1.8;margin:0">
             HCI 测试机台导出的原始文件格式杂、命名乱、同一批数据被重复导入是常态；Excel 手算退化斜率和寿命外推
-            既慢又无法复现。本工具用 SQLite 不可变 Raw 表 + Canonical 长表做数据底座，原始字节 ***REMOVED*** 去重、
+            既慢又无法复现。本工具用「原始数据不可变 + 分析层规范化」的双层数据底座，文件指纹自动查重、
             排除/恢复留痕，让每一张退化图都能回溯到具体文件与样本。
           </p>
         </figure>
         <figure class="detail-shot detail-shot--pad">
           <h3 style="margin:0 0 10px">数据接入与治理</h3>
           <p style="color:var(--muted);line-height:1.8;margin:0">
-            无损解析 ***REMOVED***/24 IP+OP、***REMOVED***/03、Auto tmpdatafile 等主流格式；
-            流式 ***REMOVED*** 组织内查重 + 两步确认；Raw 不可变，分析侧只做排除/恢复并保留审计链；
-            Auto 时间轴必须由工程师确认，预设值绝不升格为测量值。
+            兼容主流测试机台导出格式，原始文件无损解析入库；
+            文件指纹自动查重 + 导入两步确认；原始数据不可变，分析侧只做排除/恢复并保留审计链；
+            自动推测的时间轴必须由工程师确认，预设值绝不升格为测量值。
           </p>
         </figure>
         <figure class="detail-shot detail-shot--pad">
