@@ -1,5 +1,6 @@
-/* Ambient motion layer — starfield cosmos + portrait tilt/spotlight + staggered reveal.
-   Dynamic starfield: 3-layer parallax stars, twinkle, shooting stars, faint nebula. */
+/* Ambient motion layer — aurora canvas + counters + tilt/spotlight + staggered reveal.
+   Signature effect replicated from loujc.github.io: breathing color fields, light ribbon,
+   pointer bloom; palette strengthened for this site's deep-night theme. */
 (() => {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(pointer: fine)").matches;
@@ -27,52 +28,16 @@
     revealTargets.forEach((t) => observer.observe(t));
   }
 
-  /* ---------- starfield canvas ---------- */
+  /* ---------- ambient aurora canvas ---------- */
   const canvas = document.createElement("canvas");
   canvas.className = "ambient-canvas";
   canvas.setAttribute("aria-hidden", "true");
   document.body.prepend(canvas);
   const ctx = canvas.getContext("2d", { alpha: true });
-  const pointer = { x: 0.5, y: 0.4, tx: 0.5, ty: 0.4 };
+  const pointer = { x: 0.58, y: 0.32, tx: 0.58, ty: 0.32 };
   let width = 0, height = 0, pixelRatio = 1;
   let scrollProgress = 0, targetScroll = 0;
   let lastFrame = 0, raf = 0, running = false;
-  let stars = [], meteors = [], nextMeteor = 0;
-
-  /* far / mid / near layers: count, radius range, parallax depth, drift speed */
-  const LAYERS = [
-    { count: 150, rMin: 0.4, rMax: 1.0, depth: 0.25, drift: 0.0025, alpha: 0.55 },
-    { count: 90,  rMin: 0.8, rMax: 1.6, depth: 0.55, drift: 0.006,  alpha: 0.75 },
-    { count: 45,  rMin: 1.2, rMax: 2.2, depth: 1.0,  drift: 0.012,  alpha: 1.0 },
-  ];
-
-  const seedStars = () => {
-    stars = [];
-    LAYERS.forEach((layer) => {
-      for (let i = 0; i < layer.count; i++) {
-        stars.push({
-          x: Math.random(),
-          y: Math.random(),
-          r: layer.rMin + Math.random() * (layer.rMax - layer.rMin),
-          depth: layer.depth,
-          drift: layer.drift * (0.6 + Math.random() * 0.8),
-          baseAlpha: layer.alpha * (0.55 + Math.random() * 0.45),
-          twSpeed: 0.4 + Math.random() * 1.6,
-          twPhase: Math.random() * Math.PI * 2,
-          /* slight warm/cool tint variety */
-          warm: Math.random() < 0.18,
-        });
-      }
-    });
-  };
-
-  /* faint nebula blobs — keep the site's teal/amber identity, much subtler than before */
-  const nebulae = [
-    { x: 0.12, y: 0.16, r: 0.42, color: "57, 230, 163",  a: 0.05, spd: 0.10, off: 0.0 },
-    { x: 0.85, y: 0.30, r: 0.38, color: "96, 140, 235",  a: 0.055, spd: 0.08, off: 2.1 },
-    { x: 0.72, y: 0.82, r: 0.45, color: "150, 110, 220", a: 0.04, spd: 0.07, off: 4.0 },
-    { x: 0.28, y: 0.75, r: 0.34, color: "242, 184, 75",  a: 0.035, spd: 0.09, off: 5.4 },
-  ];
 
   const resize = () => {
     if (!ctx) return;
@@ -91,125 +56,132 @@
     targetScroll = Math.min(1, Math.max(0, window.scrollY / range));
   };
 
-  const drawNebula = (t) => {
-    nebulae.forEach((n) => {
-      const phase = t / 9000;
-      const breathe = 0.75 + 0.25 * Math.sin(phase * n.spd * 8 + n.off);
-      const cx = (n.x + Math.sin(phase * n.spd + n.off) * 0.04 + (pointer.x - 0.5) * 0.03) * width;
-      const cy = (n.y + Math.cos(phase * n.spd * 0.8 + n.off) * 0.03 + (pointer.y - 0.5) * 0.02 - scrollProgress * 0.08) * height;
-      const r = n.r * Math.min(width, height) * breathe;
-      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-      g.addColorStop(0, `rgba(${n.color}, ${n.a})`);
-      g.addColorStop(0.55, `rgba(${n.color}, ${n.a * 0.4})`);
-      g.addColorStop(1, `rgba(${n.color}, 0)`);
-      ctx.fillStyle = g;
-      ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
-    });
+  const drawColorField = (field, phase) => {
+    const angle = phase * field.speed + field.offset;
+    const pointerX = (pointer.x - 0.5) * field.pointer * width;
+    const pointerY = (pointer.y - 0.5) * field.pointer * height;
+    const orbitX = Math.sin(angle) * field.driftX * width;
+    const orbitY = Math.cos(angle * 0.78) * field.driftY * height;
+    const scrollX = Math.sin(scrollProgress * Math.PI * 2.2 + field.offset) * field.scroll * width;
+    const scrollY = Math.cos(scrollProgress * Math.PI * 1.7 + field.offset) * field.scroll * height;
+    const centerX = field.x * width + pointerX + orbitX + scrollX;
+    const centerY = field.y * height + pointerY + orbitY + scrollY;
+    const fieldWidth = field.width * width;
+    const fieldHeight = field.height * height;
+    const breathe = 1 + Math.sin(angle * 0.62) * field.breathe;
+
+    ctx.save();
+    ctx.translate(centerX, centerY);
+    ctx.rotate(field.rotation + Math.sin(angle * 0.42) * 0.08);
+    ctx.scale((fieldWidth / 2) * breathe, (fieldHeight / 2) / breathe);
+    const gradient = ctx.createRadialGradient(-0.18, -0.2, 0.04, 0, 0, 1);
+    gradient.addColorStop(0, field.core);
+    gradient.addColorStop(0.46, field.middle);
+    gradient.addColorStop(1, field.edge);
+    ctx.beginPath();
+    ctx.arc(0, 0, 1, 0, Math.PI * 2);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+    ctx.restore();
   };
 
-  const drawStars = (t) => {
-    const px = (pointer.x - 0.5);
-    const py = (pointer.y - 0.5);
-    stars.forEach((s) => {
-      /* slow upward drift + parallax by depth; wrap around edges */
-      let x = s.x - px * s.depth * 0.06;
-      let y = (s.y - t * s.drift * 0.02 - py * s.depth * 0.04 - scrollProgress * s.depth * 0.25) % 1;
-      if (y < 0) y += 1;
-      if (x < 0) x += 1;
-      const tw = 0.55 + 0.45 * Math.sin(t / 1000 * s.twSpeed + s.twPhase);
-      const alpha = s.baseAlpha * tw;
-      const sx = x * width, sy = y * height;
-      const radius = s.r * (0.8 + 0.2 * tw);
-      ctx.beginPath();
-      ctx.arc(sx, sy, radius, 0, Math.PI * 2);
-      ctx.fillStyle = s.warm
-        ? `rgba(255, 226, 180, ${alpha})`
-        : `rgba(214, 240, 255, ${alpha})`;
-      ctx.fill();
-      /* sparkle cross on the brightest near-layer stars */
-      if (s.depth === 1 && s.r > 1.8 && tw > 0.85) {
-        const glow = (tw - 0.85) * 4;
-        ctx.strokeStyle = `rgba(214, 240, 255, ${0.35 * glow})`;
-        ctx.lineWidth = 0.6;
-        ctx.beginPath();
-        ctx.moveTo(sx - radius * 3, sy); ctx.lineTo(sx + radius * 3, sy);
-        ctx.moveTo(sx, sy - radius * 3); ctx.lineTo(sx, sy + radius * 3);
-        ctx.stroke();
-      }
-    });
+  const drawLightRibbon = (phase) => {
+    const travel = Math.sin(phase * 0.42 + scrollProgress * Math.PI * 1.4);
+    const lift = Math.cos(phase * 0.34 - scrollProgress * Math.PI) * height * 0.12;
+    const top = height * (0.36 + travel * 0.12) + lift;
+    const thickness = height * (0.18 + Math.sin(phase * 0.27) * 0.035);
+    const gradient = ctx.createLinearGradient(-width * 0.1, top, width * 1.1, top + thickness);
+    gradient.addColorStop(0, "rgba(89, 231, 214, 0)");
+    gradient.addColorStop(0.28, "rgba(89, 231, 214, 0.14)");
+    gradient.addColorStop(0.58, "rgba(150, 169, 255, 0.16)");
+    gradient.addColorStop(0.82, "rgba(255, 157, 132, 0.11)");
+    gradient.addColorStop(1, "rgba(255, 157, 132, 0)");
+    ctx.save();
+    ctx.translate((pointer.x - 0.5) * width * 0.06, (pointer.y - 0.5) * height * 0.04);
+    ctx.rotate(-0.08 + travel * 0.035);
+    ctx.beginPath();
+    ctx.moveTo(-width * 0.18, top);
+    ctx.bezierCurveTo(width * 0.2, top - height * 0.15, width * 0.72, top + height * 0.19, width * 1.18, top - height * 0.03);
+    ctx.lineTo(width * 1.18, top + thickness);
+    ctx.bezierCurveTo(width * 0.7, top + thickness + height * 0.14, width * 0.2, top + thickness - height * 0.13, -width * 0.18, top + thickness);
+    ctx.closePath();
+    ctx.fillStyle = gradient;
+    ctx.fill();
+    ctx.restore();
   };
 
-  const spawnMeteor = (t) => {
-    const fromLeft = Math.random() < 0.5;
-    meteors.push({
-      x: fromLeft ? -0.05 : Math.random() * 0.6 + 0.4,
-      y: Math.random() * 0.35,
-      vx: (fromLeft ? 1 : -1) * (0.00045 + Math.random() * 0.00035),
-      vy: 0.00025 + Math.random() * 0.0002,
-      born: t,
-      life: 1400 + Math.random() * 900,
-    });
-    nextMeteor = t + 3500 + Math.random() * 6000;
+  const drawPointerBloom = () => {
+    if (!finePointer) return;
+    const radius = Math.max(width, height) * 0.48;
+    const gradient = ctx.createRadialGradient(
+      pointer.x * width, pointer.y * height, 0,
+      pointer.x * width, pointer.y * height, radius
+    );
+    gradient.addColorStop(0, "rgba(205, 252, 246, 0.10)");
+    gradient.addColorStop(0.34, "rgba(205, 252, 246, 0.035)");
+    gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
   };
 
-  const drawMeteors = (t) => {
-    meteors = meteors.filter((m) => t - m.born < m.life);
-    meteors.forEach((m) => {
-      const age = (t - m.born) / m.life;
-      const fade = age < 0.15 ? age / 0.15 : 1 - (age - 0.15) / 0.85;
-      const mx = (m.x + m.vx * (t - m.born)) * width;
-      const my = (m.y + m.vy * (t - m.born)) * height;
-      const tailX = mx - m.vx * 260 * width / 1000;
-      const tailY = my - m.vy * 260 * height / 1000;
-      const g = ctx.createLinearGradient(tailX, tailY, mx, my);
-      g.addColorStop(0, "rgba(190, 240, 255, 0)");
-      g.addColorStop(0.8, `rgba(190, 240, 255, ${0.5 * fade})`);
-      g.addColorStop(1, `rgba(255, 255, 255, ${0.9 * fade})`);
-      ctx.strokeStyle = g;
-      ctx.lineWidth = 1.4;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(tailX, tailY);
-      ctx.lineTo(mx, my);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(mx, my, 1.6, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, 255, 255, ${0.9 * fade})`;
-      ctx.fill();
-    });
-  };
-
-  const draw = (ts = 0) => {
+  const drawAmbientField = (timestamp = 0) => {
     if (!ctx || !width || !height) return;
     ctx.clearRect(0, 0, width, height);
-    drawNebula(ts);
-    drawStars(ts);
-    if (!reducedMotion && ts > nextMeteor) spawnMeteor(ts);
-    drawMeteors(ts);
+    const phase = reducedMotion ? 0 : timestamp / 8200;
+    /* loujc dark palette, boosted for this site's near-black background */
+    const palette = [
+      ["rgba(72, 224, 178, 0.55)", "rgba(31, 112, 111, 0.38)", "rgba(16, 44, 48, 0)"],
+      ["rgba(103, 135, 224, 0.52)", "rgba(45, 67, 128, 0.38)", "rgba(23, 31, 61, 0)"],
+      ["rgba(221, 117, 100, 0.42)", "rgba(126, 63, 75, 0.32)", "rgba(52, 24, 34, 0)"],
+      ["rgba(184, 153, 230, 0.42)", "rgba(81, 64, 121, 0.30)", "rgba(34, 27, 55, 0)"],
+      ["rgba(225, 190, 93, 0.36)", "rgba(108, 91, 52, 0.26)", "rgba(48, 39, 20, 0)"],
+    ];
+    const fields = [
+      { x: 0.04, y: 0.06, width: 1.18, height: 0.88, rotation: -0.18, pointer: 0.10, scroll: 0.13, driftX: 0.18, driftY: 0.14, breathe: 0.09, speed: 0.54, offset: 0.2 },
+      { x: 0.96, y: 0.08, width: 1.08, height: 0.92, rotation: 0.22, pointer: -0.08, scroll: 0.11, driftX: 0.16, driftY: 0.18, breathe: 0.08, speed: 0.43, offset: 1.5 },
+      { x: 0.18, y: 0.88, width: 1.04, height: 0.86, rotation: 0.12, pointer: 0.07, scroll: -0.14, driftX: 0.20, driftY: 0.13, breathe: 0.10, speed: 0.62, offset: 2.7 },
+      { x: 0.92, y: 0.74, width: 0.94, height: 1.02, rotation: -0.24, pointer: -0.09, scroll: 0.16, driftX: 0.17, driftY: 0.20, breathe: 0.075, speed: 0.38, offset: 3.9 },
+      { x: 0.52, y: 0.46, width: 0.88, height: 0.76, rotation: 0.08, pointer: 0.06, scroll: -0.10, driftX: 0.14, driftY: 0.17, breathe: 0.085, speed: 0.49, offset: 5.2 },
+    ].map((field, index) => ({
+      ...field,
+      core: palette[index][0],
+      middle: palette[index][1],
+      edge: palette[index][2],
+    }));
+
+    ctx.save();
+    ctx.filter = `blur(${Math.max(46, Math.min(92, width * 0.065))}px) saturate(118%)`;
+    fields.forEach((field) => drawColorField(field, phase));
+    drawLightRibbon(phase);
+    ctx.restore();
+
+    drawPointerBloom();
+    ctx.fillStyle = "rgba(4, 8, 7, 0.10)";
+    ctx.fillRect(0, 0, width, height);
   };
 
-  const loop = (ts) => {
+  const animateAmbientField = (timestamp) => {
     if (document.hidden) { running = false; raf = 0; return; }
-    if (ts - lastFrame >= 32) {
-      lastFrame = ts;
+    if (timestamp - lastFrame >= 32) {
+      lastFrame = timestamp;
       pointer.x += (pointer.tx - pointer.x) * 0.075;
       pointer.y += (pointer.ty - pointer.y) * 0.075;
       scrollProgress += (targetScroll - scrollProgress) * 0.06;
-      draw(ts);
+      drawAmbientField(timestamp);
     }
-    raf = window.requestAnimationFrame(loop);
+    raf = window.requestAnimationFrame(animateAmbientField);
   };
-  const start = () => { if (reducedMotion || running) return; running = true; raf = window.requestAnimationFrame(loop); };
-  const stop = () => { if (raf) window.cancelAnimationFrame(raf); raf = 0; running = false; };
+
+  const startAmbient = () => { if (reducedMotion || running) return; running = true; raf = window.requestAnimationFrame(animateAmbientField); };
+  const stopAmbient = () => { if (raf) window.cancelAnimationFrame(raf); raf = 0; running = false; };
 
   if (ctx) {
     updateScroll();
     scrollProgress = targetScroll;
-    seedStars();
     resize();
-    draw();
-    start();
-    window.addEventListener("resize", () => { resize(); draw(lastFrame); }, { passive: true });
+    drawAmbientField();
+    startAmbient();
+    window.addEventListener("resize", () => { resize(); drawAmbientField(lastFrame); }, { passive: true });
     window.addEventListener("scroll", updateScroll, { passive: true });
     if (finePointer) {
       window.addEventListener("pointermove", (e) => {
@@ -217,11 +189,11 @@
         pointer.ty = Math.min(1, Math.max(0, e.clientY / height));
       }, { passive: true });
       document.documentElement.addEventListener("pointerleave", () => {
-        pointer.tx = 0.5; pointer.ty = 0.4;
+        pointer.tx = 0.58; pointer.ty = 0.32;
       });
     }
     document.addEventListener("visibilitychange", () => {
-      if (document.hidden) stop(); else start();
+      if (document.hidden) stopAmbient(); else startAmbient();
     });
   }
 

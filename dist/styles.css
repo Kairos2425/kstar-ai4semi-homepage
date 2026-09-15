@@ -24,13 +24,7 @@ html {
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at 76% 18%, rgba(57, 230, 163, 0.15), transparent 28%),
-    radial-gradient(circle at 12% 36%, rgba(242, 184, 75, 0.08), transparent 24%),
-    linear-gradient(rgba(57, 230, 163, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(57, 230, 163, 0.055) 1px, transparent 1px),
-    var(--bg);
-  background-size: auto, auto, 48px 48px, 48px 48px, auto;
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--font);
   letter-spacing: 0;
