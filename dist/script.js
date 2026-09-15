@@ -370,9 +370,16 @@ function initReveal() {
   items.forEach((item) => observer.observe(item));
 }
 
+function initChipmap() {
+  const pins = byId("chipmap-pins");
+  if (!pins) return;
+  for (let i = 0; i < 42; i++) pins.appendChild(document.createElement("span"));
+}
+
 function renderPage() {
   if (!data) return;
   renderHero();
+  initChipmap();
   renderDashboard();
   renderProjects();
   renderTools();

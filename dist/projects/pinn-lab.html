@@ -20,16 +20,19 @@
       </figure>
       <section class="detail-grid">
         <figure class="detail-shot detail-shot--wide detail-shot--screen">
+          <img src="../assets/showcase/pinn-workflow.svg" alt="灰箱模型结构示意" />
+          <figcaption>灰箱结构：物理骨干管可解释的外推方向，神经网络只学习残差修正——比纯黑箱可信，比纯物理贴合实测。</figcaption>
+        </figure>
+        <figure class="detail-shot">
           <img src="../assets/showcase/reliability-workbench-ml-design.png" alt="PINN 工作台设计" />
           <figcaption>六步工作流：数据接入 → 列映射 → 骨干项选择 → 集成训练 → 场景预测 → 报告输出。</figcaption>
         </figure>
-        <figure class="detail-shot">
-          <img src="../assets/showcase/ldmos-hci-aging-fit.png" alt="退化轨迹拟合" />
-          <figcaption>物理骨干项：1/Vd、1000/Tk（Arrhenius）、ln(Vg/Vd) 等；约束含右删失、单调性、参数物理界。</figcaption>
-        </figure>
-        <figure class="detail-shot">
-          <img src="../assets/showcase/reliability-stats-learning-poster.png" alt="统计方法教学" />
-          <figcaption>方法工作台：五大加速模型、卡方样本量、权衡矩阵、验证时长反算。</figcaption>
+        <figure class="detail-shot detail-shot--pad">
+          <h3 style="margin:0 0 10px">为什么不做纯黑箱</h3>
+          <p style="color:var(--muted);line-height:1.8;margin:0">
+            寿命外推是可靠性里最危险的环节——黑箱模型在数据域外会给出自信的错误答案。
+            让物理规律决定方向、神经网络只做局部修正，是把「能不能外推」变成可回答问题的工程折中。
+          </p>
         </figure>
       </section>
       <section class="detail-notes">

@@ -9,6 +9,7 @@
     />
     <title>柯星澜 | AI4Semi Independent Researcher & Tool Builder</title>
     <link rel="stylesheet" href="styles.css?v=20260915a" />
+    <link rel="stylesheet" href="chipmap.css?v=20260915a" />
   </head>
   <body>
     <div class="progress" id="progress"></div>
@@ -53,6 +54,58 @@
           </div>
           <dl class="facts" id="profile-facts"></dl>
         </aside>
+      </section>
+
+      <section class="section" id="map">
+        <div class="section__head reveal">
+          <p class="eyebrow"><span class="eyebrow__num">00 ·</span> Project Map</p>
+          <h2>一颗 die 上的版图：我在做的项目</h2>
+          <p>围绕「器件可靠性 + AI」这条主线展开的几个方向，点击标签进入对应项目详情。</p>
+        </div>
+        <div class="chipmap reveal" id="chipmap">
+          <div class="chipmap__scene">
+            <div class="chipmap__glow"></div>
+            <div class="chipmap__chip" aria-hidden="true">
+              <div class="chipmap__face">
+                <div class="chipmap__inset"></div>
+                <svg class="chipmap__routing" viewBox="0 0 400 150" preserveAspectRatio="none">
+                  <path class="flow" d="M8 26 H150 L178 54 H300 L322 32 H392" />
+                  <path class="flow slow" d="M8 52 H120 L146 78 H262 L288 52 H392" />
+                  <path class="b" d="M8 78 H96 L122 104 H240 L266 78 H392" />
+                  <path class="b" d="M8 104 H70 L96 130 H214 L240 104 H392" />
+                  <path class="flow" d="M180 8 V26" />
+                  <path class="flow slow" d="M262 8 V52" />
+                  <rect x="4" y="22" width="7" height="8" />
+                  <rect x="4" y="48" width="7" height="8" />
+                  <rect x="388" y="28" width="7" height="8" />
+                  <rect x="388" y="48" width="7" height="8" />
+                  <rect x="176" y="2" width="8" height="7" />
+                  <rect x="258" y="2" width="8" height="7" />
+                </svg>
+                <div class="chipmap__sheen"></div>
+                <div class="chipmap__hotspot"></div>
+                <div class="chipmap__edge"></div>
+              </div>
+              <div class="chipmap__pins" id="chipmap-pins"></div>
+            </div>
+            <div class="chipmap__vignette"></div>
+            <svg class="chipmap__leads" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M150 66 H230 L340 195" /><circle cx="340" cy="195" r="3" />
+              <path d="M140 240 H210 L310 295" /><circle cx="310" cy="295" r="3" />
+              <path d="M150 410 H230 L340 385" /><circle cx="340" cy="385" r="3" />
+              <path d="M850 80 H780 L660 205" /><circle cx="660" cy="205" r="3" />
+              <path d="M860 250 H790 L690 300" /><circle cx="690" cy="300" r="3" />
+              <path d="M850 420 H780 L660 390" /><circle cx="660" cy="390" r="3" />
+            </svg>
+            <div class="chipmap__hud"><span class="id">AI4SEMI</span> · <span class="dim">reliability × agents × simulation</span></div>
+            <a class="chipmap__tag" data-slot="l1" href="projects/agentic-tcad.html"><small>01</small>Agentic TCAD 工作台</a>
+            <a class="chipmap__tag" data-slot="l2" href="projects/reliability-bench.html"><small>02</small>Reliability-Bench</a>
+            <a class="chipmap__tag" data-slot="l3" href="projects/pinn-lab.html"><small>03</small>PINN 寿命预测</a>
+            <a class="chipmap__tag" data-slot="r1" href="projects/layout-canvas.html"><small>04</small>Layout Canvas</a>
+            <a class="chipmap__tag" data-slot="r2" href="projects/simulation-agent.html"><small>05</small>仿真智能体</a>
+            <a class="chipmap__tag" data-slot="r3" href="projects/reliability-workbench.html"><small>06</small>可靠性数据工作台</a>
+          </div>
+        </div>
       </section>
 
       <section class="section" id="dashboard">

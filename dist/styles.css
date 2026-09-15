@@ -1257,6 +1257,13 @@ code {
   padding: 18px 20px;
 }
 
+.detail-shot .fx-stage {
+  position: relative;
+  height: 220px;
+  background: var(--night);
+  border-bottom: 1px solid var(--line);
+}
+
 .detail-shot img {
   display: block;
   width: 100%;

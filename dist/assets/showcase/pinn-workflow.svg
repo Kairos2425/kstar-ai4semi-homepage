@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bgp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a1512"/><stop offset="1" stop-color="#060b09"/>
+    </linearGradient>
+    <marker id="arrp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#39e6a3"/>
+    </marker>
+  </defs>
+  <rect width="800" height="420" fill="url(#bgp)" rx="10"/>
+  <text x="40" y="52" fill="#8fe3c0" font-family="Consolas,monospace" font-size="13" letter-spacing="3">PINN-LAB · 灰箱寿命预测示意</text>
+  <!-- physics backbone box -->
+  <rect x="60" y="110" width="300" height="90" rx="10" fill="#10201a" stroke="#2c5b46"/>
+  <text x="210" y="140" text-anchor="middle" fill="#e8f4ee" font-family="'Microsoft YaHei',sans-serif" font-weight="700" font-size="15">物理骨干</text>
+  <text x="210" y="164" text-anchor="middle" fill="#7fa896" font-family="'Microsoft YaHei',sans-serif" font-size="12">Arrhenius · 逆幂律 · 经典加速模型</text>
+  <text x="210" y="184" text-anchor="middle" fill="#5d7a6d" font-family="'Microsoft YaHei',sans-serif" font-size="11">已知物理先验，可解释、有边界</text>
+  <!-- nn residual box -->
+  <rect x="60" y="230" width="300" height="90" rx="10" fill="#1a1626" stroke="#5a4a8a"/>
+  <text x="210" y="260" text-anchor="middle" fill="#e8e4f4" font-family="'Microsoft YaHei',sans-serif" font-weight="700" font-size="15">神经网络残差</text>
+  <text x="210" y="284" text-anchor="middle" fill="#9a8fc0" font-family="'Microsoft YaHei',sans-serif" font-size="12">只学物理没覆盖的部分</text>
+  <text x="210" y="304" text-anchor="middle" fill="#6a608f" font-family="'Microsoft YaHei',sans-serif" font-size="11">带约束：单调性 / 删失 / 参数界</text>
+  <!-- plus -->
+  <text x="392" y="215" fill="#f2c96b" font-size="30" font-weight="700" text-anchor="middle">+</text>
+  <!-- output box -->
+  <rect x="440" y="150" width="300" height="140" rx="10" fill="#12291f" stroke="#39e6a3" stroke-opacity="0.6"/>
+  <text x="590" y="182" text-anchor="middle" fill="#e8f4ee" font-family="'Microsoft YaHei',sans-serif" font-weight="700" font-size="15">预测输出</text>
+  <g font-family="'Microsoft YaHei',sans-serif" font-size="12.5" fill="#9fc4b2">
+    <text x="470" y="210">· 寿命估计 + 不确定度区间</text>
+    <text x="470" y="234">· 适用范围（数据域）提示</text>
+    <text x="470" y="258">· 域外结果明确标记，不外推装懂</text>
+  </g>
+  <text x="590" y="306" text-anchor="middle" fill="#5d7a6d" font-family="Consolas,monospace" font-size="11">decision support · not signoff</text>
+  <g stroke="#39e6a3" stroke-width="1.6" fill="none" marker-end="url(#arrp)">
+    <path d="M360 155 H430 V190 H434"/><path d="M360 275 H430 V250 H434"/>
+  </g>
+  <text x="40" y="388" fill="#42604f" font-family="'Microsoft YaHei',sans-serif" font-size="12">物理可解释 + 数据可修正：比纯黑箱更可信，比纯物理更贴合实测</text>
+</svg>

@@ -21,15 +21,11 @@
       <section class="detail-grid">
         <figure class="detail-shot detail-shot--wide detail-shot--screen">
           <img src="../assets/showcase/layout-canvas-cover.svg" alt="Layout Canvas 版图编译示意" />
-          <figcaption>版图编译示意：标准单元行、布线、引脚与 die 边界——编译产 netlist → 仿真 → PPA 报告的闭环。</figcaption>
+          <figcaption>版图编译示意：标准单元行、布线、引脚与 die 边界——从电路到可制造版图的编译过程。</figcaption>
         </figure>
-        <figure class="detail-shot">
-          <img src="../assets/showcase/reliability-workbench-architecture.png" alt="事务化编辑引擎架构" />
-          <figcaption>核心不变量：唯一变更边界的事务化编辑引擎，GUI 与 Agent 走同一接口，dry-run → commit。</figcaption>
-        </figure>
-        <figure class="detail-shot">
-          <img src="../assets/showcase/simulation-agent-poster.png" alt="Agent 迭代环" />
-          <figcaption>Agent 迭代环：snapshot → transact → compile → inspect_ppa → run_verification。</figcaption>
+        <figure class="detail-shot detail-shot--wide detail-shot--screen">
+          <img src="../assets/showcase/layout-edit-loop.svg" alt="编辑-验证闭环" />
+          <figcaption>编辑-验证闭环：Agent 提需求 → 试编辑（可回滚）→ 验证 → 通过才提交，不达标回滚重试。</figcaption>
         </figure>
       </section>
       <section class="detail-notes">
