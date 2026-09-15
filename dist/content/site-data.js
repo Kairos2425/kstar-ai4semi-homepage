@@ -1,12 +1,12 @@
 ﻿window.HOMEPAGE_DATA = {
   profile: {
-    name: "柯星澜",
-    nameEn: "Kstar Ke",
+    name: "Xiaodan Li",
+    nameEn: "Kairos Li",
     initials: "Kstar",
     eyebrow: "AI4Semi Independent Builder / Reliability / Simulation Agent",
     headline: "用 AI 产品化半导体可靠性与仿真知识工具。",
     intro:
-      "你好，我是柯星澜，一名具备物理化学与微纳材料科研训练背景的 AI4Semi 探索者。我的主线任务是探索大模型与人工智能在半导体器件可靠性领域的落地应用，从可靠性数据工作台、器件寿命预测模型，到由 LLM 驱动的仿真智能体。",
+      "你好，我是 Xiaodan Li（Kairos），一名具备物理化学与微纳材料科研训练背景的 AI4Semi 探索者。我的主线任务是探索大模型与人工智能在半导体器件可靠性领域的落地应用，从可靠性数据工作台、器件寿命预测模型，到由 LLM 驱动的仿真智能体。",
     actions: [
       { label: "查看 AI4Semi 项目", href: "#projects", variant: "solid" },
       { label: "工作台实况", href: "#dashboard", variant: "ghost" },

@@ -36,7 +36,7 @@ function getPrimaryHref(project) {
 
 function renderHero() {
   const profile = data.profile;
-  setText("site-brand", profile.name);
+  setText("site-brand", profile.initials || profile.name);
   setText("profile-eyebrow", profile.eyebrow);
   setText("profile-name", `${profile.name} · ${profile.nameEn}`);
   setText("profile-headline", profile.headline);
