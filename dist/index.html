@@ -9,7 +9,7 @@
     />
     <title>柯星澜 | AI4Semi Independent Researcher & Tool Builder</title>
     <link rel="stylesheet" href="styles.css?v=20260915a" />
-    <link rel="stylesheet" href="chipmap.css?v=20260915a" />
+    <link rel="stylesheet" href="chipmap.css?v=20260915b" />
   </head>
   <body>
     <div class="progress" id="progress"></div>
@@ -68,6 +68,56 @@
             <div class="chipmap__chip" aria-hidden="true">
               <div class="chipmap__face">
                 <div class="chipmap__inset"></div>
+                <svg class="chipmap__cells" viewBox="0 0 800 494" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <!-- 标准单元行：细密水平条纹 -->
+                    <pattern id="cellrows" width="10" height="7" patternUnits="userSpaceOnUse">
+                      <rect width="10" height="7" fill="none"/>
+                      <line x1="0" y1="6.5" x2="10" y2="6.5" stroke="rgba(120,220,190,0.16)" stroke-width="0.7"/>
+                      <line x1="0" y1="3" x2="10" y2="3" stroke="rgba(120,220,190,0.07)" stroke-width="0.5"/>
+                    </pattern>
+                    <!-- SRAM 阵列：细密网格 -->
+                    <pattern id="sramgrid" width="6" height="6" patternUnits="userSpaceOnUse">
+                      <rect width="6" height="6" fill="rgba(10,20,16,0.55)"/>
+                      <path d="M0 0H6M0 0V6" stroke="rgba(140,200,230,0.13)" stroke-width="0.5" fill="none"/>
+                    </pattern>
+                    <!-- 大间距行（模拟逻辑块分隔） -->
+                    <pattern id="bigrows" width="14" height="14" patternUnits="userSpaceOnUse">
+                      <line x1="0" y1="13" x2="14" y2="13" stroke="rgba(242,184,75,0.10)" stroke-width="0.8"/>
+                      <line x1="0" y1="6" x2="14" y2="6" stroke="rgba(120,220,190,0.10)" stroke-width="0.6"/>
+                    </pattern>
+                  </defs>
+
+                  <!-- 左侧主逻辑区：标准单元行 -->
+                  <rect x="46" y="46" width="270" height="330" fill="url(#cellrows)" stroke="rgba(120,220,190,0.22)" stroke-width="0.8"/>
+                  <!-- 逻辑区内部的竖直电源轨 -->
+                  <line x1="46" y1="46" x2="46" y2="376" stroke="rgba(57,230,163,0.35)" stroke-width="2"/>
+                  <line x1="316" y1="46" x2="316" y2="376" stroke="rgba(57,230,163,0.35)" stroke-width="2"/>
+                  <line x1="181" y1="46" x2="181" y2="376" stroke="rgba(57,230,163,0.12)" stroke-width="1.4"/>
+
+                  <!-- 中上：SRAM 宏块 ×2 -->
+                  <rect x="346" y="46" width="150" height="90" fill="url(#sramgrid)" stroke="rgba(140,200,230,0.3)" stroke-width="0.8"/>
+                  <rect x="506" y="46" width="150" height="90" fill="url(#sramgrid)" stroke="rgba(140,200,230,0.3)" stroke-width="0.8"/>
+                  <text x="421" y="95" fill="rgba(160,200,230,0.5)" font-family="Consolas,monospace" font-size="11" text-anchor="middle">SRAM</text>
+                  <text x="581" y="95" fill="rgba(160,200,230,0.5)" font-family="Consolas,monospace" font-size="11" text-anchor="middle">SRAM</text>
+
+                  <!-- 中下：模拟/IO 大块（琥珀行纹） -->
+                  <rect x="346" y="160" width="180" height="110" fill="url(#bigrows)" stroke="rgba(242,184,75,0.28)" stroke-width="0.8"/>
+                  <text x="436" y="220" fill="rgba(242,200,110,0.55)" font-family="Consolas,monospace" font-size="11" text-anchor="middle">ANALOG / IO</text>
+
+                  <!-- 底部横向总线槽 -->
+                  <rect x="46" y="392" width="610" height="30" fill="rgba(57,230,163,0.05)" stroke="rgba(57,230,163,0.2)" stroke-width="0.7"/>
+                  <line x1="46" y1="407" x2="656" y2="407" stroke="rgba(57,230,163,0.35)" stroke-width="1" stroke-dasharray="8 6"/>
+                  <text x="351" y="412" fill="rgba(120,220,190,0.5)" font-family="Consolas,monospace" font-size="10" text-anchor="middle">GLOBAL BUS</text>
+
+                  <!-- 划线槽（scribe lines） -->
+                  <line x1="46" y1="432" x2="656" y2="432" stroke="rgba(255,255,255,0.10)" stroke-width="0.6" stroke-dasharray="2 8"/>
+                  <line x1="330" y1="46" x2="330" y2="422" stroke="rgba(255,255,255,0.08)" stroke-width="0.6" stroke-dasharray="2 8"/>
+
+                  <!-- die 蚀刻标识 -->
+                  <text x="60" y="468" fill="rgba(200,235,215,0.35)" font-family="Consolas,monospace" font-size="16" letter-spacing="4">KSTAR·A1</text>
+                  <text x="640" y="468" fill="rgba(200,235,215,0.3)" font-family="Consolas,monospace" font-size="10" letter-spacing="2" text-anchor="end">RELIABILITY × AGENTS</text>
+                </svg>
                 <svg class="chipmap__routing" viewBox="0 0 400 150" preserveAspectRatio="none">
                   <path class="flow" d="M8 26 H150 L178 54 H300 L322 32 H392" />
                   <path class="flow slow" d="M8 52 H120 L146 78 H262 L288 52 H392" />
