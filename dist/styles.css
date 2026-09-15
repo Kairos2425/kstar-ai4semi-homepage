@@ -307,6 +307,121 @@ body::after {
   font-weight: 700;
 }
 
+/* ---- released desktop tools ---- */
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 22px;
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(57, 230, 163, 0.45);
+}
+
+.tool-card__fx {
+  position: relative;
+  height: 150px;
+  border-bottom: 1px solid var(--line);
+  background: var(--night);
+}
+
+.tool-card__fx .fx-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.tool-card__body {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tool-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tool-card__badge {
+  color: var(--accent);
+  border: 1px solid rgba(57, 230, 163, 0.45);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tool-card__en {
+  color: var(--faint);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tool-card__body h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.tool-card__body p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.tool-card__tagline {
+  color: var(--ink) !important;
+  font-weight: 700;
+}
+
+.tool-card__usecase {
+  padding: 10px 12px;
+  border-left: 3px solid rgba(242, 184, 75, 0.6);
+  background: rgba(242, 184, 75, 0.06);
+  border-radius: 0 8px 8px 0;
+}
+
+.tool-card__path {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+  padding: 10px 12px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+}
+
+.tool-card__path span {
+  color: var(--faint);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.tool-card__path code {
+  color: var(--accent);
+  font-size: 11.5px;
+  word-break: break-all;
+  user-select: all;
+}
+
 /* ---- per-project animated canvas (fx.js) ---- */
 .fx-stage {
   position: absolute;
@@ -1122,6 +1237,10 @@ code {
 
 .detail-shot--wide {
   grid-column: 1 / -1;
+}
+
+.detail-shot--pad {
+  padding: 18px 20px;
 }
 
 .detail-shot img {

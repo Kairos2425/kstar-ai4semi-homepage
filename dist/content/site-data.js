@@ -208,6 +208,52 @@
     },
   ],
 
+  tools: [
+    {
+      name: "DCC 报告检查工具",
+      en: "DCC Report Checker",
+      badge: "v5.1 便携版 · 免安装",
+      fx: "flow",
+      tagline: "可靠性认证报告的自动化规则审查器",
+      summary:
+        "把 Process / Product Reliability Qualification Report 的人工逐页核对，变成规则引擎驱动的批量扫描：Excel 规则包加载 → DOCX 解析 → 15 类检查器 → FAIL 清单落 Excel。",
+      features: [
+        "15 类检查器：必备项 / 术语字典 / 表格比对 / OCR / 版式 / 错别字等",
+        "规则包 Excel 驱动，业务可自维护，命中例外可降级",
+        "内置 Tesseract OCR，报告内嵌曲线图与扫描表也能查",
+      ],
+      usecases:
+        "器件领域应用：认证报告出具前预审——NBTI / TDDB / HCI / EM 小节必备内容缺漏、氧化层术语别名归一、表值对标 Qual Plan。",
+      detailUrl: "tools/dcc-report-checker.html",
+      links: [
+        { label: "工具详情", href: "tools/dcc-report-checker.html" },
+        { label: "使用指南", href: "tools/dcc-guide.html" },
+      ],
+      path: "***REMOVED***",
+    },
+    {
+      name: "HCI 可靠性数据处理工具",
+      en: "HCI Reliability Tool",
+      badge: "Release 2026-08 · onedir EXE",
+      fx: "aging",
+      tagline: "HCI 应力数据：从机台原始文件到认证决策报告",
+      summary:
+        "SQLite 不可变 Raw + Canonical 双层数据底座，***REMOVED*** 去重与排除/恢复审计；退化拟合 → 寿命外推 → CDF → 认证决策 → Excel/PPT 报告一键交付。",
+      features: [
+        "无损解析 ***REMOVED***/24 IP+OP、***REMOVED***/03、Auto tmpdatafile",
+        "Raw 不可变 + 双向溯源，Auto 时间轴需工程师确认",
+        "离线授权分发，可作为只读 EXE 交给产线/客户工程师",
+      ],
+      usecases:
+        "器件领域应用：HCI 应力测试数据的规范化入库、Δ 参数退化轨迹分析、失效判据寿命提取与资格报告生成——分析结果是决策支持，非签核依据。",
+      detailUrl: "tools/hci-reliability-tool.html",
+      links: [
+        { label: "工具详情", href: "tools/hci-reliability-tool.html" },
+      ],
+      path: "***REMOVED***",
+    },
+  ],
+
   dashboard: {
     title: "工作台实况",
     intro:

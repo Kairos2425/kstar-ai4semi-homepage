@@ -1,0 +1,67 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HCI 可靠性数据处理工具 | AI4Semi 工具</title>
+    <link rel="stylesheet" href="../styles.css?v=20260915a" />
+  </head>
+  <body>
+    <main class="detail-page">
+      <a class="back-link" href="../index.html#tools">返回主页</a>
+      <header class="detail-hero">
+        <p class="eyebrow">Desktop Tool · Release 2026-08</p>
+        <h1>HCI 可靠性数据处理工具</h1>
+        <p>面向 HCI 应力测试数据的一体化处理桌面端：从测试机台原始文件到退化绘图、寿命外推、认证决策与 Excel/PPT 报告，全程可追溯。</p>
+      </header>
+      <figure class="fx-hero">
+        <div class="fx-stage" data-fx="aging"></div>
+        <figcaption>核心视图：多应力条件的 Δ 参数退化轨迹，失效判据交叉自动提取寿命点</figcaption>
+      </figure>
+
+      <section class="detail-grid">
+        <figure class="detail-shot detail-shot--wide detail-shot--pad">
+          <h3 style="margin:0 0 10px">它解决什么问题</h3>
+          <p style="color:var(--muted);line-height:1.8;margin:0">
+            HCI 测试机台导出的原始文件格式杂、命名乱、同一批数据被重复导入是常态；Excel 手算退化斜率和寿命外推
+            既慢又无法复现。本工具用 SQLite 不可变 Raw 表 + Canonical 长表做数据底座，原始字节 ***REMOVED*** 去重、
+            排除/恢复留痕，让每一张退化图都能回溯到具体文件与样本。
+          </p>
+        </figure>
+        <figure class="detail-shot detail-shot--pad">
+          <h3 style="margin:0 0 10px">数据接入与治理</h3>
+          <p style="color:var(--muted);line-height:1.8;margin:0">
+            无损解析 ***REMOVED***/24 IP+OP、***REMOVED***/03、Auto tmpdatafile 等主流格式；
+            流式 ***REMOVED*** 组织内查重 + 两步确认；Raw 不可变，分析侧只做排除/恢复并保留审计链；
+            Auto 时间轴必须由工程师确认，预设值绝不升格为测量值。
+          </p>
+        </figure>
+        <figure class="detail-shot detail-shot--pad">
+          <h3 style="margin:0 0 10px">分析与交付</h3>
+          <p style="color:var(--muted);line-height:1.8;margin:0">
+            基线对齐、退化拟合、log 轴可绘制状态检查；寿命外推 → CDF 统计 →
+            认证决策（qualification decision）→ Excel / PPT 资格报告一键交付。
+            附带离线授权机制，可作为只读 EXE 分发给产线或客户工程师。
+          </p>
+        </figure>
+      </section>
+
+      <section class="detail-notes">
+        <h2>使用方式</h2>
+        <p>
+          发布物：<code style="color:var(--accent)">***REMOVED***</code>
+          （onedir 打包，约 36 MB，启动本地 Web 界面）。
+        </p>
+        <p>
+          口径声明：分析结果是工程决策支持，不是签核依据；所有外推都带数据域边界提示。
+          源码与测试在 <code>src/</code>、<code>tests/</code> 维护，EXE 为只读发布物。
+        </p>
+        <p>
+          <a class="button button--ghost" href="***REMOVED***">本机打开发布目录</a>
+        </p>
+      </section>
+    </main>
+    <script src="../motion.js?v=20260915a"></script>
+    <script src="../fx.js?v=20260915a"></script>
+  </body>
+</html>

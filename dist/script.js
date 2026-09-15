@@ -149,6 +149,48 @@ function renderProjects() {
   });
 }
 
+function renderTools() {
+  const grid = byId("tool-grid");
+  if (!grid || !data.tools) return;
+  data.tools.forEach((tool) => {
+    const card = makeElement("article", "tool-card reveal");
+
+    if (tool.fx) {
+      const media = makeElement("div", "tool-card__fx");
+      const stage = makeElement("div", "fx-stage");
+      stage.dataset.fx = tool.fx;
+      media.appendChild(stage);
+      card.appendChild(media);
+    }
+
+    const body = makeElement("div", "tool-card__body");
+    const head = makeElement("div", "tool-card__head");
+    head.appendChild(makeElement("span", "tool-card__badge", tool.badge));
+    head.appendChild(makeElement("span", "tool-card__en", tool.en));
+    body.appendChild(head);
+    body.appendChild(makeElement("h3", "", tool.name));
+    body.appendChild(makeElement("p", "tool-card__tagline", tool.tagline));
+    body.appendChild(makeElement("p", "", tool.summary));
+
+    const feats = makeElement("ul", "project-highlights");
+    tool.features.forEach((f) => feats.appendChild(makeElement("li", "", f)));
+    body.appendChild(feats);
+
+    body.appendChild(makeElement("p", "tool-card__usecase", tool.usecases));
+
+    const links = makeElement("div", "project-links");
+    tool.links.forEach((link) => links.appendChild(makeLink(link)));
+    body.appendChild(links);
+
+    const path = makeElement("div", "tool-card__path");
+    path.appendChild(makeElement("span", "", "本机路径"));
+    path.appendChild(makeElement("code", "", tool.path));
+    body.appendChild(path);
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+}
+
 function renderTimeline() {
   const timeline = byId("timeline");
   data.timeline.forEach((item) => {
@@ -326,6 +368,7 @@ function renderPage() {
   renderHero();
   renderDashboard();
   renderProjects();
+  renderTools();
   renderTimeline();
   renderSkillsAndHonors();
   renderPublications();
