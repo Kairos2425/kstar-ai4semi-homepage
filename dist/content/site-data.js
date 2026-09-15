@@ -9,7 +9,14 @@ window.HOMEPAGE_DATA = {
       "你好，我是柯星澜，一名具备物理化学与微纳材料科研训练背景的 AI4Semi 探索者。我的主线任务是探索大模型与人工智能在半导体器件可靠性领域的落地应用，从可靠性数据工作台、器件寿命预测模型，到由 LLM 驱动的仿真智能体。",
     actions: [
       { label: "查看 AI4Semi 项目", href: "#projects", variant: "solid" },
+      { label: "工作台实况", href: "#dashboard", variant: "ghost" },
       { label: "联系交流", href: "#contact", variant: "ghost" },
+    ],
+    quicklinks: [
+      { label: "数据看板", href: "#dashboard" },
+      { label: "可靠性工作台", href: "projects/reliability-workbench.html" },
+      { label: "仿真智能体", href: "projects/simulation-agent.html" },
+      { label: "GitHub", href: "https://github.com/kairos2425" },
     ],
     metrics: [
       { value: "AI4Semi", label: "核心方向" },
@@ -41,11 +48,85 @@ window.HOMEPAGE_DATA = {
         { label: "产品介绍", href: "projects/reliability-workbench.html" },
       ],
       featured: true,
+      progress: { pct: 70, label: "产品雏形已建：方法/预测/数据桥三工作台 + PPT/Word 报告链" },
+    },
+    {
+      title: "Agentic TCAD 全链条工作台",
+      category: "Agentic TCAD",
+      status: "串链中",
+      image: "assets/showcase/reliability-workbench-architecture.png",
+      alt: "Agentic TCAD 三层架构图",
+      detailUrl: "projects/agentic-tcad.html",
+      summary:
+        "自然语言 → 受控仿真 → 证据包的三层系统：***REMOVED*** ***REMOVED*** 执行层（Broker+Workbench+***REMOVED***，***REMOVED*** nLDMOS 资格验收 BV=***REMOVED***V 逐位复现，220 tests），***REMOVED*** 物理治理层（***REMOVED*** 个 ***REMOVED*** 工具、HCI ***REMOVED***-***REMOVED*** 内核谱系、证据分级 hypothesis/solver_verified/silicon_calibrated，518 tests），跨层 ***REMOVED*** 编排 + ***REMOVED*** 审计契约。",
+      contribution:
+        "目标：工艺→器件→老化→寿命一条链，每步有冻结计划、人工闸、制品哈希和独立审计。当前断点：***REMOVED*** 应力-测量 deck 生成器。",
+      chips: ["***REMOVED*** ***REMOVED***/Athena", "***REMOVED***", "***REMOVED***", "证据分级"],
+      highlights: ["BV 逐位复现", "***REMOVED*** ***REMOVED*** 工具", "逐制品 ***REMOVED***"],
+      links: [
+        { label: "项目详情", href: "projects/agentic-tcad.html" },
+      ],
+      featured: true,
+      progress: { pct: 60, label: "***REMOVED*** 验收过 / ***REMOVED*** 执行中 / 编排 v0.1 / ***REMOVED*** 阻塞待解" },
+    },
+    {
+      title: "***REMOVED*** 老化预测流水线 · Reliability-Bench 雏形",
+      category: "Reliability Benchmark",
+      status: "***REMOVED*** 完成",
+      image: "assets/showcase/ldmos-hci-aging-fit.png",
+      alt: "LDMOS HCI 老化拟合图",
+      detailUrl: "projects/reliability-bench.html",
+      summary:
+        "***REMOVED***-46 + ***REMOVED*** SG13G2 开源 PDK 的端到端老化流水线：fresh ID-Vg 提取 → 应力扫描 → PINN 老化轨迹拟合 → 寿命外推 → 200 器件蒙特卡洛 → 敏感性 tornado → 证据报告。一轮 campaign 约 1 分钟、零 license 成本，是公开基准与 RL 环境的理想成本结构。",
+      contribution:
+        "正在把它打包成 Reliability-Bench v0：任务池 + golden 解 + 客观评分（对 solver 真值的数值误差），准备开源。",
+      chips: ["***REMOVED***", "***REMOVED*** SG13G2", "PINN", "Monte Carlo", "Weibull"],
+      highlights: ["~60s/轮", "200 器件 MC", "证据分级报告"],
+      links: [
+        { label: "项目详情", href: "projects/reliability-bench.html" },
+      ],
+      progress: { pct: 55, label: "***REMOVED*** 完成 / ***REMOVED*** 基线 / ***REMOVED*** 应力-测量闭环阻塞中" },
+    },
+    {
+      title: "Reliability-PINN-Lab 寿命预测工作台",
+      category: "Physics-Informed ML",
+      status: "产品雏形",
+      image: "assets/showcase/reliability-workbench-ml-design.png",
+      alt: "PINN 寿命预测工作台设计图",
+      detailUrl: "projects/pinn-lab.html",
+      summary:
+        "灰箱 PINN 寿命预测：物理骨干（Arrhenius/逆幂律等）+ NN 残差修正，右删失、单调性、参数物理界约束，深度集成不确定度 + 凸包域检查，输出永远是 diagnostic 不替代签核。已有 Windows EXE、Streamlit、REST、纯静态公网版四种形态。",
+      contribution:
+        "六步工作流：数据接入 → 列映射 → 骨干项选择 → 集成训练 → 场景预测 → PPT/Word 报告。",
+      chips: ["Grey-box PINN", "PyTorch", "Streamlit", "Uncertainty", "Censoring"],
+      highlights: ["不确定度区间", "域检查", "一键报告"],
+      links: [
+        { label: "项目详情", href: "projects/pinn-lab.html" },
+      ],
+      progress: { pct: 65, label: "四形态已建 / 真实多条件数据待接入" },
+    },
+    {
+      title: "Layout Canvas：Agent 原生的版图编译工作台",
+      category: "Layout Compiler",
+      status: "架构期",
+      image: "assets/showcase/layout-canvas-cover.svg",
+      alt: "Layout Canvas 版图编译示意",
+      detailUrl: "projects/layout-canvas.html",
+      summary:
+        "面向 AI Agent 的「电路→版图→验证」编译工作台：事务化编辑引擎（snapshot/transact/dry-run）、显式连接性投影、fail-closed 验证语义、KLayout 实时桥。架构参照 analog-canvas 的事务边界与 ADR 纪律。",
+      contribution:
+        "负责产品规划与架构移植：session 事务边界、连接性投影、项目文件协议、PDK 描述符。",
+      chips: ["TypeScript", "KLayout", "***REMOVED***", "Sky130", "ADR"],
+      highlights: ["事务化引擎", "fail-closed 验证", "KLayout 桥"],
+      links: [
+        { label: "项目详情", href: "projects/layout-canvas.html" },
+      ],
+      progress: { pct: 25, label: "ADR×6 已冻结契约 / 引擎骨架搭建中" },
     },
     {
       title: "面向半导体器件仿真的大语言模型智能体",
       category: "Simulation Agent",
-      status: "Prototype",
+      status: "进行中",
       image: "assets/showcase/simulation-agent-poster.png",
       alt: "Simulation Agent 产品海报图",
       detailUrl: "projects/simulation-agent.html",
@@ -56,13 +137,14 @@ window.HOMEPAGE_DATA = {
       chips: ["LLM", "Prompt Engineering", "COMSOL API", "FEM"],
       highlights: ["自然语言交互", "仿真任务组织", "结果解释视图"],
       links: [
-        { label: "产品介绍", href: "projects/simulation-agent.html" },
+        { label: "项目详情", href: "projects/simulation-agent.html" },
       ],
+      progress: { pct: 40, label: "LLM→仿真意图翻译原型已通 / 接入 TCAD 编排层中" },
     },
     {
       title: "半导体工程效率知识库与计算器",
       category: "Reliability Knowledge Radar",
-      status: "补充生态",
+      status: "线上运行",
       image: "assets/showcase/reliability-copilot-live.png",
       alt: "半导体器件可靠性知识检索与分享看板",
       detailUrl: "projects/reliability-copilot.html",
@@ -75,13 +157,14 @@ window.HOMEPAGE_DATA = {
       highlights: ["检索入口", "资料追踪", "主题图解"],
       links: [
         { label: "直接进入", href: "https://semiconductor-reliability-copilot.79402635.workers.dev/" },
-        { label: "产品介绍", href: "projects/reliability-copilot.html" },
+        { label: "项目详情", href: "projects/reliability-copilot.html" },
       ],
+      progress: { pct: 80, label: "Cloudflare Workers 线上版持续迭代" },
     },
     {
       title: "AI Skill Quest：AI 技能学习平台",
       category: "AI Learning Platform",
-      status: "学习系统",
+      status: "线上运行",
       image: "assets/showcase/ai-skill-quest-home.png",
       alt: "AI Skill Quest AI 技能学习平台首页",
       detailUrl: "projects/ai-skill-quest.html",
@@ -94,8 +177,9 @@ window.HOMEPAGE_DATA = {
       highlights: ["学习地图", "任务卡片", "自动助教"],
       links: [
         { label: "直接进入", href: "https://ai-skill-quest-9u3.pages.dev/" },
-        { label: "产品介绍", href: "projects/ai-skill-quest.html" },
+        { label: "项目详情", href: "projects/ai-skill-quest.html" },
       ],
+      progress: { pct: 75, label: "Pages 线上可访问 / 任务地图持续扩充" },
     },
     {
       title: "可靠性统计学习型网页开发",
@@ -114,8 +198,31 @@ window.HOMEPAGE_DATA = {
       links: [
         { label: "直接进入", href: "projects/reliability-stats-learning.html" },
       ],
+      progress: { pct: 90, label: "站内可直接体验" },
     },
   ],
+
+  dashboard: {
+    title: "工作台实况",
+    intro:
+      "下面是 TCAD/可靠性工作台的真实进展快照——数字都来自各层仓库的测试与验收记录，不是概念图。状态口径：验收过 / 进行中 / 雏形 / 阻塞。",
+    metrics: [
+      { value: ***REMOVED***, suffix: "", label: "***REMOVED*** ***REMOVED*** 工具数", note: "agentic_tcad 注册工具" },
+      { value: ***REMOVED***, suffix: "+", label: "自动化测试", note: "***REMOVED*** 220 + ***REMOVED*** 518" },
+      { value: ***REMOVED***, decimals: 4, suffix: " V", label: "nLDMOS BV 复现", note: "***REMOVED*** 5.30 逐位一致" },
+      { value: 200, suffix: "", label: "MC 器件数", label2: "", note: "***REMOVED*** 蒙特卡洛统计" },
+      { value: 60, prefix: "~", suffix: " s", label: "***REMOVED*** 一轮仿真", note: "***REMOVED*** + 开源 PDK" },
+      { value: 5, suffix: "", label: "加速寿命模型", note: "Arrhenius/IPL/Peck 等" },
+    ],
+    pipeline: [
+      { name: "***REMOVED*** ***REMOVED*** 执行层", status: "验收过", tone: "ok", pct: 100, note: "***REMOVED*** nLDMOS 资格链：BV=***REMOVED***V、逐制品哈希、220 tests" },
+      { name: "***REMOVED*** 物理治理层", status: "进行中", tone: "run", pct: 80, note: "***REMOVED*** 工具、HCI ***REMOVED***–***REMOVED*** 内核、校准门禁、518 tests" },
+      { name: "跨层编排 ***REMOVED***", status: "v0.1", tone: "run", pct: 35, note: "***REMOVED*** + 链级审计已交付，边界收窄" },
+      { name: "***REMOVED*** PINN 寿命预测", status: "雏形", tone: "run", pct: 50, note: "灰箱 PINN 四形态已建，真实多条件数据待接入" },
+      { name: "***REMOVED*** 应力-测量闭环", status: "阻塞", tone: "warn", pct: 15, note: "deck 生成器写死单 go ***REMOVED***，待放行 stress-measure" },
+      { name: "Reliability-Bench 公开基准", status: "待开源", tone: "info", pct: 20, note: "任务池+golden+评分器打包中" },
+    ],
+  },
 
   timeline: [
     {

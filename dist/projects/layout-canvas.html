@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Layout Canvas | AI4Semi 项目介绍</title>
+    <link rel="stylesheet" href="../styles.css?v=20260914a" />
+  </head>
+  <body>
+    <main class="detail-page">
+      <a class="back-link" href="../index.html#projects">返回主页</a>
+      <header class="detail-hero">
+        <p class="eyebrow">Layout Compiler</p>
+        <h1>Agent 原生的版图编译工作台</h1>
+        <p>Agent 说「给我一个 5 管 OTA，面积 &lt; 4000µm²」，系统迭代产出 DRC/LVS 干净、PPA 达标的 GDS。事务化编辑引擎 + 显式连接性 + fail-closed 验证。</p>
+      </header>
+      <section class="detail-grid">
+        <figure class="detail-shot detail-shot--wide detail-shot--screen">
+          <img src="../assets/showcase/layout-canvas-cover.svg" alt="Layout Canvas 版图编译示意" />
+          <figcaption>版图编译示意：标准单元行、布线、引脚与 die 边界——编译产 netlist → 仿真 → PPA 报告的闭环。</figcaption>
+        </figure>
+        <figure class="detail-shot">
+          <img src="../assets/showcase/reliability-workbench-architecture.png" alt="事务化编辑引擎架构" />
+          <figcaption>核心不变量：唯一变更边界的事务化编辑引擎，GUI 与 Agent 走同一接口，dry-run → commit。</figcaption>
+        </figure>
+        <figure class="detail-shot">
+          <img src="../assets/showcase/simulation-agent-poster.png" alt="Agent 迭代环" />
+          <figcaption>Agent 迭代环：snapshot → transact → compile → inspect_ppa → run_verification。</figcaption>
+        </figure>
+      </section>
+      <section class="detail-notes">
+        <h2>当前进展</h2>
+        <p>架构移植期：ADR 已冻结会话事务边界、显式连接性投影、项目文件协议、fail-closed 验证、PDK 描述符等契约；引擎骨架搭建中。</p>
+        <p>原则：连接性是显式电气事实，画线交叉不产生连接；验证工具缺失时报 blocked，绝不报假 clean。</p>
+      </section>
+    </main>
+    <script src="../motion.js?v=20260914a"></script>
+  </body>
+</html>

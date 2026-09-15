@@ -1,5 +1,5 @@
-/* Ambient motion layer — aurora canvas + portrait tilt/spotlight + staggered reveal.
-   Visual language inspired by loujc.github.io; implementation adapted to this site. */
+/* Ambient motion layer — starfield cosmos + portrait tilt/spotlight + staggered reveal.
+   Dynamic starfield: 3-layer parallax stars, twinkle, shooting stars, faint nebula. */
 (() => {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(pointer: fine)").matches;
@@ -27,16 +27,52 @@
     revealTargets.forEach((t) => observer.observe(t));
   }
 
-  /* ---------- ambient aurora canvas ---------- */
+  /* ---------- starfield canvas ---------- */
   const canvas = document.createElement("canvas");
   canvas.className = "ambient-canvas";
   canvas.setAttribute("aria-hidden", "true");
   document.body.prepend(canvas);
   const ctx = canvas.getContext("2d", { alpha: true });
-  const pointer = { x: 0.58, y: 0.32, tx: 0.58, ty: 0.32 };
+  const pointer = { x: 0.5, y: 0.4, tx: 0.5, ty: 0.4 };
   let width = 0, height = 0, pixelRatio = 1;
   let scrollProgress = 0, targetScroll = 0;
   let lastFrame = 0, raf = 0, running = false;
+  let stars = [], meteors = [], nextMeteor = 0;
+
+  /* far / mid / near layers: count, radius range, parallax depth, drift speed */
+  const LAYERS = [
+    { count: 150, rMin: 0.4, rMax: 1.0, depth: 0.25, drift: 0.0025, alpha: 0.55 },
+    { count: 90,  rMin: 0.8, rMax: 1.6, depth: 0.55, drift: 0.006,  alpha: 0.75 },
+    { count: 45,  rMin: 1.2, rMax: 2.2, depth: 1.0,  drift: 0.012,  alpha: 1.0 },
+  ];
+
+  const seedStars = () => {
+    stars = [];
+    LAYERS.forEach((layer) => {
+      for (let i = 0; i < layer.count; i++) {
+        stars.push({
+          x: Math.random(),
+          y: Math.random(),
+          r: layer.rMin + Math.random() * (layer.rMax - layer.rMin),
+          depth: layer.depth,
+          drift: layer.drift * (0.6 + Math.random() * 0.8),
+          baseAlpha: layer.alpha * (0.55 + Math.random() * 0.45),
+          twSpeed: 0.4 + Math.random() * 1.6,
+          twPhase: Math.random() * Math.PI * 2,
+          /* slight warm/cool tint variety */
+          warm: Math.random() < 0.18,
+        });
+      }
+    });
+  };
+
+  /* faint nebula blobs — keep the site's teal/amber identity, much subtler than before */
+  const nebulae = [
+    { x: 0.12, y: 0.16, r: 0.42, color: "57, 230, 163",  a: 0.05, spd: 0.10, off: 0.0 },
+    { x: 0.85, y: 0.30, r: 0.38, color: "96, 140, 235",  a: 0.055, spd: 0.08, off: 2.1 },
+    { x: 0.72, y: 0.82, r: 0.45, color: "150, 110, 220", a: 0.04, spd: 0.07, off: 4.0 },
+    { x: 0.28, y: 0.75, r: 0.34, color: "242, 184, 75",  a: 0.035, spd: 0.09, off: 5.4 },
+  ];
 
   const resize = () => {
     if (!ctx) return;
@@ -55,99 +91,101 @@
     targetScroll = Math.min(1, Math.max(0, window.scrollY / range));
   };
 
-  /* palette tuned to the site's teal/amber-on-night identity */
-  const palette = [
-    ["rgba(57, 230, 163, 0.34)", "rgba(24, 110, 84, 0.26)", "rgba(7, 16, 15, 0)"],
-    ["rgba(64, 140, 224, 0.28)", "rgba(30, 60, 120, 0.24)", "rgba(8, 12, 26, 0)"],
-    ["rgba(242, 184, 75, 0.24)", "rgba(120, 84, 30, 0.20)", "rgba(22, 16, 6, 0)"],
-    ["rgba(150, 120, 226, 0.22)", "rgba(70, 56, 118, 0.18)", "rgba(16, 12, 30, 0)"],
-    ["rgba(89, 231, 214, 0.24)", "rgba(40, 110, 104, 0.20)", "rgba(8, 22, 22, 0)"],
-  ];
-  const fields = [
-    { x: 0.04, y: 0.06, w: 1.18, h: 0.88, rot: -0.18, ptr: 0.10, scr: 0.13, dx: 0.18, dy: 0.14, br: 0.09, spd: 0.54, off: 0.2 },
-    { x: 0.96, y: 0.08, w: 1.08, h: 0.92, rot: 0.22, ptr: -0.08, scr: 0.11, dx: 0.16, dy: 0.18, br: 0.08, spd: 0.43, off: 1.5 },
-    { x: 0.18, y: 0.88, w: 1.04, h: 0.86, rot: 0.12, ptr: 0.07, scr: -0.14, dx: 0.20, dy: 0.13, br: 0.10, spd: 0.62, off: 2.7 },
-    { x: 0.92, y: 0.74, w: 0.94, h: 1.02, rot: -0.24, ptr: -0.09, scr: 0.16, dx: 0.17, dy: 0.20, br: 0.075, spd: 0.38, off: 3.9 },
-    { x: 0.52, y: 0.46, w: 0.88, h: 0.76, rot: 0.08, ptr: 0.06, scr: -0.10, dx: 0.14, dy: 0.17, br: 0.085, spd: 0.49, off: 5.2 },
-  ].map((f, i) => ({ ...f, core: palette[i][0], mid: palette[i][1], edge: palette[i][2] }));
-
-  const drawField = (f, phase) => {
-    const a = phase * f.spd + f.off;
-    const px = (pointer.x - 0.5) * f.ptr * width;
-    const py = (pointer.y - 0.5) * f.ptr * height;
-    const ox = Math.sin(a) * f.dx * width;
-    const oy = Math.cos(a * 0.78) * f.dy * height;
-    const sx = Math.sin(scrollProgress * Math.PI * 2.2 + f.off) * f.scr * width;
-    const sy = Math.cos(scrollProgress * Math.PI * 1.7 + f.off) * f.scr * height;
-    const cx = f.x * width + px + ox + sx;
-    const cy = f.y * height + py + oy + sy;
-    const breathe = 1 + Math.sin(a * 0.62) * f.br;
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(f.rot + Math.sin(a * 0.42) * 0.08);
-    ctx.scale((f.w * width / 2) * breathe, (f.h * height / 2) / breathe);
-    const g = ctx.createRadialGradient(-0.18, -0.2, 0.04, 0, 0, 1);
-    g.addColorStop(0, f.core);
-    g.addColorStop(0.46, f.mid);
-    g.addColorStop(1, f.edge);
-    ctx.beginPath();
-    ctx.arc(0, 0, 1, 0, Math.PI * 2);
-    ctx.fillStyle = g;
-    ctx.fill();
-    ctx.restore();
+  const drawNebula = (t) => {
+    nebulae.forEach((n) => {
+      const phase = t / 9000;
+      const breathe = 0.75 + 0.25 * Math.sin(phase * n.spd * 8 + n.off);
+      const cx = (n.x + Math.sin(phase * n.spd + n.off) * 0.04 + (pointer.x - 0.5) * 0.03) * width;
+      const cy = (n.y + Math.cos(phase * n.spd * 0.8 + n.off) * 0.03 + (pointer.y - 0.5) * 0.02 - scrollProgress * 0.08) * height;
+      const r = n.r * Math.min(width, height) * breathe;
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      g.addColorStop(0, `rgba(${n.color}, ${n.a})`);
+      g.addColorStop(0.55, `rgba(${n.color}, ${n.a * 0.4})`);
+      g.addColorStop(1, `rgba(${n.color}, 0)`);
+      ctx.fillStyle = g;
+      ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    });
   };
 
-  const drawRibbon = (phase) => {
-    const travel = Math.sin(phase * 0.42 + scrollProgress * Math.PI * 1.4);
-    const lift = Math.cos(phase * 0.34 - scrollProgress * Math.PI) * height * 0.12;
-    const top = height * (0.36 + travel * 0.12) + lift;
-    const thick = height * (0.18 + Math.sin(phase * 0.27) * 0.035);
-    const g = ctx.createLinearGradient(-width * 0.1, top, width * 1.1, top + thick);
-    g.addColorStop(0, "rgba(89, 231, 214, 0)");
-    g.addColorStop(0.28, "rgba(89, 231, 214, 0.09)");
-    g.addColorStop(0.58, "rgba(120, 150, 255, 0.10)");
-    g.addColorStop(0.82, "rgba(242, 184, 75, 0.07)");
-    g.addColorStop(1, "rgba(242, 184, 75, 0)");
-    ctx.save();
-    ctx.translate((pointer.x - 0.5) * width * 0.06, (pointer.y - 0.5) * height * 0.04);
-    ctx.rotate(-0.08 + travel * 0.035);
-    ctx.beginPath();
-    ctx.moveTo(-width * 0.18, top);
-    ctx.bezierCurveTo(width * 0.2, top - height * 0.15, width * 0.72, top + height * 0.19, width * 1.18, top - height * 0.03);
-    ctx.lineTo(width * 1.18, top + thick);
-    ctx.bezierCurveTo(width * 0.7, top + thick + height * 0.14, width * 0.2, top + thick - height * 0.13, -width * 0.18, top + thick);
-    ctx.closePath();
-    ctx.fillStyle = g;
-    ctx.fill();
-    ctx.restore();
+  const drawStars = (t) => {
+    const px = (pointer.x - 0.5);
+    const py = (pointer.y - 0.5);
+    stars.forEach((s) => {
+      /* slow upward drift + parallax by depth; wrap around edges */
+      let x = s.x - px * s.depth * 0.06;
+      let y = (s.y - t * s.drift * 0.02 - py * s.depth * 0.04 - scrollProgress * s.depth * 0.25) % 1;
+      if (y < 0) y += 1;
+      if (x < 0) x += 1;
+      const tw = 0.55 + 0.45 * Math.sin(t / 1000 * s.twSpeed + s.twPhase);
+      const alpha = s.baseAlpha * tw;
+      const sx = x * width, sy = y * height;
+      const radius = s.r * (0.8 + 0.2 * tw);
+      ctx.beginPath();
+      ctx.arc(sx, sy, radius, 0, Math.PI * 2);
+      ctx.fillStyle = s.warm
+        ? `rgba(255, 226, 180, ${alpha})`
+        : `rgba(214, 240, 255, ${alpha})`;
+      ctx.fill();
+      /* sparkle cross on the brightest near-layer stars */
+      if (s.depth === 1 && s.r > 1.8 && tw > 0.85) {
+        const glow = (tw - 0.85) * 4;
+        ctx.strokeStyle = `rgba(214, 240, 255, ${0.35 * glow})`;
+        ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        ctx.moveTo(sx - radius * 3, sy); ctx.lineTo(sx + radius * 3, sy);
+        ctx.moveTo(sx, sy - radius * 3); ctx.lineTo(sx, sy + radius * 3);
+        ctx.stroke();
+      }
+    });
   };
 
-  const drawBloom = () => {
-    if (!finePointer) return;
-    const r = Math.max(width, height) * 0.48;
-    const g = ctx.createRadialGradient(
-      pointer.x * width, pointer.y * height, 0,
-      pointer.x * width, pointer.y * height, r
-    );
-    g.addColorStop(0, "rgba(190, 252, 235, 0.07)");
-    g.addColorStop(0.34, "rgba(190, 252, 235, 0.022)");
-    g.addColorStop(1, "rgba(190, 252, 235, 0)");
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, width, height);
+  const spawnMeteor = (t) => {
+    const fromLeft = Math.random() < 0.5;
+    meteors.push({
+      x: fromLeft ? -0.05 : Math.random() * 0.6 + 0.4,
+      y: Math.random() * 0.35,
+      vx: (fromLeft ? 1 : -1) * (0.00045 + Math.random() * 0.00035),
+      vy: 0.00025 + Math.random() * 0.0002,
+      born: t,
+      life: 1400 + Math.random() * 900,
+    });
+    nextMeteor = t + 3500 + Math.random() * 6000;
+  };
+
+  const drawMeteors = (t) => {
+    meteors = meteors.filter((m) => t - m.born < m.life);
+    meteors.forEach((m) => {
+      const age = (t - m.born) / m.life;
+      const fade = age < 0.15 ? age / 0.15 : 1 - (age - 0.15) / 0.85;
+      const mx = (m.x + m.vx * (t - m.born)) * width;
+      const my = (m.y + m.vy * (t - m.born)) * height;
+      const tailX = mx - m.vx * 260 * width / 1000;
+      const tailY = my - m.vy * 260 * height / 1000;
+      const g = ctx.createLinearGradient(tailX, tailY, mx, my);
+      g.addColorStop(0, "rgba(190, 240, 255, 0)");
+      g.addColorStop(0.8, `rgba(190, 240, 255, ${0.5 * fade})`);
+      g.addColorStop(1, `rgba(255, 255, 255, ${0.9 * fade})`);
+      ctx.strokeStyle = g;
+      ctx.lineWidth = 1.4;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(tailX, tailY);
+      ctx.lineTo(mx, my);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(mx, my, 1.6, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${0.9 * fade})`;
+      ctx.fill();
+    });
   };
 
   const draw = (ts = 0) => {
     if (!ctx || !width || !height) return;
     ctx.clearRect(0, 0, width, height);
-    const phase = reducedMotion ? 0 : ts / 8200;
-    ctx.save();
-    ctx.filter = `blur(${Math.max(46, Math.min(92, width * 0.065))}px) saturate(118%)`;
-    fields.forEach((f) => drawField(f, phase));
-    drawRibbon(phase);
-    ctx.restore();
-    drawBloom();
-    ctx.fillStyle = "rgba(4, 8, 7, 0.16)";
-    ctx.fillRect(0, 0, width, height);
+    drawNebula(ts);
+    drawStars(ts);
+    if (!reducedMotion && ts > nextMeteor) spawnMeteor(ts);
+    drawMeteors(ts);
   };
 
   const loop = (ts) => {
@@ -167,6 +205,7 @@
   if (ctx) {
     updateScroll();
     scrollProgress = targetScroll;
+    seedStars();
     resize();
     draw();
     start();
@@ -178,12 +217,43 @@
         pointer.ty = Math.min(1, Math.max(0, e.clientY / height));
       }, { passive: true });
       document.documentElement.addEventListener("pointerleave", () => {
-        pointer.tx = 0.58; pointer.ty = 0.32;
+        pointer.tx = 0.5; pointer.ty = 0.4;
       });
     }
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) stop(); else start();
     });
+  }
+
+  /* ---------- animated counters (dashboard) ---------- */
+  const counters = [...document.querySelectorAll("[data-count-to]")];
+  if (counters.length) {
+    const animate = (el) => {
+      const target = parseFloat(el.dataset.countTo);
+      const decimals = parseInt(el.dataset.countDecimals || "0", 10);
+      const dur = 1300;
+      const t0 = performance.now();
+      const tick = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = (target * eased).toFixed(decimals);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      if (reducedMotion) { el.textContent = target.toFixed(decimals); return; }
+      requestAnimationFrame(tick);
+    };
+    if (!("IntersectionObserver" in window)) {
+      counters.forEach(animate);
+    } else {
+      const co = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          animate(entry.target);
+          co.unobserve(entry.target);
+        });
+      }, { threshold: 0.4 });
+      counters.forEach((c) => co.observe(c));
+    }
   }
 
   /* ---------- portrait tilt + spotlight ---------- */

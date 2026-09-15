@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07100f"/>
+      <stop offset="1" stop-color="#0c241f"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#39e6a3" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#59c9e7" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <g opacity="0.16" stroke="#39e6a3" stroke-width="1">
+    <path d="M0 60 H800 M0 140 H800 M0 220 H800 M0 300 H800 M0 380 H800 M0 460 H800"/>
+    <path d="M80 0 V500 M200 0 V500 M320 0 V500 M440 0 V500 M560 0 V500 M680 0 V500"/>
+  </g>
+  <!-- standard-cell rows -->
+  <g>
+    <rect x="90" y="120" width="620" height="46" rx="4" fill="#123128" stroke="#39e6a3" stroke-opacity="0.5"/>
+    <rect x="90" y="180" width="620" height="46" rx="4" fill="#123128" stroke="#39e6a3" stroke-opacity="0.5"/>
+    <rect x="90" y="240" width="620" height="46" rx="4" fill="#123128" stroke="#39e6a3" stroke-opacity="0.5"/>
+    <rect x="90" y="300" width="620" height="46" rx="4" fill="#123128" stroke="#39e6a3" stroke-opacity="0.5"/>
+  </g>
+  <!-- cells -->
+  <g fill="#1d5c49" stroke="#7ff0c8" stroke-opacity="0.7">
+    <rect x="104" y="128" width="52" height="30" rx="3"/>
+    <rect x="168" y="128" width="34" height="30" rx="3"/>
+    <rect x="214" y="128" width="70" height="30" rx="3" fill="#29506e" stroke="#9fd4ff"/>
+    <rect x="300" y="128" width="44" height="30" rx="3"/>
+    <rect x="356" y="128" width="58" height="30" rx="3" fill="#6e5426" stroke="#ffd98f"/>
+    <rect x="104" y="188" width="70" height="30" rx="3" fill="#29506e" stroke="#9fd4ff"/>
+    <rect x="188" y="188" width="40" height="30" rx="3"/>
+    <rect x="240" y="188" width="52" height="30" rx="3"/>
+    <rect x="420" y="188" width="66" height="30" rx="3" fill="#5c2f4d" stroke="#f0a8d8"/>
+    <rect x="130" y="248" width="48" height="30" rx="3"/>
+    <rect x="190" y="248" width="78" height="30" rx="3" fill="#6e5426" stroke="#ffd98f"/>
+    <rect x="500" y="248" width="60" height="30" rx="3" fill="#29506e" stroke="#9fd4ff"/>
+    <rect x="110" y="308" width="56" height="30" rx="3" fill="#5c2f4d" stroke="#f0a8d8"/>
+    <rect x="180" y="308" width="46" height="30" rx="3"/>
+    <rect x="560" y="308" width="80" height="30" rx="3"/>
+  </g>
+  <!-- routing -->
+  <g stroke="url(#metal)" stroke-width="5" fill="none" stroke-linecap="round">
+    <path d="M160 143 H214 M284 143 H300 M344 143 H356 M414 143 C470 143 460 203 420 203"/>
+    <path d="M292 203 H340 C400 203 390 263 268 263 M268 263 H268"/>
+    <path d="M486 203 C540 203 560 230 560 263 M620 143 H560 C520 143 560 263 560 263"/>
+    <path d="M166 323 H180 M226 323 C300 323 330 380 420 380 H560"/>
+  </g>
+  <!-- pins -->
+  <g fill="#f2b84b">
+    <circle cx="90" cy="143" r="6"/><circle cx="710" cy="143" r="6"/>
+    <circle cx="90" cy="263" r="6"/><circle cx="710" cy="263" r="6"/>
+    <circle cx="90" cy="380" r="6"/><circle cx="710" cy="380" r="6"/>
+  </g>
+  <!-- die boundary -->
+  <rect x="60" y="90" width="680" height="330" rx="10" fill="none" stroke="#39e6a3" stroke-opacity="0.65" stroke-width="2" stroke-dasharray="10 6"/>
+  <text x="70" y="465" font-family="Consolas, monospace" font-size="26" fill="#39e6a3" opacity="0.85">layout-canvas :: compile → DRC/LVS → PPA</text>
+</svg>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agentic TCAD 全链条工作台 | AI4Semi 项目介绍</title>
+    <link rel="stylesheet" href="../styles.css?v=20260914a" />
+  </head>
+  <body>
+    <main class="detail-page">
+      <a class="back-link" href="../index.html#projects">返回主页</a>
+      <header class="detail-hero">
+        <p class="eyebrow">Agentic TCAD</p>
+        <h1>工艺 → 器件 → 老化 → 寿命的一条链</h1>
+        <p>自然语言描述验证需求，系统规划受控仿真、调用专业求解器、产出有据可查的证据包。三层资产 + 跨层编排，每个环节冻结计划、人工闸门、逐制品哈希与独立审计。</p>
+      </header>
+      <section class="detail-grid">
+        <figure class="detail-shot detail-shot--wide detail-shot--screen">
+          <img src="../assets/showcase/reliability-workbench-architecture.png" alt="Agentic TCAD 三层架构图" />
+          <figcaption>三层架构：***REMOVED*** ***REMOVED*** 执行层（Broker + Workbench + ***REMOVED***）、***REMOVED*** 物理治理层、***REMOVED*** 寿命预测层，***REMOVED*** 跨层编排。</figcaption>
+        </figure>
+        <figure class="detail-shot">
+          <img src="../assets/showcase/ldmos-transfer-curves.png" alt="nLDMOS 转移曲线求解结果" />
+          <figcaption>***REMOVED*** nLDMOS 资格验收：BV=***REMOVED***V 逐位复现，15/15 制品哈希一致。</figcaption>
+        </figure>
+        <figure class="detail-shot">
+          <img src="../assets/showcase/ldmos-hci-aging-fit.png" alt="HCI 老化轨迹拟合" />
+          <figcaption>HCI 老化轨迹与证据分级：hypothesis_only / solver_verified / silicon_calibrated 三级不越级。</figcaption>
+        </figure>
+      </section>
+      <section class="detail-notes">
+        <h2>当前进展</h2>
+        <p>***REMOVED*** 已验收（220 tests），***REMOVED*** 执行中（***REMOVED*** 个 ***REMOVED*** 工具，518 tests），***REMOVED*** v0.1 交付 ***REMOVED*** + 审计。当前断点是 ***REMOVED*** 应力-测量闭环的 deck 生成器。</p>
+        <p>原则：只编排、不重写内核；仿真证据不冒充硅校准；LLM 只提取意图，数值走确定性计算。</p>
+      </section>
+    </main>
+    <script src="../motion.js?v=20260914a"></script>
+  </body>
+</html>

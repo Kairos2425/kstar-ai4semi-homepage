@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reliability-Bench · ***REMOVED*** 老化流水线 | AI4Semi 项目介绍</title>
+    <link rel="stylesheet" href="../styles.css?v=20260914a" />
+  </head>
+  <body>
+    <main class="detail-page">
+      <a class="back-link" href="../index.html#projects">返回主页</a>
+      <header class="detail-hero">
+        <p class="eyebrow">Reliability Benchmark</p>
+        <h1>开源 PDK 上的可复现老化基准</h1>
+        <p>***REMOVED***-46 + ***REMOVED*** SG13G2 开源 PDK：一轮 campaign 约 1 分钟、零 license 成本。fresh 电性 → 应力扫描 → PINN 轨迹 → 寿命外推 → 200 器件蒙特卡洛 → 敏感性分析 → 证据报告。</p>
+      </header>
+      <section class="detail-grid">
+        <figure class="detail-shot detail-shot--wide detail-shot--screen">
+          <img src="../assets/showcase/ldmos-hci-aging-fit.png" alt="***REMOVED*** 老化轨迹与 PINN 拟合" />
+          <figcaption>***REMOVED*** 代：solver_verified 仿真数据驱动 PINN 拟合，假设参数全部列入边界声明。</figcaption>
+        </figure>
+        <figure class="detail-shot">
+          <img src="../assets/showcase/ldmos-transfer-curves.png" alt="fresh ID-Vg 提取" />
+          <figcaption>fresh ID-Vg 提取与 Vth0 max-gm 线性外推，逐制品 ***REMOVED*** 证据清单。</figcaption>
+        </figure>
+        <figure class="detail-shot">
+          <img src="../assets/showcase/reliability-workbench-poster.png" alt="基准包装概念图" />
+          <figcaption>Reliability-Bench v0 包装方向：任务池 + golden 解 + 客观评分 + 公开榜单。</figcaption>
+        </figure>
+      </section>
+      <section class="detail-notes">
+        <h2>当前进展</h2>
+        <p>***REMOVED***（普通 NMOS / HCI）完成并出报告；***REMOVED***（***REMOVED*** 真实 nLDMOS 基线）就绪；***REMOVED***（应力-恢复瞬态）阻塞于 deck 生成器；***REMOVED***（DoE + 代理模型）规划中。</p>
+        <p>纪律：仿真数据永远是 solver_verified，不冒充 silicon_calibrated；假设参数逐条登记。</p>
+      </section>
+    </main>
+    <script src="../motion.js?v=20260914a"></script>
+  </body>
+</html>

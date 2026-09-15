@@ -54,6 +54,15 @@ function renderHero() {
     metrics.appendChild(block);
   });
 
+  const quicklinks = byId("hero-quicklinks");
+  if (quicklinks && profile.quicklinks) {
+    profile.quicklinks.forEach((item) => {
+      const chip = makeLink(item, "quicklink");
+      chip.textContent = `${item.label} ↗`;
+      quicklinks.appendChild(chip);
+    });
+  }
+
   const facts = byId("profile-facts");
   profile.facts.forEach((item) => {
     const row = makeElement("div");
@@ -101,6 +110,21 @@ function renderProjects() {
       const highlights = makeElement("ul", "project-highlights");
       project.highlights.forEach((item) => highlights.appendChild(makeElement("li", "", item)));
       body.appendChild(highlights);
+    }
+
+    if (project.progress) {
+      const wrap = makeElement("div", "project-progress");
+      const head = makeElement("div", "project-progress__head");
+      head.appendChild(makeElement("span", "", "进展"));
+      head.appendChild(makeElement("strong", "", `${project.progress.pct}%`));
+      const bar = makeElement("div", "project-progress__bar");
+      const fill = makeElement("i");
+      fill.style.setProperty("--pct", `${project.progress.pct}%`);
+      bar.appendChild(fill);
+      wrap.appendChild(head);
+      wrap.appendChild(bar);
+      wrap.appendChild(makeElement("small", "project-progress__note", project.progress.label));
+      body.appendChild(wrap);
     }
 
     const links = makeElement("div", "project-links");
@@ -196,6 +220,50 @@ function renderNotes() {
   });
 }
 
+function renderDashboard() {
+  const dash = data.dashboard;
+  if (!dash) return;
+  setText("dashboard-title", dash.title);
+  setText("dashboard-intro", dash.intro);
+
+  const metrics = byId("dash-metrics");
+  dash.metrics.forEach((m) => {
+    const card = makeElement("div", "dash-metric reveal");
+    const num = makeElement("div", "dash-metric__num");
+    const prefix = m.prefix || "";
+    const suffix = m.suffix || "";
+    const value = makeElement("span", "dash-metric__value");
+    value.dataset.countTo = m.value;
+    value.dataset.countDecimals = m.decimals || 0;
+    value.textContent = "0";
+    num.appendChild(document.createTextNode(prefix));
+    num.appendChild(value);
+    num.appendChild(document.createTextNode(suffix));
+    card.appendChild(num);
+    card.appendChild(makeElement("strong", "", m.label));
+    card.appendChild(makeElement("span", "dash-metric__note", m.note));
+    metrics.appendChild(card);
+  });
+
+  const pipeline = byId("dash-pipeline");
+  dash.pipeline.forEach((row) => {
+    const item = makeElement("div", "dash-row reveal");
+    const top = makeElement("div", "dash-row__top");
+    top.appendChild(makeElement("strong", "", row.name));
+    const badge = makeElement("span", `dash-badge dash-badge--${row.tone}`, row.status);
+    top.appendChild(badge);
+    const bar = makeElement("div", "dash-row__bar");
+    const fill = makeElement("i");
+    fill.style.setProperty("--pct", `${row.pct}%`);
+    fill.className = `dash-fill dash-fill--${row.tone}`;
+    bar.appendChild(fill);
+    item.appendChild(top);
+    item.appendChild(bar);
+    item.appendChild(makeElement("p", "dash-row__note", row.note));
+    pipeline.appendChild(item);
+  });
+}
+
 function renderResearch() {
   const grid = byId("research-grid");
   data.research.forEach((item) => {
@@ -250,6 +318,7 @@ function initReveal() {
 function renderPage() {
   if (!data) return;
   renderHero();
+  renderDashboard();
   renderProjects();
   renderTimeline();
   renderSkillsAndHonors();
