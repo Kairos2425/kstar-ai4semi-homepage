@@ -35,8 +35,18 @@
           <div class="hero__metrics" id="hero-metrics" aria-label="主页内容摘要"></div>
         </div>
         <aside class="hero__panel reveal" aria-label="个人摘要">
-          <div class="portrait" id="portrait" aria-hidden="true">
+          <div
+            class="portrait"
+            id="portrait"
+            data-tilt
+            data-spotlight
+            role="button"
+            tabindex="0"
+            aria-pressed="false"
+            aria-label="切换头像聚光灯"
+          >
             <img src="assets/showcase/hero-ai4semi-cyber-doctor.png" alt="AI4Semi 赛博博士主题海报" />
+            <span class="portrait__spot" aria-hidden="true"></span>
           </div>
           <dl class="facts" id="profile-facts"></dl>
         </aside>
@@ -44,7 +54,7 @@
 
       <section class="section" id="projects">
         <div class="section__head reveal">
-          <p class="eyebrow">AI4Semi Tooling Projects</p>
+          <p class="eyebrow"><span class="eyebrow__num">01 ·</span> AI4Semi Tooling Projects</p>
           <h2>从物理直觉到可运行系统</h2>
           <p>
             这些项目连接了材料科研训练、半导体可靠性分析、仿真自动化、知识组织和公开表达，展示从问题理解到工具化产出的能力。
@@ -55,7 +65,7 @@
 
       <section class="section" id="gallery">
         <div class="section__head reveal">
-          <p class="eyebrow">Project Gallery</p>
+          <p class="eyebrow"><span class="eyebrow__num">02 ·</span> Project Gallery</p>
           <h2>系统截图、仿真结果与知识图谱</h2>
           <p>这里汇总可直接访问的项目入口和代表性界面，快速看到每个系统的实际形态。</p>
         </div>
@@ -64,7 +74,7 @@
 
       <section class="section" id="resume">
         <div class="section__head reveal">
-          <p class="eyebrow">Resume</p>
+          <p class="eyebrow"><span class="eyebrow__num">03 ·</span> Resume</p>
           <h2>硬核科研训练与工程转身</h2>
           <p>
             教育、研究经历、技能、荣誉与代表性论文放在这里，作为项目之外的履历背景，而不是首页单独主打的成果栏目。
@@ -89,7 +99,7 @@
 
       <section class="section" id="notes">
         <div class="section__head reveal">
-          <p class="eyebrow">Kstar Topics</p>
+          <p class="eyebrow"><span class="eyebrow__num">04 ·</span> Kstar Topics</p>
           <h2>小红书主题内容</h2>
           <p>按主题整理的小红书图文内容，分别覆盖可靠性理解、AI4Semi 工具观察和仿真智能体方向，每个主题都进入独立详情页查看。</p>
         </div>
@@ -98,7 +108,7 @@
 
       <section class="section" id="research">
         <div class="section__head reveal">
-          <p class="eyebrow">Research Directions</p>
+          <p class="eyebrow"><span class="eyebrow__num">05 ·</span> Research Directions</p>
           <h2>研究与工程方向</h2>
           <p>围绕 AI4Semi、器件可靠性、仿真智能体和 AI 技能训练平台，持续沉淀可复用的工程科研基础设施。</p>
         </div>
@@ -115,7 +125,8 @@
       <a class="button button--ghost" id="contact-action" href="#top">回到顶部</a>
     </footer>
 
-    <script src="content/site-data.js?v=20260602c"></script>
-    <script src="script.js?v=20260602c"></script>
+    <script src="content/site-data.js?v=20260914a"></script>
+    <script src="script.js?v=20260914a"></script>
+    <script src="motion.js?v=20260914a"></script>
   </body>
 </html>
