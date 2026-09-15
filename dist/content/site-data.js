@@ -413,6 +413,7 @@
     actionHref: "mailto:akstar2425@gmail.com",
     items: [
       "Email: akstar2425@gmail.com",
+      "Email: lixd@alumni.pku.edu.cn",
       "小红书：Kstar（分享半导体可靠性与 AI 相关见解）",
     ],
   },
