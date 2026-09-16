@@ -1,0 +1,47 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reliability-Bench · 器件老化预测基准 | AI4Semi 项目介绍</title>
+    <link rel="stylesheet" href="../styles.css?v=20260915c" />
+  </head>
+  <body>
+    <main class="detail-page">
+      <a class="back-link" href="../index.html#projects">返回主页</a>
+      <header class="detail-hero">
+        <p class="eyebrow">Reliability Benchmark</p>
+        <h1>开源 PDK 上的可复现老化基准</h1>
+        <p>在开源工艺平台上跑通端到端器件老化预测：电性曲线提取 → 应力扫描 → 老化轨迹拟合 → 寿命外推 → 统计分布与敏感性分析 → 证据化报告。一轮完整实验分钟级完成、零授权成本。</p>
+      </header>
+      <figure class="fx-hero">
+        <div class="fx-stage" data-fx="aging"></div>
+        <figcaption>ΔVth(t) 老化轨迹实时绘制，三条应力曲线依次越过失效判据并标记寿命点</figcaption>
+      </figure>
+      <section class="detail-grid">
+        <figure class="detail-shot detail-shot--wide detail-shot--screen">
+          <img src="../assets/showcase/bench-montecarlo.svg" alt="寿命分布与统计示意" />
+          <figcaption>每条应力条件 → 一批器件 → 一个寿命分布；预测与参考解的数值误差可直接评分。</figcaption>
+        </figure>
+        <figure class="detail-shot">
+          <img src="../assets/showcase/ldmos-hci-aging-fit.png" alt="老化轨迹与寿命拟合" />
+          <figcaption>老化轨迹与寿命拟合：所有假设参数显式登记，不静默生效。</figcaption>
+        </figure>
+        <figure class="detail-shot detail-shot--pad">
+          <h3 style="margin:0 0 10px">为什么是开源工艺</h3>
+          <p style="color:var(--muted);line-height:1.8;margin:0">
+            用开源器件与开源求解器意味着任何人都能复现同一条流水线、核对同一个答案——
+            这是「可客观评分」的前提，也是它能成为公共基准而不是内部工具的原因。
+          </p>
+        </figure>
+      </section>
+      <section class="detail-notes">
+        <h2>方向与价值</h2>
+        <p>「AI 能不能做器件可靠性分析」目前没人能客观回答——缺一个公开、可复现、能自动评分的基准。这条流水线用开源器件与求解器把成本压到分钟级，正在包装成公开的基准任务集。</p>
+        <p>纪律：仿真结论与实测校准严格分层，证据等级不越级；假设参数逐条登记，供评审者复核。</p>
+      </section>
+    </main>
+    <script src="../motion.js?v=20260915a"></script>
+      <script src="../fx.js?v=20260915a"></script>
+  </body>
+</html>

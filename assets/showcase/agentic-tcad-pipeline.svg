@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a1512"/><stop offset="1" stop-color="#060b09"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#12291f"/><stop offset="1" stop-color="#0c1a14"/>
+    </linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#39e6a3"/>
+    </marker>
+  </defs>
+  <rect width="800" height="420" fill="url(#bg)" rx="10"/>
+  <text x="40" y="52" fill="#8fe3c0" font-family="Consolas,monospace" font-size="13" letter-spacing="3">AGENTIC TCAD · 全链条示意</text>
+  <!-- chain nodes -->
+  <g font-family="'Microsoft YaHei',sans-serif" font-weight="700" font-size="15" fill="#e8f4ee">
+    <rect x="50" y="110" width="128" height="64" rx="8" fill="url(#box)" stroke="#2c5b46"/>
+    <text x="114" y="136" text-anchor="middle">自然语言</text><text x="114" y="158" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">验证需求描述</text>
+    <rect x="222" y="110" width="128" height="64" rx="8" fill="url(#box)" stroke="#2c5b46"/>
+    <text x="286" y="136" text-anchor="middle">方案规划</text><text x="286" y="158" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">器件/应力/指标</text>
+    <rect x="394" y="110" width="128" height="64" rx="8" fill="#241d10" stroke="#8a6b2f"/>
+    <text x="458" y="136" text-anchor="middle" fill="#f2c96b">人工确认</text><text x="458" y="158" text-anchor="middle" fill="#a8895a" font-size="11" font-weight="400">工程师闸门</text>
+    <rect x="566" y="110" width="128" height="64" rx="8" fill="url(#box)" stroke="#2c5b46"/>
+    <text x="630" y="136" text-anchor="middle">可信执行</text><text x="630" y="158" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">专业求解器</text>
+  </g>
+  <g stroke="#39e6a3" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+    <path d="M178 142 H216"/><path d="M350 142 H388"/><path d="M522 142 H560"/>
+  </g>
+  <!-- downstream -->
+  <g font-family="'Microsoft YaHei',sans-serif" font-weight="700" font-size="15" fill="#e8f4ee">
+    <rect x="222" y="230" width="128" height="64" rx="8" fill="url(#box)" stroke="#2c5b46"/>
+    <text x="286" y="256" text-anchor="middle">结果验证</text><text x="286" y="278" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">指标复核</text>
+    <rect x="394" y="230" width="128" height="64" rx="8" fill="url(#box)" stroke="#2c5b46"/>
+    <text x="458" y="256" text-anchor="middle">报告交付</text><text x="458" y="278" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">可追溯证据</text>
+  </g>
+  <g stroke="#39e6a3" stroke-width="1.6" fill="none" marker-end="url(#arr)">
+    <path d="M630 174 V262 H528"/><path d="M350 262 H388"/>
+  </g>
+  <!-- ground note -->
+  <text x="40" y="360" fill="#5d7a6d" font-family="Consolas,monospace" font-size="12">intent → plan → gate → solve → verify → report</text>
+  <text x="40" y="384" fill="#42604f" font-family="'Microsoft YaHei',sans-serif" font-size="12">每一步可回溯 · 可审计 · 可复核</text>
+</svg>

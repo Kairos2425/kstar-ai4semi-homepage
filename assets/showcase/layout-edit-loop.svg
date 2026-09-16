@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bgl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a1512"/><stop offset="1" stop-color="#060b09"/>
+    </linearGradient>
+    <marker id="arrl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#39e6a3"/>
+    </marker>
+  </defs>
+  <rect width="800" height="420" fill="url(#bgl)" rx="10"/>
+  <text x="40" y="52" fill="#8fe3c0" font-family="Consolas,monospace" font-size="13" letter-spacing="3">LAYOUT CANVAS · 编辑-验证闭环</text>
+  <!-- cycle -->
+  <g font-family="'Microsoft YaHei',sans-serif" font-weight="700" font-size="15" fill="#e8f4ee">
+    <rect x="90" y="100" width="180" height="66" rx="8" fill="#12291f" stroke="#2c5b46"/>
+    <text x="180" y="128" text-anchor="middle">Agent 提需求</text>
+    <text x="180" y="150" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">「5 管 OTA · 面积受限」</text>
+    <rect x="330" y="100" width="180" height="66" rx="8" fill="#12291f" stroke="#2c5b46"/>
+    <text x="420" y="128" text-anchor="middle">试编辑</text>
+    <text x="420" y="150" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">dry-run · 可回滚</text>
+    <rect x="570" y="100" width="180" height="66" rx="8" fill="#12291f" stroke="#2c5b46"/>
+    <text x="660" y="128" text-anchor="middle">验证</text>
+    <text x="660" y="150" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">DRC / LVS / 指标</text>
+  </g>
+  <g stroke="#39e6a3" stroke-width="1.6" fill="none" marker-end="url(#arrl)">
+    <path d="M270 133 H324"/><path d="M510 133 H564"/>
+    <path d="M660 166 V240 H180 V172" />
+  </g>
+  <text x="420" y="228" text-anchor="middle" fill="#f2c96b" font-family="'Microsoft YaHei',sans-serif" font-size="13">不达标 → 回滚重试；通过 → 提交</text>
+  <!-- principle strip -->
+  <g font-family="'Microsoft YaHei',sans-serif" font-size="12.5" fill="#9fc4b2">
+    <rect x="90" y="280" width="310" height="88" rx="8" fill="#0d1a15" stroke="#224033"/>
+    <text x="110" y="308" fill="#e8f4ee" font-weight="700">电气连接是显式事实</text>
+    <text x="110" y="330">画线交叉 ≠ 连接；连接靠显式声明</text>
+    <text x="110" y="350" fill="#5d7a6d" font-size="11">避免「看着像连上了」的静默错误</text>
+    <rect x="430" y="280" width="320" height="88" rx="8" fill="#0d1a15" stroke="#224033"/>
+    <text x="450" y="308" fill="#e8f4ee" font-weight="700">验证不可用 = 明确受阻</text>
+    <text x="450" y="330">工具缺席时报告 blocked，不报假通过</text>
+    <text x="450" y="350" fill="#5d7a6d" font-size="11">宁可说「不知道」，不说「没问题」</text>
+  </g>
+  <text x="40" y="402" fill="#42604f" font-family="'Microsoft YaHei',sans-serif" font-size="12">目标：让「给我一个满足指标的版图」成为可执行、可回退、可验证的编译过程</text>
+</svg>

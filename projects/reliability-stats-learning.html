@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -190,5 +190,6 @@ function updateCase(){let scheme=$('caseScheme').value,q=+$('caseQ').value/100,d
 function bind(ids,fn){ids.forEach(id=>$(id).addEventListener('input',fn));fn()}
 bind(['cdfType','cdfT','cdfA','cdfB'],updateCDF);bind(['fanT','fanMode'],updateEmp);bind(['nMu','nSig','nLsl','nUsl'],updateNormal);bind(['lnMu','lnSig','lnT','lnView'],updateLogN);bind(['wBeta','wEta','wT','wView'],updateWeibull);bind(['lsModel','lsOutlier','lsResidual','lsNoise'],updateLS);bind(['ipT','ipMethod'],updateIP);bind(['dgThr','dgModel','dgMax'],updateDG);bind(['caseScheme','caseQ'],updateCase);
 </script>
-</body>
+    <script src="../motion.js?v=20260915a"></script>
+  </body>
 </html>

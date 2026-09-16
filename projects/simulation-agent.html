@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Simulation Agent | AI4Semi 项目介绍</title>
-    <link rel="stylesheet" href="../styles.css?v=20260602c" />
+    <link rel="stylesheet" href="../styles.css?v=20260915c" />
   </head>
   <body>
     <main class="detail-page">
@@ -14,18 +14,26 @@
         <h1>面向器件仿真的 AI 智能体</h1>
         <p>探索自然语言如何进入器件仿真协作过程，把工程意图转化为建模、求解与结果解读线索，当前以前端展示与产品化表达为主。</p>
       </header>
+      <figure class="fx-hero">
+        <div class="fx-stage" data-fx="iv"></div>
+        <figcaption>Vg 扫描下 I-V 输出特性曲线族动态出图——仿真智能体的结果视图</figcaption>
+      </figure>
       <section class="detail-grid">
         <figure class="detail-shot detail-shot--wide detail-shot--screen">
           <img src="../assets/showcase/simulation-agent-poster.png" alt="Simulation Agent 产品海报概念图" />
           <figcaption>产品海报概念图：用于展示目标中的交互界面与结果视图，当前项目仍在开发完善中。</figcaption>
         </figure>
-        <figure class="detail-shot">
-          <img src="../assets/showcase/ldmos-hci-aging-fit.png" alt="展示型老化趋势图" />
-          <figcaption>展示型老化趋势图，用来说明系统可承载的分析结果表达方式。</figcaption>
+        <figure class="detail-shot detail-shot--pad">
+          <h3 style="margin:0 0 10px">探索的问题</h3>
+          <p style="color:var(--muted);line-height:1.8;margin:0">
+            器件仿真的门槛不在求解器，而在「把工程意图翻译成正确的建模任务」。
+            这个智能体探索自然语言如何进入这个过程：理解需求 → 组织仿真任务 → 解读结果，
+            让工程师聚焦物理判断而不是脚本细节。
+          </p>
         </figure>
         <figure class="detail-shot">
-          <img src="../assets/showcase/ldmos-transfer-curves.png" alt="展示型器件曲线图" />
-          <figcaption>展示型器件曲线图，用来说明结果面板与对比视图的前端形态。</figcaption>
+          <div class="fx-stage" data-fx="iv" style="position:relative;height:220px"></div>
+          <figcaption>I-V 输出特性曲线族示意——仿真智能体面向的结果视图。</figcaption>
         </figure>
       </section>
       <section class="detail-notes">
@@ -34,5 +42,7 @@
         <p>备注：当前仍在开发完善中，现阶段公开页面主要用于展示产品方向。</p>
       </section>
     </main>
+      <script src="../motion.js?v=20260915a"></script>
+      <script src="../fx.js?v=20260915a"></script>
   </body>
 </html>

@@ -36,7 +36,7 @@ function getPrimaryHref(project) {
 
 function renderHero() {
   const profile = data.profile;
-  setText("site-brand", profile.name);
+  setText("site-brand", profile.initials || profile.name);
   setText("profile-eyebrow", profile.eyebrow);
   setText("profile-name", `${profile.name} · ${profile.nameEn}`);
   setText("profile-headline", profile.headline);
@@ -53,6 +53,15 @@ function renderHero() {
     block.appendChild(makeElement("span", "", item.label));
     metrics.appendChild(block);
   });
+
+  const quicklinks = byId("hero-quicklinks");
+  if (quicklinks && profile.quicklinks) {
+    profile.quicklinks.forEach((item) => {
+      const chip = makeLink(item, "quicklink");
+      chip.textContent = `${item.label} ↗`;
+      quicklinks.appendChild(chip);
+    });
+  }
 
   const facts = byId("profile-facts");
   profile.facts.forEach((item) => {
@@ -75,11 +84,17 @@ function renderProjects() {
     media.href = primaryHref;
     applyExternalLinkAttrs(media, primaryHref);
     media.setAttribute("aria-label", `查看${project.title}详情`);
-    const image = makeElement("img");
-    image.src = project.image;
-    image.alt = project.alt;
-    image.loading = "lazy";
-    media.appendChild(image);
+    if (project.fx) {
+      const stage = makeElement("div", "fx-stage");
+      stage.dataset.fx = project.fx;
+      media.appendChild(stage);
+    } else {
+      const image = makeElement("img");
+      image.src = project.image;
+      image.alt = project.alt;
+      image.loading = "lazy";
+      media.appendChild(image);
+    }
     card.appendChild(media);
 
     const body = makeElement("div", "project-card__body");
@@ -103,6 +118,21 @@ function renderProjects() {
       body.appendChild(highlights);
     }
 
+    if (project.progress) {
+      const wrap = makeElement("div", "project-progress");
+      const head = makeElement("div", "project-progress__head");
+      head.appendChild(makeElement("span", "", "阶段"));
+      head.appendChild(makeElement("strong", "", project.status || ""));
+      const bar = makeElement("div", "project-progress__bar");
+      const fill = makeElement("i");
+      fill.style.setProperty("--pct", `${project.progress.pct}%`);
+      bar.appendChild(fill);
+      wrap.appendChild(head);
+      wrap.appendChild(bar);
+      wrap.appendChild(makeElement("small", "project-progress__note", project.progress.label));
+      body.appendChild(wrap);
+    }
+
     const links = makeElement("div", "project-links");
     project.links.forEach((link) => links.appendChild(makeLink(link)));
     body.appendChild(links);
@@ -116,6 +146,55 @@ function renderProjects() {
     evidenceLink.appendChild(makeElement("strong", "", project.title));
     evidenceLink.appendChild(makeElement("em", "", `${project.category} · ${project.status}`));
     evidence.appendChild(evidenceLink);
+  });
+}
+
+function renderTools() {
+  const grid = byId("tool-grid");
+  if (!grid || !data.tools) return;
+  data.tools.forEach((tool) => {
+    const card = makeElement("article", "tool-card reveal");
+
+    if (tool.fx || tool.image) {
+      const media = makeElement("div", "tool-card__fx");
+      if (tool.fx) {
+        const stage = makeElement("div", "fx-stage");
+        stage.dataset.fx = tool.fx;
+        media.appendChild(stage);
+      } else {
+        const image = makeElement("img");
+        image.src = tool.image;
+        image.alt = `${tool.name}界面`;
+        image.loading = "lazy";
+        media.appendChild(image);
+      }
+      card.appendChild(media);
+    }
+
+    const body = makeElement("div", "tool-card__body");
+    const head = makeElement("div", "tool-card__head");
+    head.appendChild(makeElement("span", "tool-card__badge", tool.badge));
+    head.appendChild(makeElement("span", "tool-card__en", tool.en));
+    body.appendChild(head);
+    body.appendChild(makeElement("h3", "", tool.name));
+    body.appendChild(makeElement("p", "tool-card__tagline", tool.tagline));
+    body.appendChild(makeElement("p", "", tool.summary));
+
+    const feats = makeElement("ul", "project-highlights");
+    tool.features.forEach((f) => feats.appendChild(makeElement("li", "", f)));
+    body.appendChild(feats);
+
+    body.appendChild(makeElement("p", "tool-card__usecase", tool.usecases));
+
+    const links = makeElement("div", "project-links");
+    tool.links.forEach((link) => links.appendChild(makeLink(link)));
+    body.appendChild(links);
+
+    if (tool.access) {
+      body.appendChild(makeElement("p", "tool-card__access", tool.access));
+    }
+    card.appendChild(body);
+    grid.appendChild(card);
   });
 }
 
@@ -196,6 +275,50 @@ function renderNotes() {
   });
 }
 
+function renderDashboard() {
+  const dash = data.dashboard;
+  if (!dash) return;
+  setText("dashboard-title", dash.title);
+  setText("dashboard-intro", dash.intro);
+
+  const metrics = byId("dash-metrics");
+  dash.metrics.forEach((m) => {
+    const card = makeElement("div", "dash-metric reveal");
+    const num = makeElement("div", "dash-metric__num");
+    const prefix = m.prefix || "";
+    const suffix = m.suffix || "";
+    const value = makeElement("span", "dash-metric__value");
+    value.dataset.countTo = m.value;
+    value.dataset.countDecimals = m.decimals || 0;
+    value.textContent = "0";
+    num.appendChild(document.createTextNode(prefix));
+    num.appendChild(value);
+    num.appendChild(document.createTextNode(suffix));
+    card.appendChild(num);
+    card.appendChild(makeElement("strong", "", m.label));
+    card.appendChild(makeElement("span", "dash-metric__note", m.note));
+    metrics.appendChild(card);
+  });
+
+  const pipeline = byId("dash-pipeline");
+  dash.pipeline.forEach((row) => {
+    const item = makeElement("div", "dash-row reveal");
+    const top = makeElement("div", "dash-row__top");
+    top.appendChild(makeElement("strong", "", row.name));
+    const badge = makeElement("span", `dash-badge dash-badge--${row.tone}`, row.status);
+    top.appendChild(badge);
+    const bar = makeElement("div", "dash-row__bar");
+    const fill = makeElement("i");
+    fill.style.setProperty("--pct", `${row.pct}%`);
+    fill.className = `dash-fill dash-fill--${row.tone}`;
+    bar.appendChild(fill);
+    item.appendChild(top);
+    item.appendChild(bar);
+    item.appendChild(makeElement("p", "dash-row__note", row.note));
+    pipeline.appendChild(item);
+  });
+}
+
 function renderResearch() {
   const grid = byId("research-grid");
   data.research.forEach((item) => {
@@ -247,10 +370,19 @@ function initReveal() {
   items.forEach((item) => observer.observe(item));
 }
 
+function initChipmap() {
+  const pins = byId("chipmap-pins");
+  if (!pins) return;
+  for (let i = 0; i < 42; i++) pins.appendChild(document.createElement("span"));
+}
+
 function renderPage() {
   if (!data) return;
   renderHero();
+  initChipmap();
+  renderDashboard();
   renderProjects();
+  renderTools();
   renderTimeline();
   renderSkillsAndHonors();
   renderPublications();

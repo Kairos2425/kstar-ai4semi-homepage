@@ -1,0 +1,47 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reliability-PINN-Lab | AI4Semi 项目介绍</title>
+    <link rel="stylesheet" href="../styles.css?v=20260915c" />
+  </head>
+  <body>
+    <main class="detail-page">
+      <a class="back-link" href="../index.html#projects">返回主页</a>
+      <header class="detail-hero">
+        <p class="eyebrow">Physics-Informed ML</p>
+        <h1>灰箱 PINN 寿命预测工作台</h1>
+        <p>回答一个问题：测出来的应力数据，外推到使用工况能活多久、有多可信。物理骨干 + NN 残差 + 不确定度 + 域检查，输出永远是 diagnostic。</p>
+      </header>
+      <figure class="fx-hero">
+        <div class="fx-stage" data-fx="pinn"></div>
+        <figcaption>物理主干 + 残差修正：散点逐点拟合、不确定度带呼吸、域外边界警戒</figcaption>
+      </figure>
+      <section class="detail-grid">
+        <figure class="detail-shot detail-shot--wide detail-shot--screen">
+          <img src="../assets/showcase/pinn-workflow.svg" alt="灰箱模型结构示意" />
+          <figcaption>灰箱结构：物理骨干管可解释的外推方向，神经网络只学习残差修正——比纯黑箱可信，比纯物理贴合实测。</figcaption>
+        </figure>
+        <figure class="detail-shot">
+          <img src="../assets/showcase/reliability-workbench-ml-design.png" alt="PINN 工作台设计" />
+          <figcaption>六步工作流：数据接入 → 列映射 → 骨干项选择 → 集成训练 → 场景预测 → 报告输出。</figcaption>
+        </figure>
+        <figure class="detail-shot detail-shot--pad">
+          <h3 style="margin:0 0 10px">为什么不做纯黑箱</h3>
+          <p style="color:var(--muted);line-height:1.8;margin:0">
+            寿命外推是可靠性里最危险的环节——黑箱模型在数据域外会给出自信的错误答案。
+            让物理规律决定方向、神经网络只做局部修正，是把「能不能外推」变成可回答问题的工程折中。
+          </p>
+        </figure>
+      </section>
+      <section class="detail-notes">
+        <h2>方向与价值</h2>
+        <p>可靠性工程师的核心问题是外推：加速应力下的几十小时数据，能说明使用工况下的十年吗？这个工作台把经典加速模型做物理骨干、神经网络只学习残差修正，预测永远附带不确定度区间与适用范围提示。</p>
+        <p>红线：预测是工程决策支持，不替代签核；适用范围之外的结果明确标记，不让模型假装知道它不知道的事。</p>
+      </section>
+    </main>
+    <script src="../motion.js?v=20260915a"></script>
+      <script src="../fx.js?v=20260915a"></script>
+  </body>
+</html>

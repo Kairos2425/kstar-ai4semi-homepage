@@ -1,15 +1,22 @@
-window.HOMEPAGE_DATA = {
+﻿window.HOMEPAGE_DATA = {
   profile: {
-    name: "柯星澜",
-    nameEn: "Kstar Ke",
+    name: "Xiaodan Li",
+    nameEn: "Kairos Li",
     initials: "Kstar",
     eyebrow: "AI4Semi Independent Builder / Reliability / Simulation Agent",
     headline: "用 AI 产品化半导体可靠性与仿真知识工具。",
     intro:
-      "你好，我是柯星澜，一名具备物理化学与微纳材料科研训练背景的 AI4Semi 探索者。我的主线任务是探索大模型与人工智能在半导体器件可靠性领域的落地应用，从可靠性数据工作台、器件寿命预测模型，到由 LLM 驱动的仿真智能体。",
+      "你好，我是 Xiaodan Li（Kairos），一名具备物理化学与微纳材料科研训练背景的 AI4Semi 探索者。我的主线任务是探索大模型与人工智能在半导体器件可靠性领域的落地应用，从可靠性数据工作台、器件寿命预测模型，到由 LLM 驱动的仿真智能体。",
     actions: [
       { label: "查看 AI4Semi 项目", href: "#projects", variant: "solid" },
+      { label: "工作台实况", href: "#dashboard", variant: "ghost" },
       { label: "联系交流", href: "#contact", variant: "ghost" },
+    ],
+    quicklinks: [
+      { label: "数据看板", href: "#dashboard" },
+      { label: "可靠性工作台", href: "projects/reliability-workbench.html" },
+      { label: "仿真智能体", href: "projects/simulation-agent.html" },
+      { label: "GitHub", href: "https://github.com/kairos2425" },
     ],
     metrics: [
       { value: "AI4Semi", label: "核心方向" },
@@ -27,6 +34,7 @@ window.HOMEPAGE_DATA = {
     {
       title: "基于 AI 赋能的器件可靠性数据中台与寿命预测系统",
       category: "Reliability Data System",
+      fx: "flow",
       status: "核心展示",
       image: "assets/showcase/reliability-workbench-poster.png",
       alt: "Reliability Workbench 产品海报图",
@@ -41,11 +49,90 @@ window.HOMEPAGE_DATA = {
         { label: "产品介绍", href: "projects/reliability-workbench.html" },
       ],
       featured: true,
+      progress: { pct: 70, label: "产品雏形已建：方法/预测/数据桥三工作台 + PPT/Word 报告链" },
+    },
+    {
+      title: "Agentic TCAD 全链条工作台",
+      category: "Agentic TCAD",
+      status: "核心方向",
+      fx: "chip",
+      image: "assets/showcase/reliability-workbench-architecture.png",
+      alt: "Agentic TCAD 工作台概念图",
+      detailUrl: "projects/agentic-tcad.html",
+      summary:
+        "让 AI 安全地驱动专业 TCAD 仿真工具链：工程师用自然语言描述验证需求，系统规划受控仿真、调用求解器、产出有据可查的结果。器件电性指标在真实求解器上逐位复现，每一步都可追溯、可审计。",
+      contribution:
+        "愿景是打通「工艺 → 器件 → 老化 → 寿命」的完整链条，让器件仿真从专家手艺变成可复用的基础设施——AI 设计芯片的速度越快，可靠性验证越是瓶颈。",
+      chips: ["TCAD 仿真", "AI 编排", "证据链", "器件可靠性"],
+      highlights: ["求解器级精度复现", "全流程可追溯", "人机协同闸门"],
+      links: [
+        { label: "项目详情", href: "projects/agentic-tcad.html" },
+      ],
+      featured: true,
+      progress: { pct: 60, label: "核心链路已跑通，持续扩展器件覆盖面" },
+    },
+    {
+      title: "Reliability-Bench：开源工艺上的老化预测基准",
+      category: "Reliability Benchmark",
+      status: "持续演进",
+      fx: "aging",
+      image: "assets/showcase/ldmos-hci-aging-fit.png",
+      alt: "器件老化拟合示意图",
+      detailUrl: "projects/reliability-bench.html",
+      summary:
+        "在开源工艺平台上构建端到端的器件老化预测流水线：从电性曲线提取、应力扫描、老化轨迹拟合到寿命外推与统计分布分析，一轮完整实验只需分钟级、零授权成本。",
+      contribution:
+        "目标是把它做成公开的可靠性基准任务集——让「AI 能不能做器件可靠性分析」有一个可客观评分的答案，也为可靠性数据智能积累方法论资产。",
+      chips: ["器件老化", "寿命外推", "Monte Carlo", "统计建模"],
+      highlights: ["分钟级完整实验", "零授权成本", "客观可评分"],
+      links: [
+        { label: "项目详情", href: "projects/reliability-bench.html" },
+      ],
+      progress: { pct: 55, label: "基准流水线可用，器件族与应力场景扩展中" },
+    },
+    {
+      title: "Reliability-PINN-Lab 寿命预测工作台",
+      category: "Physics-Informed ML",
+      status: "产品雏形",
+      fx: "pinn",
+      image: "assets/showcase/reliability-workbench-ml-design.png",
+      alt: "PINN 寿命预测工作台设计图",
+      detailUrl: "projects/pinn-lab.html",
+      summary:
+        "物理规律与机器学习结合的寿命预测：经典加速模型做骨干、神经网络只学残差，预测永远带不确定度区间和适用范围提示——输出是工程决策支持，不替代签核。",
+      contribution:
+        "回答的是可靠性工程师每天的问题：加速应力下的数据，外推到使用工况还能活多久、这个答案有多可信。从数据接入到一键报告，全流程一个界面完成。",
+      chips: ["Physics-Informed ML", "寿命预测", "不确定度", "决策支持"],
+      highlights: ["不确定度区间", "适用范围提示", "一键报告"],
+      links: [
+        { label: "项目详情", href: "projects/pinn-lab.html" },
+      ],
+      progress: { pct: 65, label: "多种交付形态已就绪，真实数据场景持续接入" },
+    },
+    {
+      title: "Layout Canvas：Agent 原生的版图工作台",
+      category: "Layout Compiler",
+      status: "早期探索",
+      fx: "layout",
+      image: "assets/showcase/layout-canvas-cover.svg",
+      alt: "Layout Canvas 版图编译示意",
+      detailUrl: "projects/layout-canvas.html",
+      summary:
+        "面向 AI Agent 的版图工作台：让「给我一个满足指标的版图」成为可执行的编译过程，每次修改可回滚、可验证，验证不通过绝不报假通过。",
+      contribution:
+        "版图是模拟芯片自动化最难啃的一段。这个方向探索的是：当 Agent 真正开始动版图时，编辑、验证、回滚的工程底座应该长什么样。",
+      chips: ["模拟版图", "AI Agent", "验证驱动", "自动化"],
+      highlights: ["可回滚编辑", "验证驱动", "人机同一接口"],
+      links: [
+        { label: "项目详情", href: "projects/layout-canvas.html" },
+      ],
+      progress: { pct: 25, label: "架构探索期，核心设计理念已成型" },
     },
     {
       title: "面向半导体器件仿真的大语言模型智能体",
       category: "Simulation Agent",
-      status: "Prototype",
+      status: "进行中",
+      fx: "iv",
       image: "assets/showcase/simulation-agent-poster.png",
       alt: "Simulation Agent 产品海报图",
       detailUrl: "projects/simulation-agent.html",
@@ -56,13 +143,14 @@ window.HOMEPAGE_DATA = {
       chips: ["LLM", "Prompt Engineering", "COMSOL API", "FEM"],
       highlights: ["自然语言交互", "仿真任务组织", "结果解释视图"],
       links: [
-        { label: "产品介绍", href: "projects/simulation-agent.html" },
+        { label: "项目详情", href: "projects/simulation-agent.html" },
       ],
+      progress: { pct: 40, label: "LLM→仿真意图翻译原型已通 / 接入 TCAD 编排层中" },
     },
     {
       title: "半导体工程效率知识库与计算器",
       category: "Reliability Knowledge Radar",
-      status: "补充生态",
+      status: "线上运行",
       image: "assets/showcase/reliability-copilot-live.png",
       alt: "半导体器件可靠性知识检索与分享看板",
       detailUrl: "projects/reliability-copilot.html",
@@ -75,13 +163,14 @@ window.HOMEPAGE_DATA = {
       highlights: ["检索入口", "资料追踪", "主题图解"],
       links: [
         { label: "直接进入", href: "https://semiconductor-reliability-copilot.79402635.workers.dev/" },
-        { label: "产品介绍", href: "projects/reliability-copilot.html" },
+        { label: "项目详情", href: "projects/reliability-copilot.html" },
       ],
+      progress: { pct: 80, label: "Cloudflare Workers 线上版持续迭代" },
     },
     {
       title: "AI Skill Quest：AI 技能学习平台",
       category: "AI Learning Platform",
-      status: "学习系统",
+      status: "线上运行",
       image: "assets/showcase/ai-skill-quest-home.png",
       alt: "AI Skill Quest AI 技能学习平台首页",
       detailUrl: "projects/ai-skill-quest.html",
@@ -94,8 +183,9 @@ window.HOMEPAGE_DATA = {
       highlights: ["学习地图", "任务卡片", "自动助教"],
       links: [
         { label: "直接进入", href: "https://ai-skill-quest-9u3.pages.dev/" },
-        { label: "产品介绍", href: "projects/ai-skill-quest.html" },
+        { label: "项目详情", href: "projects/ai-skill-quest.html" },
       ],
+      progress: { pct: 75, label: "Pages 线上可访问 / 任务地图持续扩充" },
     },
     {
       title: "可靠性统计学习型网页开发",
@@ -114,8 +204,101 @@ window.HOMEPAGE_DATA = {
       links: [
         { label: "直接进入", href: "projects/reliability-stats-learning.html" },
       ],
+      progress: { pct: 90, label: "站内可直接体验" },
     },
   ],
+
+  tools: [
+    {
+      name: "DCC 报告检查工具",
+      en: "DCC Report Checker",
+      badge: "桌面版 · 免安装",
+      fx: "flow",
+      tagline: "可靠性认证报告的自动化规则审查器",
+      summary:
+        "把 Process / Product Reliability Qualification Report 的人工逐页核对，变成规则引擎驱动的批量扫描：Excel 规则包加载 → DOCX 解析 → 15 类检查器 → FAIL 清单落 Excel。",
+      features: [
+        "15 类检查器：必备项 / 术语字典 / 表格比对 / OCR / 版式 / 错别字等",
+        "规则包 Excel 驱动，业务可自维护，命中例外可降级",
+        "内置 OCR，报告内嵌曲线图与扫描表也能查",
+      ],
+      usecases:
+        "器件领域应用：认证报告出具前预审——NBTI / TDDB / HCI / EM 小节必备内容缺漏、氧化层术语别名归一、表值对标 Qual Plan。",
+      detailUrl: "tools/dcc-report-checker.html",
+      links: [
+        { label: "工具详情", href: "tools/dcc-report-checker.html" },
+        { label: "使用指南", href: "tools/dcc-guide.html" },
+        { label: "申请体验", href: "#contact-me" },
+      ],
+      access: "本工具为内部授权桌面软件，体验或试用请联系作者获取。",
+    },
+    {
+      name: "HCI 可靠性数据处理工具",
+      en: "HCI Reliability Tool",
+      badge: "桌面版 · 离线运行",
+      fx: "aging",
+      tagline: "HCI 应力数据：从机台原始文件到认证决策报告",
+      summary:
+        "不可变原始数据底座 + 规范化分析层，全程溯源审计；退化拟合 → 寿命外推 → 统计分布 → 认证决策 → 资格报告一键交付。",
+      features: [
+        "兼容主流机台导出格式，原始文件无损解析入库",
+        "原始数据不可变 + 排除/恢复留痕，分析可完全回溯",
+        "离线授权分发，可作为只读桌面端交给产线/客户工程师",
+      ],
+      usecases:
+        "器件领域应用：HCI 应力测试数据的规范化入库、Δ 参数退化轨迹分析、失效判据寿命提取与资格报告生成——分析结果是决策支持，非签核依据。",
+      detailUrl: "tools/hci-reliability-tool.html",
+      links: [
+        { label: "工具详情", href: "tools/hci-reliability-tool.html" },
+        { label: "申请体验", href: "#contact-me" },
+      ],
+      access: "本工具为内部授权桌面软件，体验或试用请联系作者获取。",
+    },
+    {
+      name: "PPT 模板工作台",
+      en: "PPT Workbench",
+      badge: "桌面版 · 全离线",
+      image: "assets/showcase/ppt-workbench-ui.png",
+      tagline: "本地大模型驱动的 PPT 排版与文献速读工作台",
+      summary:
+        "上传自己的 PPT 模板，AI 生成大纲与润色，规则引擎产出原生可编辑的 PPTX——文本、图表、表格都能继续改。另带文献速读：多篇论文一次性结构化精读、跨文献综述与可拖拽脑图。全程离线，数据不出本机。",
+      features: [
+        "模板库：识别主题色/版式/页面尺寸，富版式引擎实际套用",
+        "14 种页面类型 + 原生图表/表格 + 生成后质量审计",
+        "扫描版 PDF 自动 OCR，中英文开箱可用",
+      ],
+      usecases:
+        "器件领域应用：可靠性评审汇报、项目立项 PPT 快速出稿；文献速读服务可把 3-5 篇器件可靠性论文一次抽成结构化精读 + 综述 + 专利点提示。",
+      detailUrl: "tools/ppt-workbench.html",
+      links: [
+        { label: "工具详情", href: "tools/ppt-workbench.html" },
+        { label: "申请体验", href: "#contact-me" },
+      ],
+      access: "本工具为内部授权桌面软件，在线体验版筹备中，可邮件预约。",
+    },
+  ],
+
+  dashboard: {
+    title: "能力版图",
+    intro:
+      "用 AI 把器件可靠性分析做成可复用的基础设施——下面是目前覆盖的能力面与推进方向。",
+    metrics: [
+      { value: 4, suffix: "", label: "可靠性场景", note: "HCI / BTI / TDDB / EM" },
+      { value: 5, suffix: "", label: "加速寿命模型", note: "Arrhenius / 逆幂律 / Peck 等" },
+      { value: 200, suffix: "", label: "器件统计样本", note: "蒙特卡洛寿命分布分析" },
+      { value: 60, prefix: "~", suffix: " s", label: "一轮仿真实验", note: "开源平台端到端" },
+      { value: 15, suffix: "+", label: "报告检查规则", note: "认证报告自动预审" },
+      { value: 3, suffix: "", label: "已交付桌面工具", note: "离线运行 · 授权分发" },
+    ],
+    pipeline: [
+      { name: "器件仿真执行", status: "已可用", tone: "ok", pct: 100, note: "专业求解器驱动，电性指标逐位复现" },
+      { name: "可靠性数据分析", status: "已可用", tone: "ok", pct: 90, note: "机台数据入库、退化轨迹、统计分布" },
+      { name: "寿命预测", status: "产品化中", tone: "run", pct: 65, note: "物理约束 ML，带不确定度与适用范围" },
+      { name: "报告与交付自动化", status: "已可用", tone: "ok", pct: 85, note: "认证报告预审 + PPT/Word 一键生成" },
+      { name: "AI 编排与 Agent", status: "演进中", tone: "run", pct: 50, note: "自然语言到受控执行的完整链路" },
+      { name: "公开基准 Reliability-Bench", status: "筹备中", tone: "info", pct: 30, note: "让器件可靠性分析可客观评分" },
+    ],
+  },
 
   timeline: [
     {
@@ -230,6 +413,7 @@ window.HOMEPAGE_DATA = {
     actionHref: "mailto:akstar2425@gmail.com",
     items: [
       "Email: akstar2425@gmail.com",
+      "Email: lixd@alumni.pku.edu.cn",
       "小红书：Kstar（分享半导体可靠性与 AI 相关见解）",
     ],
   },

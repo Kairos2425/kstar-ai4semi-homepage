@@ -1,0 +1,69 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DCC 报告检查工具 | AI4Semi 工具</title>
+    <link rel="stylesheet" href="../styles.css?v=20260915c" />
+  </head>
+  <body>
+    <main class="detail-page">
+      <a class="back-link" href="../index.html#tools">返回主页</a>
+      <header class="detail-hero">
+        <p class="eyebrow">Desktop Tool · v5.1</p>
+        <h1>DCC 报告检查工具</h1>
+        <p>面向器件可靠性认证报告（Process / Product Reliability Qualification Report）的自动化规则审查器：把人工逐页核对变成规则引擎驱动的批量扫描。</p>
+      </header>
+      <figure class="fx-hero">
+        <div class="fx-stage" data-fx="flow"></div>
+        <figcaption>审查流水线：规则包加载 → DOCX 解析 → 上下文定位 → 15 类检查器 → Excel 结果输出</figcaption>
+      </figure>
+
+      <section class="detail-grid">
+        <figure class="detail-shot detail-shot--wide detail-shot--pad">
+          <h3 style="margin:0 0 10px">它解决什么问题</h3>
+          <p style="color:var(--muted);line-height:1.8;margin:0">
+            可靠性认证报告动辄上百页：NBTI / TDDB / HCI / EM 各应力小节是否齐全、应力温度与时间有没有写、
+            术语是否统一（GOX vs Gate Oxide）、表格数值是否与 Qual Plan 一致、扫描图里的参数有没有抄错——
+            人工核对一遍要数小时且容易漏。本工具把检查项固化为规则包，一次运行产出带定位的 FAIL 清单。
+          </p>
+        </figure>
+        <figure class="detail-shot detail-shot--pad">
+          <h3 style="margin:0 0 10px">15 类检查器</h3>
+          <p style="color:var(--muted);line-height:1.8;margin:0">
+            Keyword / Regex / Word 属性 / 表格比对 / Section 必备项 / 版式 / 术语字典 /
+            OCR / 图片识别 / 一致性 / 页眉 / 错别字 / 表值范围 / 节格式 / 人工确认项。
+            规则全部从 Excel 规则包（***REMOVED***_V3）加载，业务同事可维护。
+          </p>
+        </figure>
+        <figure class="detail-shot detail-shot--pad">
+          <h3 style="margin:0 0 10px">器件领域适配</h3>
+          <p style="color:var(--muted);line-height:1.8;margin:0">
+            内置 Trigger_Group 别名机制覆盖工艺术语变体（GOX/GDX/GOI 等），支持
+            「氧化层 + TDDB」这类条件触发的章节级检查；内置 Tesseract OCR 可校验
+            报告内嵌曲线图与扫描表格，恰好覆盖认证报告最常见的两类盲区。
+          </p>
+        </figure>
+      </section>
+
+      <section class="detail-notes">
+        <h2>使用方式</h2>
+        <p>
+          流程：选择规则包 xlsx → 选择待审 DOCX → Run → 输出
+          <code>DCC_Check_Result.xlsx</code>（仅列出 FAIL 项，含严重级、定位、期望 vs 实际、整改建议）。
+          桌面端免安装、离线运行，规则包与使用指南随包附带。
+        </p>
+        <p>
+          本工具为内部授权桌面软件，不在线上公开发布。如需体验或试用，请联系作者获取。
+        </p>
+        <p>
+          <a class="button" href="dcc-guide.html">在线使用指南</a>
+          <a class="button button--ghost" href="#contact-me">联系作者获取体验</a>
+        </p>
+      </section>
+    </main>
+    <script src="../motion.js?v=20260915a"></script>
+    <script src="../fx.js?v=20260915a"></script>
+      <script src="../contact.js?v=20260915a"></script>
+  </body>
+</html>
