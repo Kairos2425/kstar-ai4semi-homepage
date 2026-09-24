@@ -13,9 +13,10 @@
       { label: "联系交流", href: "#contact", variant: "ghost" },
     ],
     quicklinks: [
+      { label: "JEDEC 解读库", href: "https://jedec-docs.pages.dev/" },
+      { label: "IC World 2026 汇报", href: "https://ic-world-2026-report.pages.dev/" },
       { label: "数据看板", href: "#dashboard" },
       { label: "可靠性工作台", href: "projects/reliability-workbench.html" },
-      { label: "仿真智能体", href: "projects/simulation-agent.html" },
       { label: "GitHub", href: "https://github.com/kairos2425" },
     ],
     metrics: [
@@ -70,6 +71,48 @@
       ],
       featured: true,
       progress: { pct: 60, label: "核心链路已跑通，持续扩展器件覆盖面" },
+    },
+    {
+      title: "JEDEC 标准解读库",
+      category: "Standards Knowledge Base",
+      status: "线上运行 · 新作",
+      image: "assets/showcase/jedec-docs-cover.svg",
+      alt: "JEDEC 标准解读库封面",
+      detailUrl: "projects/jedec-docs.html",
+      productUrl: "https://jedec-docs.pages.dev/",
+      summary:
+        "把 JEDEC 标准按芯片走过的路重新组织：器件设计、版图、仿真模型、晶圆监控、机理级可靠性、封装级认证——每一条测试要求都落到一份具体的方法文件（JESD / JEP / J-STD / JS 联合文件）。交互版图与轨道式总览，让标准从案头文档变成可导航的工程地图。",
+      contribution:
+        "独立整理与解读：以一颗芯片从设计到认证的路径为主轴重构标准体系，把失效机理、加速模型、应力判据串成可查阅的知识库——器件可靠性知识的公开化表达。",
+      chips: ["JEDEC 标准", "可靠性认证", "失效机理", "知识库"],
+      highlights: ["按生命周期组织", "机理 → 方法文件映射", "交互式导览"],
+      links: [
+        { label: "直接进入", href: "https://jedec-docs.pages.dev/" },
+        { label: "项目详情", href: "projects/jedec-docs.html" },
+      ],
+      featured: true,
+      progress: { pct: 100, label: "线上可访问，收录持续扩充中" },
+    },
+    {
+      title: "IC World 2026 大会汇报 · 驭智拓芯途",
+      category: "Industry Report",
+      status: "线上运行 · 新作",
+      image: "assets/showcase/ic-world-2026-cover.svg",
+      alt: "IC World 2026 大会汇报封面",
+      detailUrl: "projects/ic-world-2026.html",
+      productUrl: "https://ic-world-2026-report.pages.dev/",
+      summary:
+        "把 66 页大会汇报重构为单页动态演示：以北京微电子国际研讨会七场论坛、40+ 场演讲与 46 幅实拍为一手素材，结合 WSTS / IEEE HIR / JEDEC 与 Nature·JSSC·TED 文献交叉验证，讲清两条主线——3D IC×异质异构集成、AI 赋能全链条——如何交汇于器件可靠性。",
+      contribution:
+        "独立完成素材采集、文献交叉验证与叙事重构：从万亿美元市场周期到混合键合间距路线图，再到 AI×可靠性的逐条深读——一份可溯源的产业全景判断。",
+      chips: ["3D IC", "Chiplet", "AI × 可靠性", "产业分析"],
+      highlights: ["一手大会素材", "文献可溯源", "单页动态叙事"],
+      links: [
+        { label: "直接进入", href: "https://ic-world-2026-report.pages.dev/" },
+        { label: "项目详情", href: "projects/ic-world-2026.html" },
+      ],
+      featured: true,
+      progress: { pct: 100, label: "线上可访问" },
     },
     {
       title: "Reliability-Bench：开源工艺上的老化预测基准",

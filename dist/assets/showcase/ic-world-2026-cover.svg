@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bgi" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a1512"/><stop offset="1" stop-color="#060b09"/>
+    </linearGradient>
+    <linearGradient id="diei" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#153a2c"/><stop offset="1" stop-color="#0b1f18"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bgi)" rx="10"/>
+  <text x="40" y="52" fill="#8fe3c0" font-family="Consolas,monospace" font-size="13" letter-spacing="3">IC WORLD 2026 · 大会汇报重构</text>
+
+  <!-- isometric 3D stack: top die / hybrid bonding / bottom die / bumps -->
+  <g transform="translate(120,95)">
+    <!-- top die -->
+    <path d="M0 60 L120 15 L260 60 L140 105 Z" fill="url(#diei)" stroke="#39e6a3" stroke-opacity="0.7" stroke-width="1.4"/>
+    <path d="M0 60 L140 105 L140 122 L0 77 Z" fill="#0c211a" stroke="#2c4a3e"/>
+    <path d="M140 105 L260 60 L260 77 L140 122 Z" fill="#0e271e" stroke="#2c4a3e"/>
+    <!-- hybrid bonding interface -->
+    <path d="M14 92 L140 136 L246 92" fill="none" stroke="#f2c96b" stroke-width="2" stroke-dasharray="1 0"/>
+    <path d="M14 92 L140 136 L246 92 L246 100 L140 144 L14 100 Z" fill="rgba(242,201,107,0.14)" stroke="#f2c96b" stroke-opacity="0.5"/>
+    <!-- bottom die -->
+    <path d="M14 122 L140 166 L246 122 L246 146 L140 190 L14 146 Z" fill="url(#diei)" stroke="#39e6a3" stroke-opacity="0.55"/>
+    <!-- bumps -->
+    <g fill="#f2c96b" opacity="0.75">
+      <circle cx="50" cy="176" r="4"/><circle cx="90" cy="192" r="4"/><circle cx="140" cy="206" r="4"/>
+      <circle cx="190" cy="192" r="4"/><circle cx="230" cy="176" r="4"/>
+    </g>
+    <g font-family="Consolas,monospace" font-size="11" fill="#7fa896">
+      <text x="135" y="8" text-anchor="middle">Top Die</text>
+      <text x="262" y="104" fill="#f2c96b">Hybrid Bonding</text>
+      <text x="135" y="232" text-anchor="middle">µBump / Substrate</text>
+    </g>
+  </g>
+
+  <!-- two main lines converging -->
+  <g font-family="'Microsoft YaHei',sans-serif">
+    <path d="M430 150 C500 170 540 200 585 245" fill="none" stroke="#39e6a3" stroke-width="2"/>
+    <path d="M430 330 C500 310 540 285 585 245" fill="none" stroke="#f2c96b" stroke-width="2"/>
+    <rect x="430" y="126" width="150" height="42" rx="6" fill="#0d1f19" stroke="#39e6a3" stroke-opacity="0.55"/>
+    <text x="505" y="144" fill="#c8ded3" font-size="13" text-anchor="middle">主线 A</text>
+    <text x="505" y="161" fill="#7fa896" font-size="12" text-anchor="middle">3D IC × 异构集成</text>
+    <rect x="430" y="306" width="150" height="42" rx="6" fill="#0d1f19" stroke="#f2c96b" stroke-opacity="0.6"/>
+    <text x="505" y="324" fill="#c8ded3" font-size="13" text-anchor="middle">主线 B</text>
+    <text x="505" y="341" fill="#7fa896" font-size="12" text-anchor="middle">AI 赋能全链条</text>
+    <rect x="592" y="216" width="150" height="58" rx="8" fill="#0d1f19" stroke="#39e6a3" stroke-width="1.4"/>
+    <text x="667" y="241" fill="#8fe3c0" font-size="14" text-anchor="middle">交汇点</text>
+    <text x="667" y="262" fill="#c8ded3" font-size="13" text-anchor="middle">器件可靠性</text>
+  </g>
+
+  <!-- stat strip -->
+  <g font-family="Consolas,monospace" font-size="12" fill="#7fa896">
+    <text x="430" y="80">$1.65T · 2026E 市场</text>
+    <text x="430" y="100">6–9µm · 混合键合量产间距</text>
+    <text x="430" y="390">46 幅实拍 · 40+ 演讲 · 文献可溯源</text>
+  </g>
+  <text x="40" y="398" fill="#42604f" font-family="'Microsoft YaHei',sans-serif" font-size="12">66 页大会汇报 → 单页动态演示 · 2026.09 北京</text>
+</svg>
