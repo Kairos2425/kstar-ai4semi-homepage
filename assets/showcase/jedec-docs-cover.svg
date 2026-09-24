@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bgj" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a1512"/><stop offset="1" stop-color="#060b09"/>
+    </linearGradient>
+    <radialGradient id="wfj" cx="0.5" cy="0.45" r="0.55">
+      <stop offset="0" stop-color="#123a2e"/><stop offset="0.7" stop-color="#0c241d"/><stop offset="1" stop-color="#081711"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="420" fill="url(#bgj)" rx="10"/>
+  <text x="40" y="52" fill="#8fe3c0" font-family="Consolas,monospace" font-size="13" letter-spacing="3">JEDEC 解读库 · 标准接力地图</text>
+
+  <!-- wafer -->
+  <circle cx="190" cy="215" r="118" fill="url(#wfj)" stroke="#2c4a3e" stroke-width="1.5"/>
+  <circle cx="190" cy="215" r="118" fill="none" stroke="#3a5348" stroke-width="1" stroke-dasharray="2 6" opacity="0.6"/>
+  <g stroke="#1d3a2f" stroke-width="1">
+    <path d="M110 170 H270 M96 215 H284 M110 260 H270 M150 112 V318 M190 100 V330 M230 112 V318"/>
+  </g>
+  <!-- highlight cells on wafer -->
+  <g fill="rgba(57,230,163,0.35)">
+    <rect x="150" y="160" width="18" height="14"/><rect x="212" y="205" width="18" height="14"/>
+    <rect x="168" y="250" width="18" height="14"/><rect x="196" y="140" width="18" height="14"/>
+  </g>
+  <g fill="rgba(242,201,107,0.45)">
+    <rect x="230" y="245" width="18" height="14"/><rect x="130" y="200" width="18" height="14"/>
+  </g>
+  <text x="190" y="352" fill="#5d7a6d" font-family="'Microsoft YaHei',sans-serif" font-size="12" text-anchor="middle">高亮 = 该阶段标准覆盖位置</text>
+
+  <!-- relay path of stages -->
+  <g font-family="'Microsoft YaHei',sans-serif" font-size="13">
+    <path d="M330 150 H730 M330 230 H730 M330 310 H730" stroke="#26443a" stroke-width="1" stroke-dasharray="3 5"/>
+    <g>
+      <rect x="330" y="130" width="120" height="40" rx="6" fill="#0d1f19" stroke="#39e6a3" stroke-opacity="0.55"/>
+      <text x="390" y="154" fill="#c8ded3" text-anchor="middle">器件设计</text>
+      <rect x="470" y="130" width="120" height="40" rx="6" fill="#0d1f19" stroke="#3a5348"/>
+      <text x="530" y="154" fill="#c8ded3" text-anchor="middle">版图设计</text>
+      <rect x="610" y="130" width="120" height="40" rx="6" fill="#0d1f19" stroke="#3a5348"/>
+      <text x="670" y="154" fill="#c8ded3" text-anchor="middle">仿真与模型</text>
+      <rect x="330" y="210" width="120" height="40" rx="6" fill="#0d1f19" stroke="#3a5348"/>
+      <text x="390" y="234" fill="#c8ded3" text-anchor="middle">晶圆监控</text>
+      <rect x="470" y="210" width="120" height="40" rx="6" fill="#0d1f19" stroke="#f2c96b" stroke-opacity="0.6"/>
+      <text x="530" y="234" fill="#c8ded3" text-anchor="middle">机理级可靠性</text>
+      <rect x="610" y="210" width="120" height="40" rx="6" fill="#0d1f19" stroke="#3a5348"/>
+      <text x="670" y="234" fill="#c8ded3" text-anchor="middle">封装级认证</text>
+      <rect x="330" y="290" width="120" height="40" rx="6" fill="#0d1f19" stroke="#3a5348"/>
+      <text x="390" y="314" fill="#c8ded3" text-anchor="middle">先进封装</text>
+      <rect x="470" y="290" width="120" height="40" rx="6" fill="#0d1f19" stroke="#3a5348"/>
+      <text x="530" y="314" fill="#c8ded3" text-anchor="middle">标准接力</text>
+      <rect x="610" y="290" width="120" height="40" rx="6" fill="#0d1f19" stroke="#3a5348"/>
+      <text x="670" y="314" fill="#c8ded3" text-anchor="middle">测试引导台</text>
+    </g>
+  </g>
+  <!-- doc tags -->
+  <g font-family="Consolas,monospace" font-size="11" fill="#7fa896">
+    <text x="330" y="105">JESD47 · JESD22-A108 · JESD78 · JEP122 · JESD85 · JESD263 · JS-001/002 …</text>
+    <text x="330" y="360" fill="#42604f">每条测试要求 → 落到一份具体的方法文件</text>
+  </g>
+  <text x="40" y="398" fill="#42604f" font-family="'Microsoft YaHei',sans-serif" font-size="12">按芯片走过的路整理的标准文件库 · 交互式导览</text>
+</svg>
