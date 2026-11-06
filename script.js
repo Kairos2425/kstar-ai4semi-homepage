@@ -287,10 +287,15 @@ function renderDashboard() {
     const num = makeElement("div", "dash-metric__num");
     const prefix = m.prefix || "";
     const suffix = m.suffix || "";
+    const isNumeric = m.value !== "" && !Number.isNaN(Number(m.value));
     const value = makeElement("span", "dash-metric__value");
-    value.dataset.countTo = m.value;
-    value.dataset.countDecimals = m.decimals || 0;
-    value.textContent = "0";
+    if (isNumeric) {
+      value.dataset.countTo = m.value;
+      value.dataset.countDecimals = m.decimals || 0;
+      value.textContent = "0";
+    } else {
+      value.textContent = String(m.value);
+    }
     num.appendChild(document.createTextNode(prefix));
     num.appendChild(value);
     num.appendChild(document.createTextNode(suffix));

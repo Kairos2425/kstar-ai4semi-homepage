@@ -4,9 +4,9 @@
     nameEn: "Kairos Li",
     initials: "Kstar",
     eyebrow: "AI4Semi Independent Builder / Reliability / Simulation Agent",
-    headline: "用 AI 产品化半导体可靠性与仿真知识工具。",
+    headline: "让 AI 进入芯片研发：器件可靠性 × 数字设计智能体。",
     intro:
-      "你好，我是 Xiaodan Li（Kairos），一名具备物理化学与微纳材料科研训练背景的 AI4Semi 探索者。我的主线任务是探索大模型与人工智能在半导体器件可靠性领域的落地应用，从可靠性数据工作台、器件寿命预测模型，到由 LLM 驱动的仿真智能体。",
+      "你好，我是 Xiaodan Li（Kairos），一名具备物理化学与微纳材料科研训练背景的 AI4Semi 探索者。我的主线是把大模型真正带进芯片研发流程：一条线做器件可靠性——从可靠性数据工作台、器件寿命预测，到 AI 驱动的 TCAD 仿真与硅数据校准；另一条线做数字芯片设计智能体——让一句自然语言规格，变成一块能通过验证的电路。",
     actions: [
       { label: "查看 AI4Semi 项目", href: "#projects", variant: "solid" },
       { label: "工作台实况", href: "#dashboard", variant: "ghost" },
@@ -55,7 +55,7 @@
     {
       title: "Agentic TCAD 全链条工作台",
       category: "Agentic TCAD",
-      status: "核心方向",
+      status: "原型运行中",
       fx: "chip",
       image: "assets/showcase/reliability-workbench-architecture.png",
       alt: "Agentic TCAD 工作台概念图",
@@ -70,7 +70,63 @@
         { label: "项目详情", href: "projects/agentic-tcad.html" },
       ],
       featured: true,
-      progress: { pct: 60, label: "核心链路已跑通，持续扩展器件覆盖面" },
+      progress: { pct: 65, label: "统一工作台原型已在本机跑通，器件覆盖面持续扩展" },
+    },
+    {
+      title: "数字芯片设计智能体：从规格到验证的闭环",
+      category: "Digital Design Agent",
+      status: "原型运行中",
+      fx: "flow",
+      image: "assets/showcase/agentic-tcad-pipeline.svg",
+      alt: "数字芯片设计智能体流程图",
+      detailUrl: "projects/chip-agent.html",
+      summary:
+        "用自然语言写下功能规格，系统自动完成数字电路设计、测试环境生成、仿真验证与缺陷修复——每一个「通过」都经过独立判卷，而不是模型自说自话。",
+      contribution:
+        "把「写电路、写测试、跑仿真、看波形」这条原本靠资深工程师经验的链路，变成可审计的自动闭环；所有结果按证据等级如实标注，对标开源 agentic EDA 的公开基准。",
+      chips: ["数字 IC", "设计自动化", "自动验证", "AI Agent"],
+      highlights: ["规格驱动设计", "独立判卷不自证", "失败可归因可恢复"],
+      links: [
+        { label: "项目详情", href: "projects/chip-agent.html" },
+      ],
+      featured: true,
+      progress: { pct: 45, label: "本地设计-验证闭环已跑通，复杂题型能力持续提升" },
+    },
+    {
+      title: "AI4Chip 智能测试数据中枢 · 全景演示",
+      category: "数据智能 / 演示",
+      status: "线上 Demo",
+      fx: "iv",
+      productUrl: "demo/ai4chip.html",
+      summary:
+        "面向芯片测试环节的数据智能中枢概念演示：从测试数据接入、良率洞察到高风险筛选与 AI 问答的完整链路，用合成数据呈现全景能力。",
+      contribution:
+        "把「测试数据 → 产线决策」的产品想象做成可交互的演示，为合作伙伴与团队提供直观的形态参照。",
+      chips: ["测试数据", "良率分析", "AI 问答", "概念演示"],
+      highlights: ["全链路交互", "合成数据", "断网可开"],
+      links: [
+        { label: "在线体验", href: "demo/ai4chip.html" },
+      ],
+      progress: { pct: 100, label: "线上可访问（演示数据）" },
+    },
+    {
+      title: "失效案例智能检索平台",
+      category: "知识库 / RAG",
+      status: "原型可用",
+      fx: "aging",
+      image: "assets/showcase/reliability-copilot-live.png",
+      alt: "失效案例检索平台概念图",
+      detailUrl: "projects/failcase-rag.html",
+      summary:
+        "把历史失效案例与 8D 分析报告沉淀为本地可检索的知识库：工程师用自然语言描述异常，系统找出相似案例并汇总根因线索——全部数据不出本机。",
+      contribution:
+        "面向产线与可靠性团队的失效知识复用：把散落在个人电脑里的案例报告，变成可问答的组织记忆。",
+      chips: ["失效分析", "知识库", "本地部署", "隐私优先"],
+      highlights: ["表格与报告全格式", "离线单机运行", "案例级去重溯源"],
+      links: [
+        { label: "项目详情", href: "projects/failcase-rag.html" },
+      ],
+      progress: { pct: 55, label: "单机离线版已可用，知识库持续扩充" },
     },
     {
       title: "JEDEC 标准解读库",
@@ -155,11 +211,12 @@
     {
       title: "Layout Canvas：Agent 原生的版图工作台",
       category: "Layout Compiler",
-      status: "早期探索",
+      status: "介绍站点已上线",
       fx: "layout",
       image: "assets/showcase/layout-canvas-cover.svg",
       alt: "Layout Canvas 版图编译示意",
       detailUrl: "projects/layout-canvas.html",
+      productUrl: "https://kairos2425.github.io/layout-canvas/",
       summary:
         "面向 AI Agent 的版图工作台：让「给我一个满足指标的版图」成为可执行的编译过程，每次修改可回滚、可验证，验证不通过绝不报假通过。",
       contribution:
@@ -167,9 +224,10 @@
       chips: ["模拟版图", "AI Agent", "验证驱动", "自动化"],
       highlights: ["可回滚编辑", "验证驱动", "人机同一接口"],
       links: [
+        { label: "在线介绍", href: "https://kairos2425.github.io/layout-canvas/" },
         { label: "项目详情", href: "projects/layout-canvas.html" },
       ],
-      progress: { pct: 25, label: "架构探索期，核心设计理念已成型" },
+      progress: { pct: 30, label: "公开介绍站点已上线，编译器原型持续开发" },
     },
     {
       title: "面向半导体器件仿真的大语言模型智能体",
@@ -188,7 +246,7 @@
       links: [
         { label: "项目详情", href: "projects/simulation-agent.html" },
       ],
-      progress: { pct: 40, label: "LLM→仿真意图翻译原型已通 / 接入 TCAD 编排层中" },
+      progress: { pct: 45, label: "自然语言到受控仿真的翻译层已在工作台落地" },
     },
     {
       title: "半导体工程效率知识库与计算器",
@@ -298,6 +356,26 @@
       access: "本工具为内部授权桌面软件，体验或试用请联系作者获取。",
     },
     {
+      name: "HCI Reliability SaaS",
+      en: "HCI Reliability SaaS",
+      badge: "Web · 内测中",
+      fx: "aging",
+      tagline: "HCI 应力数据：浏览器里上传即分析，报告直接下载",
+      summary:
+        "把可靠性分析引擎做成浏览器可用的内测服务：多文件混合上传、自动识别格式与配对关系，退化画像、寿命模型评估与资格报告一键产出，全程审计留痕。",
+      features: [
+        "多格式自动识别与应力/量测配对",
+        "工作区数据隔离，不可变账本",
+        "Excel / PPT 资格报告一键下载",
+      ],
+      usecases:
+        "器件领域应用：产线与客户工程师无需安装软件，上传应力数据即可获得退化画像与寿命评估（诊断级参考，非签核依据）。",
+      links: [
+        { label: "申请内测", href: "#contact-me" },
+      ],
+      access: "内测版，访问口令请联系作者获取。",
+    },
+    {
       name: "PPT 模板工作台",
       en: "PPT Workbench",
       badge: "桌面版 · 全离线",
@@ -326,20 +404,21 @@
     intro:
       "用 AI 把器件可靠性分析做成可复用的基础设施——下面是目前覆盖的能力面与推进方向。",
     metrics: [
-      { value: 4, suffix: "", label: "可靠性场景", note: "HCI / BTI / TDDB / EM" },
-      { value: 5, suffix: "", label: "加速寿命模型", note: "Arrhenius / 逆幂律 / Peck 等" },
-      { value: 200, suffix: "", label: "器件统计样本", note: "蒙特卡洛寿命分布分析" },
-      { value: 60, prefix: "~", suffix: " s", label: "一轮仿真实验", note: "开源平台端到端" },
-      { value: 15, suffix: "+", label: "报告检查规则", note: "认证报告自动预审" },
-      { value: 3, suffix: "", label: "已交付桌面工具", note: "离线运行 · 授权分发" },
+      { value: "可靠性×AI", label: "核心方向", note: "器件可靠性与数字设计智能体两条线" },
+      { value: "HCI·BTI·TDDB·EM", label: "可靠性场景", note: "覆盖主流失效机理" },
+      { value: "物理+ML", label: "寿命预测", note: "加速模型做骨干，带不确定度" },
+      { value: "自然语言", label: "驱动方式", note: "中文描述即可发起任务" },
+      { value: "全程留痕", label: "证据链", note: "每个结论可追溯可审计" },
+      { value: "桌面+Web", label: "交付形态", note: "离线工具与内测服务并行" },
     ],
     pipeline: [
-      { name: "器件仿真执行", status: "已可用", tone: "ok", pct: 100, note: "专业求解器驱动，电性指标逐位复现" },
-      { name: "可靠性数据分析", status: "已可用", tone: "ok", pct: 90, note: "机台数据入库、退化轨迹、统计分布" },
+      { name: "器件仿真执行", status: "已可用", tone: "ok", pct: 100, note: "多求解器受控调用，结果可复核" },
+      { name: "可靠性数据分析", status: "已可用", tone: "ok", pct: 90, note: "机台数据入库、退化画像、统计分布" },
+      { name: "数字芯片设计智能体", status: "产品化中", tone: "run", pct: 45, note: "规格到电路再到验证的自动闭环" },
       { name: "寿命预测", status: "产品化中", tone: "run", pct: 65, note: "物理约束 ML，带不确定度与适用范围" },
-      { name: "报告与交付自动化", status: "已可用", tone: "ok", pct: 85, note: "认证报告预审 + PPT/Word 一键生成" },
+      { name: "报告与交付自动化", status: "已可用", tone: "ok", pct: 85, note: "认证报告预审 + 报告一键生成" },
       { name: "AI 编排与 Agent", status: "演进中", tone: "run", pct: 50, note: "自然语言到受控执行的完整链路" },
-      { name: "公开基准 Reliability-Bench", status: "筹备中", tone: "info", pct: 30, note: "让器件可靠性分析可客观评分" },
+      { name: "公开基准与知识库", status: "筹备中", tone: "info", pct: 30, note: "让能力可客观评分、可公开复用" },
     ],
   },
 
@@ -447,6 +526,11 @@
       tag: "AI4S",
       title: "从湿实验到干代码",
       body: "把材料科学训练中的机理直觉迁移到 AI for Science 工具建设，形成高壁垒的跨学科能力。",
+    },
+    {
+      tag: "Chip Agent",
+      title: "数字 IC 设计智能体",
+      body: "探索规格驱动的数字电路自动设计：模型生成电路与验证环境，独立判卷保证结果可信——对标开源 agentic EDA 的公开基准。",
     },
   ],
 

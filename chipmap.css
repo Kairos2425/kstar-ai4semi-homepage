@@ -5,7 +5,7 @@
   height: clamp(430px, 60vh, 620px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: radial-gradient(ellipse at 50% 60%, #0b1210 0%, var(--night) 70%);
+  background: radial-gradient(ellipse at 50% 60%, #eef2ee 0%, #f6f5f1 75%);
   overflow: hidden;
   box-shadow: var(--shadow);
 }
@@ -23,7 +23,7 @@
   width: min(1150px, 140%);
   aspect-ratio: 1.62 / 1;
   transform: translate(-50%, -50%);
-  background: radial-gradient(60% 55% at 42% 34%, rgba(57, 230, 163, 0.14), transparent 68%);
+  background: radial-gradient(60% 55% at 42% 34%, rgba(14, 122, 95, 0.12), transparent 68%);
   filter: blur(60px);
   pointer-events: none;
 }
@@ -196,19 +196,19 @@
   font-family: Consolas, "JetBrains Mono", monospace;
   font-size: 11px;
   letter-spacing: 0.06em;
-  color: rgba(210, 225, 220, 0.75);
-  text-shadow: 0 0 12px rgba(0, 0, 0, 0.9);
+  color: rgba(29, 33, 32, 0.65);
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.75);
   white-space: nowrap;
 }
 
-.chipmap__hud .id { color: #fff; font-weight: 600; }
-.chipmap__hud .dim { color: rgba(160, 180, 175, 0.6); }
+.chipmap__hud .id { color: #1d2120; font-weight: 600; }
+.chipmap__hud .dim { color: rgba(29, 33, 32, 0.5); }
 
 /* vignette inside card */
 .chipmap__vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(118% 88% at 50% 44%, transparent 30%, rgba(0, 0, 0, 0.45) 72%, rgba(0, 0, 0, 0.9) 100%);
+  background: radial-gradient(118% 88% at 50% 44%, transparent 30%, rgba(255, 255, 255, 0.55) 72%, rgba(255, 255, 255, 0.92) 100%);
   pointer-events: none;
   z-index: 2;
 }
@@ -225,7 +225,7 @@
 
 .chipmap__leads path {
   fill: none;
-  stroke: rgba(120, 220, 190, 0.4);
+  stroke: rgba(14, 122, 95, 0.45);
   stroke-width: 1;
   stroke-dasharray: 4 5;
   animation: chipmap-flow 8s linear infinite;
@@ -233,7 +233,7 @@
 
 .chipmap__leads circle {
   fill: var(--accent);
-  filter: drop-shadow(0 0 4px rgba(57, 230, 163, 0.8));
+  filter: drop-shadow(0 0 4px rgba(14, 122, 95, 0.55));
 }
 
 /* project tags */
@@ -244,9 +244,9 @@
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
-  border: 1px solid rgba(57, 230, 163, 0.4);
+  border: 1px solid rgba(14, 122, 95, 0.4);
   border-radius: 999px;
-  background: rgba(7, 16, 15, 0.82);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(8px);
   color: var(--ink);
   font-size: 13px;
@@ -267,7 +267,7 @@
 .chipmap__tag:hover {
   transform: translateY(-3px);
   border-color: var(--accent);
-  box-shadow: 0 0 20px rgba(57, 230, 163, 0.3);
+  box-shadow: 0 0 20px rgba(14, 122, 95, 0.22);
 }
 
 /* tag positions — matched to lead-line endpoints in the svg below */
