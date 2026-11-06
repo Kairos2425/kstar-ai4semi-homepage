@@ -1,4 +1,4 @@
-﻿window.HOMEPAGE_DATA = {
+window.HOMEPAGE_DATA = {
   profile: {
     name: "Xiaodan Li",
     nameEn: "Kairos Li",
@@ -6,7 +6,7 @@
     eyebrow: "AI4Semi Independent Builder / Reliability / Simulation Agent",
     headline: "让 AI 进入芯片研发：器件可靠性 × 数字设计智能体。",
     intro:
-      "你好，我是 Xiaodan Li（Kairos），一名具备物理化学与微纳材料科研训练背景的 AI4Semi 探索者。我的主线是把大模型真正带进芯片研发流程：一条线做器件可靠性——从可靠性数据工作台、器件寿命预测，到 AI 驱动的 TCAD 仿真与硅数据校准；另一条线做数字芯片设计智能体——让一句自然语言规格，变成一块能通过验证的电路。",
+      "你好，我是 Xiaodan Li（Kairos），一名具备物理化学与微纳材料科研训练背景的 AI4Semi 探索者。我的主线是把大模型真正带进芯片研发流程：一条线做器件可靠性——从数据工作台、寿命预测，到 AI 驱动的 TCAD 仿真与硅数据校准；另一条线做数字芯片设计智能体——让一句功能描述，变成一块能通过验证的电路。",
     actions: [
       { label: "查看 AI4Semi 项目", href: "#projects", variant: "solid" },
       { label: "工作台实况", href: "#dashboard", variant: "ghost" },
@@ -61,13 +61,14 @@
       alt: "Agentic TCAD 工作台概念图",
       detailUrl: "projects/agentic-tcad.html",
       summary:
-        "让 AI 安全地驱动专业 TCAD 仿真工具链：工程师用自然语言描述验证需求，系统规划受控仿真、调用求解器、产出有据可查的结果。器件电性指标在真实求解器上逐位复现，每一步都可追溯、可审计。",
+        "让 AI 安全地驱动专业 TCAD 仿真工具链：工程师用一句话描述验证需求，系统规划受控仿真、调用求解器、产出有据可查的结果。器件电性指标在真实求解器上逐位复现，每一步都可追溯、可审计。",
       contribution:
         "愿景是打通「工艺 → 器件 → 老化 → 寿命」的完整链条，让器件仿真从专家手艺变成可复用的基础设施——AI 设计芯片的速度越快，可靠性验证越是瓶颈。",
       chips: ["TCAD 仿真", "AI 编排", "证据链", "器件可靠性"],
       highlights: ["求解器级精度复现", "全流程可追溯", "人机协同闸门"],
       links: [
         { label: "项目详情", href: "projects/agentic-tcad.html" },
+        { label: "工作台预览", href: "demo/tcad-workbench.html" },
       ],
       featured: true,
       progress: { pct: 65, label: "统一工作台原型已在本机跑通，器件覆盖面持续扩展" },
@@ -81,13 +82,14 @@
       alt: "数字芯片设计智能体流程图",
       detailUrl: "projects/chip-agent.html",
       summary:
-        "用自然语言写下功能规格，系统自动完成数字电路设计、测试环境生成、仿真验证与缺陷修复——每一个「通过」都经过独立判卷，而不是模型自说自话。",
+        "用一句话写下功能规格，系统自动完成数字电路设计、测试环境生成、仿真验证与缺陷修复——每一个「通过」都经过独立判卷，而不是模型自说自话。",
       contribution:
         "把「写电路、写测试、跑仿真、看波形」这条原本靠资深工程师经验的链路，变成可审计的自动闭环；所有结果按证据等级如实标注，对标开源 agentic EDA 的公开基准。",
       chips: ["数字 IC", "设计自动化", "自动验证", "AI Agent"],
       highlights: ["规格驱动设计", "独立判卷不自证", "失败可归因可恢复"],
       links: [
         { label: "项目详情", href: "projects/chip-agent.html" },
+        { label: "界面预览", href: "demo/chip-agent.html" },
       ],
       featured: true,
       progress: { pct: 45, label: "本地设计-验证闭环已跑通，复杂题型能力持续提升" },
@@ -118,13 +120,14 @@
       alt: "失效案例检索平台概念图",
       detailUrl: "projects/failcase-rag.html",
       summary:
-        "把历史失效案例与 8D 分析报告沉淀为本地可检索的知识库：工程师用自然语言描述异常，系统找出相似案例并汇总根因线索——全部数据不出本机。",
+        "把历史失效案例与 8D 分析报告沉淀为本地可检索的知识库：工程师用一句话描述异常，系统找出相似案例并汇总根因线索——全部数据不出本机。",
       contribution:
         "面向产线与可靠性团队的失效知识复用：把散落在个人电脑里的案例报告，变成可问答的组织记忆。",
       chips: ["失效分析", "知识库", "本地部署", "隐私优先"],
       highlights: ["表格与报告全格式", "离线单机运行", "案例级去重溯源"],
       links: [
         { label: "项目详情", href: "projects/failcase-rag.html" },
+        { label: "界面预览", href: "demo/failcase-rag.html" },
       ],
       progress: { pct: 55, label: "单机离线版已可用，知识库持续扩充" },
     },
@@ -238,15 +241,15 @@
       alt: "Simulation Agent 产品海报图",
       detailUrl: "projects/simulation-agent.html",
       summary:
-        "探索 LLM 在器件仿真中的能力边界，让自然语言进入物理建模、结果对比与分析解读。目标是让 Agent 更好地理解工程师的物理意图，辅助组织仿真任务和结果审阅。",
+        "探索 LLM 在器件仿真中的能力边界，让工程师的描述直接进入物理建模、结果对比与分析解读。目标是让 Agent 更好地理解工程师的物理意图，辅助组织仿真任务和结果审阅。",
       contribution:
         "正在开发基于大语言模型的仿真 Agent 交互方向，重点探索物理机制、工程意图与结果表达之间的精准翻译。",
       chips: ["LLM", "Prompt Engineering", "COMSOL API", "FEM"],
-      highlights: ["自然语言交互", "仿真任务组织", "结果解释视图"],
+      highlights: ["描述式交互", "仿真任务组织", "结果解释视图"],
       links: [
         { label: "项目详情", href: "projects/simulation-agent.html" },
       ],
-      progress: { pct: 45, label: "自然语言到受控仿真的翻译层已在工作台落地" },
+      progress: { pct: 45, label: "从描述到受控仿真的翻译层已在工作台落地" },
     },
     {
       title: "半导体工程效率知识库与计算器",
@@ -402,12 +405,12 @@
   dashboard: {
     title: "能力版图",
     intro:
-      "用 AI 把器件可靠性分析做成可复用的基础设施——下面是目前覆盖的能力面与推进方向。",
+      "用 AI 把芯片研发环节做成可复用的基础设施——下面是目前覆盖的能力面与推进方向。",
     metrics: [
       { value: "可靠性×AI", label: "核心方向", note: "器件可靠性与数字设计智能体两条线" },
       { value: "HCI·BTI·TDDB·EM", label: "可靠性场景", note: "覆盖主流失效机理" },
       { value: "物理+ML", label: "寿命预测", note: "加速模型做骨干，带不确定度" },
-      { value: "自然语言", label: "驱动方式", note: "中文描述即可发起任务" },
+      { value: "一句话", label: "驱动方式", note: "中文描述即可发起任务" },
       { value: "全程留痕", label: "证据链", note: "每个结论可追溯可审计" },
       { value: "桌面+Web", label: "交付形态", note: "离线工具与内测服务并行" },
     ],
@@ -417,7 +420,7 @@
       { name: "数字芯片设计智能体", status: "产品化中", tone: "run", pct: 45, note: "规格到电路再到验证的自动闭环" },
       { name: "寿命预测", status: "产品化中", tone: "run", pct: 65, note: "物理约束 ML，带不确定度与适用范围" },
       { name: "报告与交付自动化", status: "已可用", tone: "ok", pct: 85, note: "认证报告预审 + 报告一键生成" },
-      { name: "AI 编排与 Agent", status: "演进中", tone: "run", pct: 50, note: "自然语言到受控执行的完整链路" },
+      { name: "AI 编排与 Agent", status: "演进中", tone: "run", pct: 50, note: "从一句话到受控执行的完整链路" },
       { name: "公开基准与知识库", status: "筹备中", tone: "info", pct: 30, note: "让能力可客观评分、可公开复用" },
     ],
   },
@@ -505,7 +508,7 @@
     {
       time: "Kstar / 小红书",
       title: "Simulation Agent 的能力边界",
-      body: "记录从自然语言到物理建模、边界条件、求解器调用和结果校验的探索过程。",
+      body: "记录从需求描述到物理建模、边界条件、求解器调用和结果校验的探索过程。",
       image: "assets/showcase/xhs-simulation-agent-poster.png",
       href: "projects/xhs-simulation-agent.html",
     },
