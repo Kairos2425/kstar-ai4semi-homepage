@@ -1,6 +1,6 @@
 /* Ambient motion layer — aurora canvas + counters + tilt/spotlight + staggered reveal.
    Signature effect replicated from loujc.github.io: breathing color fields, light ribbon,
-   pointer bloom; palette strengthened for this site's deep-night theme. */
+   pointer bloom; palette adapted to soft pastels for this site's light paper theme. */
 (() => {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(pointer: fine)").matches;
@@ -91,11 +91,11 @@
     const top = height * (0.36 + travel * 0.12) + lift;
     const thickness = height * (0.18 + Math.sin(phase * 0.27) * 0.035);
     const gradient = ctx.createLinearGradient(-width * 0.1, top, width * 1.1, top + thickness);
-    gradient.addColorStop(0, "rgba(89, 231, 214, 0)");
-    gradient.addColorStop(0.28, "rgba(89, 231, 214, 0.14)");
-    gradient.addColorStop(0.58, "rgba(150, 169, 255, 0.16)");
-    gradient.addColorStop(0.82, "rgba(255, 157, 132, 0.11)");
-    gradient.addColorStop(1, "rgba(255, 157, 132, 0)");
+    gradient.addColorStop(0, "rgba(60, 170, 140, 0)");
+    gradient.addColorStop(0.28, "rgba(60, 170, 140, 0.10)");
+    gradient.addColorStop(0.58, "rgba(120, 160, 220, 0.10)");
+    gradient.addColorStop(0.82, "rgba(230, 170, 120, 0.08)");
+    gradient.addColorStop(1, "rgba(230, 170, 120, 0)");
     ctx.save();
     ctx.translate((pointer.x - 0.5) * width * 0.06, (pointer.y - 0.5) * height * 0.04);
     ctx.rotate(-0.08 + travel * 0.035);
@@ -117,8 +117,8 @@
       pointer.x * width, pointer.y * height, 0,
       pointer.x * width, pointer.y * height, radius
     );
-    gradient.addColorStop(0, "rgba(205, 252, 246, 0.10)");
-    gradient.addColorStop(0.34, "rgba(205, 252, 246, 0.035)");
+    gradient.addColorStop(0, "rgba(255, 255, 255, 0.55)");
+    gradient.addColorStop(0.34, "rgba(255, 255, 255, 0.20)");
     gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
@@ -128,13 +128,13 @@
     if (!ctx || !width || !height) return;
     ctx.clearRect(0, 0, width, height);
     const phase = reducedMotion ? 0 : timestamp / 8200;
-    /* loujc dark palette, boosted for this site's near-black background */
+    /* loujc palette adapted to soft pastels that tint the light paper background */
     const palette = [
-      ["rgba(72, 224, 178, 0.55)", "rgba(31, 112, 111, 0.38)", "rgba(16, 44, 48, 0)"],
-      ["rgba(103, 135, 224, 0.52)", "rgba(45, 67, 128, 0.38)", "rgba(23, 31, 61, 0)"],
-      ["rgba(221, 117, 100, 0.42)", "rgba(126, 63, 75, 0.32)", "rgba(52, 24, 34, 0)"],
-      ["rgba(184, 153, 230, 0.42)", "rgba(81, 64, 121, 0.30)", "rgba(34, 27, 55, 0)"],
-      ["rgba(225, 190, 93, 0.36)", "rgba(108, 91, 52, 0.26)", "rgba(48, 39, 20, 0)"],
+      ["rgba(52, 160, 128, 0.34)", "rgba(196, 230, 212, 0.38)", "rgba(240, 247, 242, 0)"],
+      ["rgba(96, 138, 214, 0.30)", "rgba(205, 216, 240, 0.36)", "rgba(240, 244, 252, 0)"],
+      ["rgba(214, 146, 92, 0.26)", "rgba(248, 228, 206, 0.34)", "rgba(252, 246, 238, 0)"],
+      ["rgba(146, 116, 206, 0.28)", "rgba(228, 220, 246, 0.34)", "rgba(244, 240, 252, 0)"],
+      ["rgba(206, 174, 84, 0.26)", "rgba(248, 238, 212, 0.34)", "rgba(252, 248, 238, 0)"],
     ];
     const fields = [
       { x: 0.04, y: 0.06, width: 1.18, height: 0.88, rotation: -0.18, pointer: 0.10, scroll: 0.13, driftX: 0.18, driftY: 0.14, breathe: 0.09, speed: 0.54, offset: 0.2 },
@@ -150,13 +150,13 @@
     }));
 
     ctx.save();
-    ctx.filter = `blur(${Math.max(46, Math.min(92, width * 0.065))}px) saturate(118%)`;
+    ctx.filter = `blur(${Math.max(46, Math.min(92, width * 0.065))}px) saturate(110%)`;
     fields.forEach((field) => drawColorField(field, phase));
     drawLightRibbon(phase);
     ctx.restore();
 
     drawPointerBloom();
-    ctx.fillStyle = "rgba(4, 8, 7, 0.10)";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.30)";
     ctx.fillRect(0, 0, width, height);
   };
 

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>数字芯片设计智能体 | AI4Semi 项目详情</title>
+    <link rel="stylesheet" href="../styles.css?v=20261107" />
+  </head>
+  <body>
+    <main class="detail-page">
+      <a class="back-link" href="../index.html#projects">返回首页</a>
+      <header class="detail-hero">
+        <p class="eyebrow">Digital Design Agent</p>
+        <h1>写一句规格，得到一块能验证的电路</h1>
+        <p>数字芯片设计智能体：用自然语言描述功能需求，系统自动完成电路设计、测试环境生成、仿真验证与缺陷修复——每一个「通过」都经过独立判卷，而不是模型自说自话。</p>
+      </header>
+      <figure class="fx-hero">
+        <div class="fx-stage" data-fx="flow"></div>
+        <figcaption>规格 → 设计 → 测试 → 验证 → 修复的自动闭环，每一步留痕、可审计。</figcaption>
+      </figure>
+      <section class="detail-grid">
+        <figure class="detail-shot detail-shot--wide detail-shot--screen">
+          <img src="../assets/showcase/agentic-tcad-pipeline.svg" alt="设计智能体流水线示意" />
+          <figcaption>从自然语言意图到可验证电路的完整链路：AI 负责编排，确定性工具负责判定。</figcaption>
+        </figure>
+        <figure class="detail-shot">
+          <div class="fx-stage" data-fx="chip" style="position:relative;height:220px"></div>
+          <figcaption>电路级交付物：可运行、可验证、可继续迭代的数字设计。</figcaption>
+        </figure>
+        <figure class="detail-shot">
+          <div class="fx-stage" data-fx="iv" style="position:relative;height:220px"></div>
+          <figcaption>验证驱动：测试环境与判卷独立于生成过程，防止「自证清白」。</figcaption>
+        </figure>
+      </section>
+      <section class="detail-notes">
+        <h2>为什么做这件事</h2>
+        <p>数字 IC 设计的瓶颈正在从「会不会写」转向「验证得过不过」。当 AI 开始承担电路生成，验证吞吐与结果可信度就成了决定性问题——一个敢报「通过」的智能体，必须先有一套不依赖它自己的判卷体系。</p>
+        <p>这个项目复刻并工程化了开源社区的 agentic EDA 思路：模型只负责提案，确定性工具负责执行与判定，所有结果按证据等级如实标注。当前本地闭环已跑通，复杂题型的能力仍在提升中——所有对外表述都以可复核的实测为准。</p>
+      </section>
+    </main>
+    <script src="../motion.js?v=20261107"></script>
+    <script src="../fx.js?v=20261107"></script>
+  </body>
+</html>

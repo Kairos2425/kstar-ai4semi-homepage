@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>格物之心 · AI4Chip 智能测试数据中枢 · 全景能力演示</title>
+<style>
+:root{
+  --ink:#1F2937; --muted:#5F6B7A; --line:#DDE4EC; --blue:#185FA5; --blue-bg:#E6F1FB;
+  --blue-deep:#0C447C; --soft:#F6F8FB; --red:#A32D2D; --red-bg:#FDF3F2;
+  --amber:#854F0B; --amber-bg:#FAEEDA; --green:#0F6E56; --green-bg:#E3F4EC;
+  --navy:#0B1F33; --navy2:#10283F; --cyan:#22B8CF; --gold:#D9A441;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#EDF1F6;color:var(--ink);font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;font-size:14px;line-height:1.65;}
+code{font-family:Consolas,"SF Mono",monospace;background:var(--soft);padding:1px 5px;border-radius:3px;font-size:12px;color:var(--blue-deep)}
+
+/* ---------- layout ---------- */
+.sidebar{position:fixed;top:0;left:0;width:236px;height:100vh;background:linear-gradient(180deg,var(--navy) 0%,#0d2742 100%);color:#C7D8EC;overflow-y:auto;z-index:50;padding:0 0 20px;}
+.brand{padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.09)}
+.brand .logo{font-size:15px;font-weight:700;color:#fff;letter-spacing:.5px}
+.brand .logo em{font-style:normal;color:var(--cyan)}
+.brand .sub{font-size:11px;color:#8FA8C4;margin-top:4px;line-height:1.5}
+.nav-group{padding:14px 10px 4px;font-size:11px;color:#6E88A6;letter-spacing:1.5px}
+.nav a{display:flex;align-items:center;gap:9px;padding:8px 12px;margin:1px 8px;border-radius:7px;color:#B9CCE2;text-decoration:none;font-size:13px;cursor:pointer;transition:background .15s,color .15s}
+.nav a .n{flex:none;width:20px;height:20px;border-radius:5px;background:rgba(255,255,255,.08);color:#9FC0E0;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:600}
+.nav a:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav a.on{background:var(--blue);color:#fff}
+.nav a.on .n{background:rgba(255,255,255,.22);color:#fff}
+.main{margin-left:236px;min-width:0}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.topbar .tt{font-size:14px;font-weight:600;color:var(--blue-deep)}
+.topbar .tt small{display:block;font-weight:400;font-size:11.5px;color:var(--muted)}
+.disc{margin-left:auto;background:var(--red-bg);color:#791F1F;border:1px solid #E24B4A;border-radius:4px;font-size:11px;padding:3px 9px;font-weight:600;white-space:nowrap}
+.page{display:none;padding:26px 30px 60px;max-width:1240px;margin:0 auto}
+.page.on{display:block}
+.sec-head{margin-bottom:18px}
+.sec-head .kick{font-size:11.5px;color:var(--blue);font-weight:700;letter-spacing:2px}
+.sec-head h1{font-size:23px;font-weight:600;margin:3px 0 4px}
+.sec-head .lead{color:var(--muted);font-size:13px;max-width:900px}
+
+/* ---------- hero ---------- */
+.hero{background:linear-gradient(135deg,#0B1F33 0%,#123A5E 55%,#185FA5 100%);border-radius:14px;color:#fff;padding:38px 40px;margin-bottom:20px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-80px;top:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(34,184,207,.28),transparent 65%)}
+.hero .kick{display:inline-block;background:rgba(34,184,207,.18);border:1px solid rgba(34,184,207,.5);color:#8FE3F0;font-size:11.5px;padding:3px 11px;border-radius:20px;letter-spacing:1px;margin-bottom:14px}
+.hero h1{font-size:30px;font-weight:700;margin:0 0 10px;letter-spacing:.5px}
+.hero h1 em{font-style:normal;color:#8FE3F0}
+.hero p{max-width:760px;color:#C4D6EA;font-size:14.5px;margin:0 0 20px;line-height:1.8}
+.hero .cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-block;padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none;border:1px solid transparent}
+.btn-p{background:var(--cyan);color:#06222B}
+.btn-g{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.28)}
+.hero .meta{margin-top:18px;font-size:11.5px;color:#7E9BB8;display:flex;gap:18px;flex-wrap:wrap}
+
+/* ---------- pipeline ---------- */
+.flow{display:flex;align-items:stretch;gap:0;margin:6px 0 4px}
+.fnode{flex:1;background:#fff;border:1px solid var(--line);border-radius:9px;padding:12px 10px;text-align:center;position:relative;min-width:0}
+.fnode + .fnode{margin-left:0}
+.fnode .ic{font-size:20px;margin-bottom:4px}
+.fnode .t{font-size:12.5px;font-weight:600;color:var(--blue-deep)}
+.fnode .d{font-size:10.8px;color:var(--muted);margin-top:2px;line-height:1.45}
+.fnode.hl{border-color:var(--blue);box-shadow:0 0 0 1px var(--blue) inset}
+.farrow{flex:none;width:30px;display:flex;align-items:center;justify-content:center}
+.farrow .ln{width:100%;height:2px;background:repeating-linear-gradient(90deg,var(--blue) 0 6px,transparent 6px 11px);position:relative;animation:flow 1.2s linear infinite}
+.farrow .ln::after{content:"";position:absolute;right:-1px;top:-3.5px;border-left:8px solid var(--blue);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
+@keyframes flow{to{background-position:11px 0}}
+
+/* ---------- cards / grids ---------- */
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.card h3{font-size:15px;font-weight:600;margin:0 0 3px;color:var(--blue-deep)}
+.card .hint{font-size:12px;color:var(--muted);margin:0 0 12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.full{grid-column:1/-1}
+.badge{display:inline-block;background:var(--red-bg);color:#A32D2D;border:1px solid #E24B4A;border-radius:3px;font-size:10.5px;padding:1px 7px;margin-left:6px;vertical-align:1px;font-weight:600}
+.badge.sim{background:var(--amber-bg);color:var(--amber);border-color:#E3C88F}
+.tag{display:inline-block;background:var(--blue-bg);color:var(--blue-deep);font-size:11px;padding:1px 8px;border-radius:3px;margin:2px 4px 2px 0;font-weight:600}
+.callout{background:var(--blue-bg);border-left:4px solid var(--blue);border-radius:6px;padding:12px 16px;margin:12px 0;font-size:13px;line-height:1.75;color:var(--blue-deep)}
+.warn{background:var(--red-bg);border-left:4px solid var(--red);border-radius:6px;padding:11px 15px;margin:12px 0;font-size:12.5px;line-height:1.75;color:#791F1F}
+.amber{background:var(--amber-bg);border-left:4px solid var(--amber);border-radius:6px;padding:11px 15px;margin:12px 0;font-size:12.5px;line-height:1.75;color:#633806}
+.greenbox{background:var(--green-bg);border-left:4px solid var(--green);border-radius:6px;padding:11px 15px;margin:12px 0;font-size:12.5px;line-height:1.75;color:#0B4A3C}
+
+/* ---------- tables ---------- */
+table{width:100%;border-collapse:collapse;font-size:12.3px;margin:8px 0}
+th{text-align:left;background:var(--soft);color:var(--blue-deep);font-weight:600;padding:7px 9px;border:1px solid var(--line);white-space:nowrap}
+td{padding:7px 9px;border:1px solid var(--line);vertical-align:top}
+tr.clickable{cursor:pointer}
+tr.clickable:hover td{background:var(--blue-bg)}
+tr.hl td{background:var(--blue-bg);outline:1px solid var(--blue)}
+
+/* ---------- misc widgets ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0 4px}
+.kpi{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.kpi .k{font-size:11.5px;color:var(--muted)}
+.kpi .v{font-size:22px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums;line-height:1.35}
+.kpi .v.neg{color:var(--red)}
+.kpi .v.pos{color:var(--green)}
+.barrow{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:12.5px}
+.barlabel{width:150px;flex:none;color:var(--muted);font-size:12px}
+.bartrack{flex:1;background:var(--soft);border-radius:3px;height:15px;position:relative;overflow:hidden}
+.barfill{height:15px;border-radius:3px;background:#85B7EB;transition:width .5s}
+.barval{width:60px;text-align:right;flex:none;font-variant-numeric:tabular-nums;font-size:12px}
+button{background:var(--blue);color:#fff;border:0;border-radius:7px;padding:8px 15px;font-size:13px;cursor:pointer;font-family:inherit;font-weight:600}
+button:hover{background:var(--blue-deep)}
+button.ghost{background:#fff;color:var(--blue);border:1px solid var(--blue)}
+button:disabled{opacity:.5;cursor:default}
+button.sm{padding:5px 11px;font-size:12px}
+.wafer{display:grid;grid-template-columns:repeat(22,15px);grid-auto-rows:15px;gap:2px;justify-content:center;margin:8px 0}
+.cell{width:15px;height:15px;border-radius:2px;background:#E6F1FB;border:1px solid #B5D4F4;cursor:pointer}
+.cell.empty{background:transparent;border-color:transparent;cursor:default}
+.cell.edge{background:#F5C4B3;border-color:#D85A30}
+.cell.cluster{background:#E24B4A;border-color:#A32D2D}
+.cell.scatter{background:#FAC775;border-color:#BA7517}
+.cell:hover{outline:2px solid var(--blue);z-index:2;position:relative}
+.legend{font-size:11.8px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:6px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;vertical-align:-1px;border:1px solid}
+.controls{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;margin:10px 0 4px}
+.ctl{flex:1;min-width:220px}
+.ctl label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:4px}
+.ctl label b{color:var(--blue-deep)}
+input[type=range]{width:100%;accent-color:#185FA5}
+svg{width:100%;height:auto;display:block}
+.conclusion{background:var(--blue-bg);border-left:3px solid var(--blue);border-radius:5px;padding:10px 14px;margin-top:10px;font-size:13px;color:var(--blue-deep)}
+.logbox{background:#0B1F33;color:#9FE8A9;font-family:Consolas,monospace;font-size:11.8px;line-height:1.75;padding:12px 14px;border-radius:8px;height:280px;overflow-y:auto;white-space:pre-wrap}
+.logbox .t{color:#5E7FA3}
+.logbox .ok{color:#6EE7A0}.logbox .warn{color:#F5C04E}.logbox .err{color:#F28B82}
+.fileitem{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;border:1px solid var(--line);border-radius:7px;margin:6px 0;font-size:12.3px;background:#fff}
+.fileitem .sz{color:var(--muted);font-size:11.5px}
+.fileitem .st{font-size:11px;font-weight:700}
+.st-ok{color:var(--green)}.st-run{color:var(--blue)}.st-wait{color:#B4B2A9}
+.check{display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line);font-size:12.8px}
+.check:last-child{border-bottom:0}
+.check .ic{flex:none;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:1px}
+.check.ok .ic{background:var(--green-bg);color:var(--green)}
+.check.warn .ic{background:var(--amber-bg);color:var(--amber)}
+.check .tx b{color:var(--ink)}
+.check .tx span{color:var(--muted);font-size:12px;display:block}
+.score{display:flex;align-items:center;gap:14px;margin-top:10px}
+.score .num{font-size:34px;font-weight:700;color:var(--blue-deep)}
+.score .grade{font-size:12px;color:var(--muted)}
+/* chat */
+.chat{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.chat-msgs{height:340px;overflow-y:auto;padding:16px;background:var(--soft)}
+.msg{max-width:82%;margin-bottom:12px}
+.msg .bubble{padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.75;white-space:pre-wrap}
+.msg.user{margin-left:auto;text-align:right}
+.msg.user .bubble{background:var(--blue);color:#fff;border-bottom-right-radius:3px;display:inline-block;text-align:left}
+.msg.bot .bubble{background:#fff;border:1px solid var(--line);border-bottom-left-radius:3px;display:inline-block;text-align:left;box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.msg.bot .who{font-size:10.5px;color:var(--muted);margin-bottom:3px}
+.cite{display:inline-block;background:var(--blue-bg);color:var(--blue-deep);font-size:10.5px;padding:0 6px;border-radius:3px;margin:0 2px;font-weight:600;cursor:help}
+.trace{border:1px solid var(--line);border-radius:8px;background:#0B1F33;color:#B9CCE2;font-family:Consolas,monospace;font-size:11.5px;padding:12px 14px;margin-top:12px;min-height:120px;line-height:1.9}
+.trace .step{opacity:.35;transition:opacity .3s}
+.trace .step.run{opacity:1;color:#8FE3F0}
+.trace .step.done{opacity:1;color:#6EE7A0}
+.trace .tool{color:#F5C04E}
+.chips{display:flex;flex-wrap:wrap;gap:7px;padding:10px 12px;border-top:1px solid var(--line);background:#fff}
+.chip{background:var(--soft);border:1px solid var(--line);border-radius:20px;padding:4px 12px;font-size:12px;cursor:pointer;color:var(--blue-deep)}
+.chip:hover{background:var(--blue-bg);border-color:var(--blue)}
+.chat-input{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:#fff}
+.chat-input input{flex:1;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:13px;font-family:inherit}
+/* misc */
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.stat{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:10px 12px;text-align:center}
+.stat .k{font-size:11px;color:var(--muted)}
+.stat .v{font-size:19px;font-weight:700;color:var(--blue-deep);font-variant-numeric:tabular-nums}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tl{background:#fff;border:1px solid var(--line);border-radius:9px;padding:13px 14px;position:relative}
+.tl .lv{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:3px;margin-bottom:7px}
+.lv.l0{background:var(--green-bg);color:var(--green)}.lv.l1{background:var(--blue-bg);color:var(--blue-deep)}.lv.l2{background:var(--amber-bg);color:var(--amber)}.lv.l3{background:var(--red-bg);color:var(--red)}
+.tl h4{font-size:13.5px;margin:0 0 5px}
+.tl p{font-size:11.8px;color:var(--muted);margin:0;line-height:1.6}
+.tl .per{font-size:11px;color:var(--blue);font-weight:600;margin-top:6px}
+.gauge{position:relative;width:150px;height:80px;margin:0 auto}
+.rul-num{font-size:30px;font-weight:700;color:var(--amber);text-align:center}
+.foot{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;text-align:center;line-height:1.8}
+.script{background:#fff;border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:6px;padding:12px 16px;margin:9px 0;font-size:13px;line-height:1.9}
+.script .lbl{display:inline-block;background:var(--blue);color:#fff;font-size:10.5px;padding:1px 8px;border-radius:3px;margin-right:8px;vertical-align:1px;font-weight:700}
+.fill{color:var(--blue);border-bottom:1px dashed var(--blue);padding:0 2px}
+@media(max-width:960px){
+  .sidebar{position:static;width:100%;height:auto}
+  .main{margin-left:0}
+  .flow{flex-direction:column}
+  .farrow{width:100%;height:22px}
+  .farrow .ln{width:2px;height:100%;background:repeating-linear-gradient(180deg,var(--blue) 0 6px,transparent 6px 11px);animation:flowv 1.2s linear infinite}
+  .farrow .ln::after{right:auto;left:-3.5px;top:auto;bottom:-1px;border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-top:8px solid var(--blue);border-bottom:0}
+  @keyframes flowv{to{background-position:0 11px}}
+  .grid2,.grid3,.kpis,.timeline,.statgrid{grid-template-columns:1fr 1fr}
+  .page{padding:18px 14px 50px}
+}
+/* products & offer */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column}
+.pcard .vis{height:72px;background:linear-gradient(135deg,#F6F8FB,#E4EFF9);border:1px solid var(--line);border-radius:7px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pcard .vis svg{width:100%;height:100%}
+.pcard h4{font-size:13.5px;margin:0 0 4px;color:var(--ink)}
+.pcard .st{font-size:10px;font-weight:700;padding:1px 8px;border-radius:3px;display:inline-block;margin-bottom:7px;letter-spacing:.5px}
+.st-del{background:var(--green-bg);color:var(--green)}
+.st-dev{background:var(--blue-bg);color:var(--blue-deep)}
+.st-res{background:var(--amber-bg);color:var(--amber)}
+.pcard p{font-size:11.8px;color:var(--muted);margin:0 0 9px;flex:1;line-height:1.6}
+.pcard .map{font-size:10.8px;color:var(--blue);border-top:1px dashed var(--line);padding-top:7px;font-weight:600}
+.formcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:15px 16px}
+.formcard .lv{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:3px;margin-bottom:8px}
+.formcard h4{font-size:14px;margin:0 0 5px}
+.formcard p{font-size:12px;color:var(--muted);margin:0;line-height:1.65}
+.formcard .per{font-size:11.5px;color:var(--blue);font-weight:600;margin-top:8px}
+.art{border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden;font-size:11px}
+.art .bar{background:var(--soft);padding:5px 10px;font-weight:600;color:var(--blue-deep);border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
+.art .bd{padding:10px 12px;color:var(--muted);line-height:1.8}
+.art table{font-size:10.5px;margin:0}
+.art th, .art td{padding:4px 6px}
+@media(max-width:960px){
+  .grid4,.pgrid{grid-template-columns:1fr 1fr}
+}
+@media print{
+  .sidebar,.topbar,.chips,.chat-input{display:none!important}
+  .main{margin:0}.page{display:block!important;padding:0;max-width:none}
+  .hero{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .card,.script,table,.warn,.callout,.amber{break-inside:avoid}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="brand">
+    <div class="logo">格物之心 <em>·</em> AI4<em>Chip</em></div>
+    <div class="sub">全景能力演示 · 格物之心代表出席<br>2026 AI、3D IC 与先进封测闭门论坛 · 长川科技总部 · 2026-11-07/08 · 主办：长川科技 × 芯谋研究</div>
+  </div>
+  <div class="nav">
+    <div class="nav-group">总览</div>
+    <a data-sec="overview" class="on"><span class="n">0</span>全景架构与能力矩阵</a>
+    <div class="nav-group">格物之心 · 我们是谁</div>
+    <a data-sec="about"><span class="n">A</span>技术底座 · RSI 迁移</a>
+    <a data-sec="products"><span class="n">B</span>产品矩阵 · 已做过的尝试</a>
+    <a data-sec="offer"><span class="n">C</span>产品形态 · 交付物 · 商务</a>
+    <div class="nav-group">纵深案例 · 用数据说话</div>
+    <a data-sec="nand"><span class="n">D</span>3D NAND 纵深示例</a>
+    <div class="nav-group">数据层 · T1–T2</div>
+    <a data-sec="t1"><span class="n">1</span>数据接入与口径诊断</a>
+    <a data-sec="t2"><span class="n">2</span>良率洞察与根因分析</a>
+    <div class="nav-group">智能层 · T3–T7</div>
+    <a data-sec="t3"><span class="n">3</span>高风险 Die 智能筛选</a>
+    <a data-sec="t4"><span class="n">4</span>自适应测试与项裁剪</a>
+    <a data-sec="t5"><span class="n">5</span>设备健康预测性维护</a>
+    <a data-sec="t6"><span class="n">6</span>AOI 缺陷智能检测</a>
+    <a data-sec="t7"><span class="n">7</span>只读智能体 · 检索问答</a>
+    <div class="nav-group">协同与交付 · T8</div>
+    <a data-sec="t8"><span class="n">8</span>跨厂口径协同沙盘</a>
+    <a data-sec="gov"><span class="n">9</span>治理 · 分级交付 · 边界</a>
+    <a data-sec="script"><span class="n">★</span>演示脚本与话术</a>
+  </div>
+</nav>
+
+<div class="main">
+<div class="topbar">
+  <div class="tt>格物之心 · AI4Chip 智能测试数据中枢 · 全景能力演示<small>定位：不做设备、不做板卡、不碰测试程序开发环境 —— 只补「机台数据 → 决策」这一段闭环</small></div>
+  <span class="disc">全部页面为合成示意数据 · 不代表任何真实产线效果</span>
+</div>
+
+<!-- ============ SECTION: OVERVIEW ============ -->
+<section class="page on" id="overview">
+  <div class="hero">
+    <span class="kick">格物之心 代表出席 · SYNTHETIC DEMO · 离线单文件 · 断网可开 · 零外部请求</span>
+    <h1>AI × 测试数据闭环<br><em>从机台到决策，中间这一层我们来做</em></h1>
+    <p>算力芯片把单颗测试时长从数十秒拉长到数十分钟，机台每秒都是钱，但测试数据大部分只用来判一次 Pass/Fail。本演示展示一套覆盖 <b>T1 数据接入 → T8 跨厂协同</b> 的智能化数据中枢：每一项能力都可现场交互，每一个数字都可复核，每一条边界都提前说清。<b>真实结论必须拿贵司数据跑过才算。</b></p>
+    <div class="cta">
+      <a class="btn btn-p" href="#" onclick="go('t3');return false">★ 先看旗舰模块：智能筛选</a>
+      <a class="btn btn-g" href="#" onclick="go('gov');return false">查看能力边界与交付分级</a>
+    </div>
+    <div class="meta"><span>技术底座：科学智能 RSI 闭环方法论（酶设计 / AlphaFold 蛋白设计已验证）→ 芯片域迁移</span><span>数据规模口径：宽表 · 小样本 · 大文件（按颗数与关联键算，不按 GB 算）</span><span>技术路线：GBDT / 统计过程控制 / 异常检测 / 共形预测 / 只读 Agent</span><span>部署形态：私有化 · 离线 · 数据不出域</span></div>
+  </div>
+
+  <div class="card">
+    <h3>数据闭环全景<span class="badge sim">示意</span></h3>
+    <p class="hint">机台吐出的每一比特数据，经接口层、数据中枢、智能引擎，最终变成「建议表」交还工程师签核 —— AI 不直接下发机台，这是安全边界也是质量红线。</p>
+    <div class="flow">
+      <div class="fnode"><div class="ic">🏭</div><div class="t">机台层</div><div class="d">ATE 测试机 · 探针台<br>分选机 · AOI 检测</div></div>
+      <div class="farrow"><div class="ln"></div></div>
+      <div class="fnode hl"><div class="ic">🔌</div><div class="t">接口层</div><div class="d">SECS/GEM · EDA/Interface A<br>STDF · FDC 时序 · 报警事件</div></div>
+      <div class="farrow"><div class="ln"></div></div>
+      <div class="fnode hl"><div class="ic">🗄️</div><div class="t">数据中枢</div><div class="d">数据湖 · 字段字典<br>口径对齐 · 数据血缘</div></div>
+      <div class="farrow"><div class="ln"></div></div>
+      <div class="fnode hl"><div class="ic">🧠</div><div class="t">智能引擎</div><div class="d">六层 AI：筛选 · 根因<br>健康 · 检测 · Agent · 联邦</div></div>
+      <div class="farrow"><div class="ln"></div></div>
+      <div class="fnode"><div class="t" style="margin-top:14px">建议表 → 工程师签核</div><div class="d">ECN 流程 · 质量签核<br>不改程序 · 不下发机台</div></div>
+      <div class="farrow"><div class="ln"></div></div>
+      <div class="fnode"><div class="ic">🔁</div><div class="t">反馈闭环</div><div class="d">良率 · 测试时长<br>过杀 / 逃逸 · DPPM</div></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>能力矩阵 · 八类任务全覆盖</h3>
+      <p class="hint">每一类都标注了可交互的演示模块、建议交付级别与周期 —— 与会后 POC 路径一一对应。</p>
+      <table>
+      <thead><tr><th>任务</th><th>本页模块</th><th>级别</th><th>周期</th></tr></thead>
+      <tbody>
+      <tr><td>T1 数据接入与口径诊断</td><td><a href="#" onclick="go('t1');return false" style="color:var(--blue);font-weight:600">→ 接入诊断台</a></td><td>L0</td><td>2–4 周</td></tr>
+      <tr><td>T2 良率可视化 / 异常批次 / 根因</td><td><a href="#" onclick="go('t2');return false" style="color:var(--blue);font-weight:600">→ 良率洞察</a></td><td>L0–L1</td><td>3–5 周</td></tr>
+      <tr><td>T3 高风险 die 筛选 / 经济账</td><td><a href="#" onclick="go('t3');return false" style="color:var(--blue);font-weight:600">→ 智能筛选 ★</a></td><td>L1</td><td>4–6 周</td></tr>
+      <tr><td>T4 自适应测试 / 项裁剪</td><td><a href="#" onclick="go('t4');return false" style="color:var(--blue);font-weight:600">→ 自适应测试</a></td><td>L2</td><td>6–10 周起</td></tr>
+      <tr><td>T5 设备健康 / 预测性维护</td><td><a href="#" onclick="go('t5');return false" style="color:var(--blue);font-weight:600">→ 设备健康</a></td><td>L1</td><td>3–6 周</td></tr>
+      <tr><td>T6 AOI 缺陷检测 / 分类</td><td><a href="#" onclick="go('t6');return false" style="color:var(--blue);font-weight:600">→ AOI 检测</a></td><td>L1</td><td>2–6 周</td></tr>
+      <tr><td>T7 只读智能体 / 检索问答</td><td><a href="#" onclick="go('t7');return false" style="color:var(--blue);font-weight:600">→ 智能体</a></td><td>L1</td><td>1–2 周</td></tr>
+      <tr><td>T8 跨厂口径 / 联邦协同</td><td><a href="#" onclick="go('t8');return false" style="color:var(--blue);font-weight:600">→ 协同沙盘</a></td><td>L3</td><td>提纲 1–2 周</td></tr>
+      </tbody></table>
+    </div>
+    <div>
+      <div class="card">
+        <h3>公开基准 · 我们引用而非自夸</h3>
+        <p class="hint">2026 年泰瑞达 × PDF Solutions 公开案例的真实量级 —— 也是本页智能筛选模块的默认参数来源。</p>
+        <div class="statgrid">
+          <div class="stat"><div class="k">缺陷芯片识别置信度</div><div class="v">90%</div></div>
+          <div class="stat"><div class="k">晶圆分选过杀率</div><div class="v">1.6%</div></div>
+          <div class="stat"><div class="k">终测良率提升</div><div class="v">≈ +1pt</div></div>
+          <div class="stat"><div class="k">经济账结论</div><div class="v" style="font-size:15px;line-height:1.4;padding-top:5px">基本持平</div></div>
+        </div>
+        <div class="callout" style="margin:12px 0 0">所以行业下一步挑<b>封装成本更高</b>的产品（Chiplet / KGD / HBM / 大尺寸算力芯片）才划算 —— 这条推论直接决定了智能筛选模块里「封装成本倍数」滑块的意义。</div>
+      </div>
+      <div class="card">
+        <h3>三条我们不做的事</h3>
+        <p style="font-size:12.8px;color:var(--muted);margin:0 0 8px">边界先说清，比能力清单更能建立信任：</p>
+        <p style="font-size:12.8px;margin:6px 0">✕ 不改工艺、不动硬件、不接管测试程序开发环境与协议栈 —— 那是设备厂的战略腹地</p>
+        <p style="font-size:12.8px;margin:6px 0">✕ 不承诺无人化、不承诺大模型直接写程序上机、不承诺任何未实测的良率/时间百分比</p>
+        <p style="font-size:12.8px;margin:6px 0">✕ AI 建议只写建议表，由贵司程序 / 工程师决定是否采纳 —— 影子模式先行</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:14px">格物之心能力版图覆盖 <b>设计 → 制造 → 测试 → 封装 → 数据</b> 全链路：本页 T1–T8 是「测试与良率」域的交互 demo，其余领域的方法与已跑通的工程实现见 <a href="#" onclick="go('products');return false" style="color:var(--blue);font-weight:700">「能力版图 · 工程实现」</a>；<b>3D NAND 纵深案例</b>（FBM 回溯 + Vt 寿命预警）见 <a href="#" onclick="go('nand');return false" style="color:var(--blue);font-weight:700">「纵深案例」</a>；产品形态、交付物与计价框架见 <a href="#" onclick="go('offer');return false" style="color:var(--blue);font-weight:700">「商务与交付」</a>。</div>
+
+  <div class="amber"><b>数据规模口径（重要）：</b>算力芯片 die 大（500–800mm²+），300mm 晶圆一片仅几十到一百多颗，一个 lot 约 1,000–3,000 颗 DUT，3 个月累计约 1–10 万颗 —— <b>按「颗数」算样本，不按「文件 GB」算</b>。但每颗 DUT 数百至数千条 PTR/MPR 记录，单 STDF 常含数万到数百万条记录、单批 GB 级。典型「宽表、小样本、大文件」：样本稀缺（良率 99% 时坏样本仅百级），故走 GBDT / SPC / 异常检测 + 共形预测 + 保留组，<b>不适用深度学习堆料</b>；工程挑战在解析与 I/O，不在算力。</div>
+</section>
+
+<!-- ============ SECTION: ABOUT ============ -->
+<section class="page" id="about">
+  <div class="sec-head">
+    <div class="kick">格物之心 · 为什么是我们</div>
+    <h1>从「科学发现的 RSI 闭环」到「芯片数据的智能闭环」</h1>
+    <p class="lead">格物之心在科学智能方向有真实落地：<b>生物酶设计 RSI 模型</b>、<b>基于 AlphaFold 的蛋白质/酶设计 RSI 模型</b>。芯片设计、制造测试、器件仿真、先进封装本质是同一个问题结构 —— <b>假设生成 → 专业求解器验证 → 结果回流 → 自我改进</b>。本页其余所有模块，都是这套方法论在芯片全链路上的工程实现。</p>
+  </div>
+
+  <div class="grid3">
+    <div class="card"><h3>生物酶设计 RSI 模型</h3><p class="hint">递归自我改进的真实闭环</p>
+      <p style="font-size:12.8px;color:var(--muted);margin:0">设计 → 表达 → 测活 → 学习 → 再设计。关键不是单次预测精度，而是<b>每一轮迭代都有湿实验 ground truth 回流</b>，模型越用越准。</p></div>
+    <div class="card"><h3>AlphaFold 蛋白/酶设计 RSI</h3><p class="hint">物理先验 × 深度生成</p>
+      <p style="font-size:12.8px;color:var(--muted);margin:0">把结构与能量等物理先验注入深度模型，走「生成 → 验证 → 精修」循环。AlphaFold 的启示：<b>领域物理不是包袱，是最强的特征工程</b>。</p></div>
+    <div class="card"><h3>迁移到芯片：同一个问题结构</h3><p class="hint">验证器换了，方法论不变</p>
+      <p style="font-size:12.8px;color:var(--muted);margin:0">湿实验 assay → <b>TCAD 求解器 / ATE 量测 / 终测标签</b>；蛋白结构 → <b>器件行为、测试响应与设计指标</b>；酶活筛选 → <b>测试建议、DFT 草稿与工艺窗口的影子验证</b>。RSI 的「回流」在芯片域有天然验证器。</p></div>
+  </div>
+
+  <div class="card">
+    <h3>方法论映射 · 科学发现 ↔ 芯片产线</h3>
+    <table>
+    <thead><tr><th style="width:24%">科学智能（已验证）</th><th style="width:26%">芯片域对应物</th><th>共同机制</th></tr></thead>
+    <tbody>
+    <tr><td>AlphaFold 结构 / 能量先验</td><td>① PINN 器件退化物理注入（HCI 寿命）② TCAD 校准的物理参数反演 ③ 设计期性能-可靠性联合建模</td><td>物理先验注入深度模型，外推不跑飞</td></tr>
+    <tr><td>酶设计：生成 → 表达 → 测活 → 学习</td><td>① 测试建议影子验证回流（T3/T4）② 测试程序 / DFT 草稿生成 → 工程师审核（T7）③ 工艺窗口多目标优化</td><td>每个 AI 输出都有可验证 gate，失败可回流</td></tr>
+    <tr><td>湿实验 assay = 验证器</td><td>① TCAD 求解器 / Sentaurus / Silvaco ② ATE / 探针台量测 ③ 可靠性实验</td><td>agent 不越权：专业工具做验证，人做签核</td></tr>
+    <tr><td>高通量筛选</td><td>晶圆级 die 筛选 / bin 级批量评估（T3）</td><td>大规模候选 × 快速验证，漏检与过杀一起算</td></tr>
+    <tr><td>失败实验案例沉淀</td><td>失效案例库 + 设计 bug 库 + 测试异常库 + 证据账本</td><td>RSI 的记忆层：踩过的坑不再重复</td></tr>
+    <tr><td>RSI 递归自我改进</td><td>模型版本血缘 + 漂移检测 + 重训练触发</td><td>系统从每一次验证中自我更新</td></tr>
+    </tbody></table>
+    <div class="callout" style="margin-top:12px"><b>一句话：</b>RSI 在芯片领域的正确形态不是「让 AI 自动改产线」，而是「让每一次 AI 建议都可验证、可回流、可沉淀」—— 这正是本页影子模式、保留组验证、证据分级与模型血缘的工程实现，也是我们敢把「智能化」讲到深的底气。</div>
+  </div>
+</section>
+
+<!-- ============ SECTION: PRODUCTS ============ -->
+<section class="page" id="products">
+  <div class="sec-head">
+    <div class="kick">格物之心 · 芯片领域能力版图</div>
+    <h1>覆盖设计 → 制造 → 测试 → 封装 → 数据的全链路能力栈</h1>
+    <p class="lead">我们的版图不是单点，而是按领域列出的能力栈：每个格子标注<b>真实需求、方法、成熟度与证据</b>。「demo 就绪」= 本页可交互验证；「内部验证/研究验证」= 已跑通的工程实现，细节从略。诚实标成熟度，比声称全会更值钱。</p>
+  </div>
+
+  <div class="grid3">
+    <div class="card" style="border-top:3px solid var(--blue)">
+      <h3>① 测试与良率数据闭环 <span class="tag">本会主场</span></h3>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>真实需求：</b>单颗测试数十分钟、KGD 判读一致性、良率归因、overkill↔escape 权衡。</p>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>方法：</b>STDF 口径对齐 → GBDT/异常检测 → 影子建议 → 签核回流。</p>
+      <p style="font-size:12px;margin:6px 0 0"><b style="color:var(--green)">T1–T8 交互 demo 就绪</b> · <b style="color:var(--green)">知识库已交付内部</b></p>
+      <div class="map" style="border:0;padding-top:5px">证据：本页全部 T 模块 · failcase-rag · semidata</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--blue-deep)">
+      <h3>② 器件与工艺仿真</h3>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>真实需求：</b>设计-工艺-可靠性联合优化、HCI 寿命预测、TCAD 校准自动化。</p>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>方法：</b>Agentic TCAD 编排 + PINN 物理先验 + 求解器验证闸。</p>
+      <p style="font-size:12px;margin:6px 0 0"><b style="color:var(--blue-deep)">内部验证</b> · <b style="color:var(--amber)">研究验证</b></p>
+      <div class="map" style="border:0;padding-top:5px">证据：tcad_workbench · hci_tool · flip_lab/decks</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--cyan)">
+      <h3>③ 芯片设计与 DFT 协同</h3>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>真实需求：</b>测试程序生成、DFT 协同、少一轮流片、上市时间。</p>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>方法：</b>Agentic EDA 流程引擎（状态机 + 技能契约 + 三层记忆 + 质量门）。</p>
+      <p style="font-size:12px;margin:6px 0 0"><b style="color:var(--blue-deep)">内部验证</b>（复刻 SOTA agentic EDA）· <b style="color:var(--amber)">联合研发可切入</b></p>
+      <div class="map" style="border:0;padding-top:5px">证据：chip_agent · casebank · agentic_sft</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <h3>④ 先进封装与检测</h3>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>真实需求：</b>混合键合 1μm 颗粒、3D 堆叠 die/键合归因、AOI 缺陷漏检/过杀。</p>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>方法：</b>小样本异常检测 + 主动学习 + AI/AOI 冲突裁决规则。</p>
+      <p style="font-size:12px;margin:6px 0 0"><b style="color:var(--green)">T6 交互 demo 就绪</b> · 真实数据待 POC</p>
+      <div class="map" style="border:0;padding-top:5px">证据：本页 T6 模块 · 方法论对齐 L4</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green)">
+      <h3>⑤ 数据治理与知识底座 <span class="tag">跨领域</span></h3>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>真实需求：</b>数据不出域、口径统一、血缘可追溯、证据分级。</p>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>方法：</b>治理编译器 + 案例库 + 域模型微调 + 出域 egress gate。</p>
+      <p style="font-size:12px;margin:6px 0 0"><b style="color:var(--green)">已交付内部</b> · <b style="color:var(--blue-deep)">内部验证</b> · <b style="color:var(--amber)">建设中</b></p>
+      <div class="map" style="border:0;padding-top:5px">证据：semidata · casebank · failcase-rag · agentic_sft</div>
+    </div>
+    <div class="card" style="border-top:3px solid #7A5AF8">
+      <h3>⑥ 跨厂协同与标准</h3>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>真实需求：</b>各厂口径不一、数据不能出域、模型无法跨厂复用。</p>
+      <p style="font-size:12.3px;color:var(--muted);margin:4px 0"><b>方法：</b>联邦学习 + 统一字段字典 + 模型血缘管理。</p>
+      <p style="font-size:12px;margin:6px 0 0"><b style="color:var(--green)">T8 沙盘 demo</b> · 联合体议题</p>
+      <div class="map" style="border:0;padding-top:5px">证据：本页 T8 · 联邦架构图</div>
+    </div>
+  </div>
+
+  <h3 style="margin:22px 0 4px;font-size:15px;color:var(--blue-deep)">代表性工程实现 · 已跑通的点</h3>
+  <p class="hint" style="margin-bottom:10px">以下 8 项是上面版图里我们真实跑过的工程实现 —— 不展开细节，只展示形态与成熟度。它们是「尝试过」的证据，不是全部家当。</p>
+  <div class="pgrid">
+    <div class="pcard">
+      <div class="vis"><svg viewBox="0 0 120 72"><rect x="4" y="20" width="24" height="30" rx="4" fill="#fff" stroke="#185FA5"/><text x="16" y="39" font-size="9" text-anchor="middle" fill="#0C447C">NL</text><line x1="28" y1="35" x2="38" y2="35" stroke="#185FA5" marker-end="url(#ah)"/><defs><marker id="ah" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#185FA5"/></marker></defs><rect x="40" y="20" width="34" height="30" rx="4" fill="#E6F1FB" stroke="#185FA5"/><text x="57" y="39" font-size="8.5" text-anchor="middle" fill="#0C447C">Agent</text><line x1="74" y1="35" x2="84" y2="35" stroke="#185FA5" marker-end="url(#ah)"/><rect x="86" y="20" width="30" height="30" rx="4" fill="#FAEEDA" stroke="#BA7517"/><text x="101" y="39" font-size="8.5" text-anchor="middle" fill="#633806">人工闸</text></svg></div>
+      <span class="st st-dev">内部验证</span>
+      <h4>Agentic TCAD 编排工作台</h4>
+      <p>自然语言 → 本地 LLM → 结构化工具调用 → 人工闸 → Sentaurus VM / Silvaco / SPICE → 证据账本。已支撑 LDMOS HCI 器件校准全流程。</p>
+      <div class="map">↔ 本次演示的方法论底座</div>
+    </div>
+    <div class="pcard">
+      <div class="vis"><svg viewBox="0 0 120 72"><line x1="12" y1="12" x2="12" y2="58" stroke="#B4B2A9"/><line x1="12" y1="58" x2="110" y2="58" stroke="#B4B2A9"/><path d="M14 50 Q40 30 66 44 T108 56" fill="none" stroke="#185FA5" stroke-width="2"/><path d="M14 50 Q40 30 66 44 T108 56 L108 62 L14 62 Z" fill="#E6F1FB" opacity=".5"/><circle cx="66" cy="44" r="2.5" fill="#A32D2D"/></svg></div>
+      <span class="st st-res">研究验证</span>
+      <h4>器件寿命预测模型（PINN）</h4>
+      <p>把 HCI 退化物理方程注入神经网络，输出寿命分布与置信区间 —— 物理先验注入，外推不跑飞，替代纯黑箱外推。</p>
+      <div class="map">↔ T3/T5 预测内核范式</div>
+    </div>
+    <div class="pcard">
+      <div class="vis"><svg viewBox="0 0 120 72"><circle cx="22" cy="36" r="11" fill="#E6F1FB" stroke="#185FA5"/><text x="22" y="39" font-size="8" text-anchor="middle" fill="#0C447C">S1</text><circle cx="60" cy="36" r="11" fill="#E6F1FB" stroke="#185FA5"/><text x="60" y="39" font-size="8" text-anchor="middle" fill="#0C447C">S2</text><circle cx="98" cy="36" r="11" fill="#E6F1FB" stroke="#185FA5"/><text x="98" y="39" font-size="8" text-anchor="middle" fill="#0C447C">S3</text><path d="M33 36h15M71 36h15" stroke="#185FA5" marker-end="url(#ah2)"/><defs><marker id="ah2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#185FA5"/></marker></defs><path d="M60 25 C60 12 80 12 80 22" fill="none" stroke="#BA7517" stroke-dasharray="3 2"/></svg></div>
+      <span class="st st-dev">内部验证</span>
+      <h4>Agentic EDA 流程引擎</h4>
+      <p>复刻 SOTA agentic EDA 全流程：六步状态机 + 技能契约 + 三层记忆 + L1/L2 质量门，面向模拟/定制设计流。</p>
+      <div class="map">↔ T7 智能体编排深度参考</div>
+    </div>
+    <div class="pcard">
+      <div class="vis"><svg viewBox="0 0 120 72"><rect x="14" y="14" width="52" height="16" rx="8" fill="#fff" stroke="#185FA5"/><rect x="20" y="36" width="60" height="16" rx="8" fill="#E6F1FB" stroke="#185FA5"/><rect x="26" y="56" width="66" height="12" rx="6" fill="#FAEEDA" stroke="#BA7517"/><circle cx="100" cy="22" r="9" fill="#0C447C"/><text x="100" y="26" font-size="9" text-anchor="middle" fill="#fff">?</text></svg></div>
+      <span class="st st-del">已交付内部</span>
+      <h4>失效案例知识库</h4>
+      <p>离线 RAG：Excel / PDF 8D 报告灌库，对话式检索相似失效案例与根因。全部数据不出本机，已在内部使用。</p>
+      <div class="map">↔ T7 知识底座已落地形态</div>
+    </div>
+    <div class="pcard">
+      <div class="vis"><svg viewBox="0 0 120 72"><circle cx="30" cy="30" r="7" fill="#E6F1FB" stroke="#185FA5"/><circle cx="70" cy="22" r="7" fill="#E6F1FB" stroke="#185FA5"/><circle cx="90" cy="50" r="7" fill="#E6F1FB" stroke="#185FA5"/><line x1="36" y1="33" x2="63" y2="25" stroke="#185FA5"/><line x1="36" y1="27" x2="85" y2="46" stroke="#185FA5"/><line x1="76" y1="27" x2="85" y2="44" stroke="#185FA5"/><circle cx="30" cy="30" r="2.5" fill="#0C447C"/><circle cx="70" cy="22" r="2.5" fill="#0C447C"/><circle cx="90" cy="50" r="2.5" fill="#0C447C"/></svg></div>
+      <span class="st st-dev">内部验证</span>
+      <h4>半导体数据治理编译器</h4>
+      <p>文件注册 → 版本化 → 血缘 → 证据分级数据集；出域只发匿名化统计画像。把散落的量测/仿真文件编译成可建模资产。</p>
+      <div class="map">↔ T1 口径诊断 + 治理页血缘范式</div>
+    </div>
+    <div class="pcard">
+      <div class="vis"><svg viewBox="0 0 120 72"><rect x="30" y="40" width="56" height="20" rx="4" fill="#fff" stroke="#B4B2A9"/><rect x="36" y="26" width="56" height="20" rx="4" fill="#EAF2FA" stroke="#85B7EB"/><rect x="42" y="12" width="56" height="20" rx="4" fill="#E6F1FB" stroke="#185FA5"/><text x="70" y="26" font-size="8" text-anchor="middle" fill="#5F6B7A">案例+证据级</text><text x="70" y="40" font-size="8" text-anchor="middle" fill="#5F6B7A">结果可复核</text><text x="70" y="54" font-size="8" text-anchor="middle" fill="#5F6B7A">未验证≠晋级</text></svg></div>
+      <span class="st st-res">建设中</span>
+      <h4>工程案例库</h4>
+      <p>task-matched 参考案例库：每条案例带真实结果与证据级标注，供 agent 检索复用 —— 通用文档不如对口案例。</p>
+      <div class="map">↔ T8 协同口径 / 知识沉淀</div>
+    </div>
+    <div class="pcard">
+      <div class="vis"><svg viewBox="0 0 120 72"><line x1="12" y1="12" x2="12" y2="58" stroke="#B4B2A9"/><line x1="12" y1="58" x2="110" y2="58" stroke="#B4B2A9"/><path d="M14 20 L34 30 L52 38 L72 46 L108 54" fill="none" stroke="#185FA5" stroke-width="2"/><circle cx="34" cy="30" r="2" fill="#A32D2D"/><circle cx="72" cy="46" r="2" fill="#A32D2D"/><text x="100" y="16" font-size="8" fill="#5F6B7A">loss</text></svg></div>
+      <span class="st st-dev">内部验证</span>
+      <h4>域模型微调流水线</h4>
+      <p>SFT / LoRA 训练 + 基座评估全流程，面向半导体领域语料做私有化小模型 —— T7 问答背后的模型路线。</p>
+      <div class="map">↔ T7 私有化模型路线</div>
+    </div>
+    <div class="pcard">
+      <div class="vis"><svg viewBox="0 0 120 72"><path d="M12 50 L30 46 L44 30 L58 52 L74 24 L92 44 L108 38" fill="none" stroke="#185FA5" stroke-width="1.8"/><path d="M12 50 L30 46 L44 30 L58 52 L74 24 L92 44 L108 38" fill="none" stroke="#A32D2D" stroke-width="1.2" stroke-dasharray="4 3" transform="translate(0,-4)"/><circle cx="74" cy="24" r="3" fill="#A32D2D"/></svg></div>
+      <span class="st st-res">研究验证</span>
+      <h4>HCI 机理建模</h4>
+      <p>退化物理机制拟合 + DeckBuild 参数卡：把 HCI 退化写成可计算的物理模型，是寿命预测与风险特征的物理来源。</p>
+      <div class="map">↔ T3 风险分的物理特征来源</div>
+    </div>
+  </div>
+  <div class="amber"><b>口径说明：</b>能力版图按领域列出「能做什么 + 成熟度」，工程实现均处于内部验证 / 试点 / 研究阶段，未对外承诺产线指标；状态三级「demo 就绪 / 已交付内部 / 内部验证 / 研究验证」。对外沟通按实际成熟度口径，研究验证不说成已交付，版图中标「联合研发可切入」的领域以 POC 合作形态推进。</div>
+</section>
+
+<!-- ============ SECTION: OFFER ============ -->
+<section class="page" id="offer">
+  <div class="sec-head">
+    <div class="kick">格物之心 · 商务与交付</div>
+    <h1>产品形态 · 交付物 · 计价框架</h1>
+    <p class="lead">回答三个问题：<b>交付什么形态的东西、验收看什么、钱怎么算</b>。原则：不按「效果承诺」计价，按「可验证的工作量」计价 —— 与质量部门的验收逻辑一致。</p>
+  </div>
+
+  <div class="grid4">
+    <div class="formcard"><span class="lv" style="background:var(--green-bg);color:var(--green)">POC 项目制</span><h4>L0–L1</h4><p>数据接入诊断 + 高风险筛选/根因/设备健康影子建议。按项目计价，最快 2 周出可复核报告。</p><div class="per">周期 2–8 周 · 我方出人出算力</div></div>
+    <div class="formcard"><span class="lv" style="background:var(--blue-bg);color:var(--blue-deep)">私有化平台</span><h4>L1–L2</h4><p>数据中枢 + 智能引擎部署贵司机房/边缘侧：STDF 接入、口径字典、模型服务、建议表回写 MES。</p><div class="per">实施费 + 年费 · 3–6 个月</div></div>
+    <div class="formcard"><span class="lv" style="background:var(--amber-bg);color:var(--amber)">联合研发</span><h4>L2</h4><p>共建自适应测试 / 根因归因 / 测试程序·DFT 协同 / 跨环节前馈模块，ECN 与质量签核走贵司既有流程，我们出算法与工程。</p><div class="per">按里程碑 · 6–12 个月</div></div>
+    <div class="formcard"><span class="lv" style="background:var(--red-bg);color:var(--red)">联合体 / 标准</span><h4>L3</h4><p>统一口径规范 + 联邦验证 + 联合白皮书/标准提案，多方分摊成本与周期。</p><div class="per">多方分摊 · 6–18 个月</div></div>
+  </div>
+
+  <div class="grid2" style="margin-top:14px">
+    <div class="card">
+      <h3>交付物清单（验收对象）</h3>
+      <table>
+      <thead><tr><th>交付物</th><th>形态</th><th>级别</th></tr></thead>
+      <tbody>
+      <tr><td>数据质量诊断报告</td><td>可复核 HTML/PDF：解析率、字段覆盖、口径对齐、关联键命中</td><td>L0</td></tr>
+      <tr><td>高风险 die 清单 + 建议表</td><td>CSV/系统内导出，风险分附置信区间</td><td>L1</td></tr>
+      <tr><td>根因 Top-3 排查报告</td><td>分级线索 + 特征归因 + 复核建议（非结论）</td><td>L1</td></tr>
+      <tr><td>设备健康预警看板</td><td>看板 + 维护建议工单（影子模式）</td><td>L1</td></tr>
+      <tr><td>自适应测试影子建议表</td><td>逐项动作 / 预估节省 / 风险等级 / 签核标记</td><td>L2</td></tr>
+      <tr><td>只读智能体知识库 + 问答界面</td><td>私有化部署，输出带出处、可复核</td><td>L1</td></tr>
+      <tr><td>统一口径规范 / 联合白皮书</td><td>文档 + 联合课题提案</td><td>L3</td></tr>
+      </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>计价维度（报价口径）</h3>
+      <table>
+      <thead><tr><th>维度</th><th>说明</th></tr></thead>
+      <tbody>
+      <tr><td>项目级别</td><td>L0 诊断 ≪ L1 影子 ≪ L2 闭环 ≪ L3 协同，工作量与风险跨级差一个量级</td></tr>
+      <tr><td>产线 / 机台数</td><td>每条线独立接入、口径标定与影子验证，按线计</td></tr>
+      <tr><td>数据规模与口径成熟度</td><td>lot 数、关联键完整度、程序版本管理水平决定接入成本</td></tr>
+      <tr><td>部署形态</td><td>纯离线 &lt; 边缘侧只读 &lt; 实时接口（SECS/GEM 接入另计集成）</td></tr>
+      <tr><td>联合体 vs 单方</td><td>多方分摊成本但周期更长；单方独建快但贵</td></tr>
+      <tr><td>商务原则</td><td>POC 我方出人出算力、不占产线工时、失败不追责；数据不出域</td></tr>
+      </tbody>
+      </table>
+      <div class="callout" style="margin:10px 0 0"><b>报价一句话：</b>按「可复核的里程碑」计价，不按「效果承诺」计价。NDA/用途审批 1–4 周通常是最长项 —— 这也是我们建议先约「半天数据对表会」而不是先谈交付日的原因。</div>
+    </div>
+  </div>
+
+  <div class="greenbox"><b>合作里的我们要什么（只有一样）：</b>一个能验证的真实场景 —— 一批脱敏历史数据 + 一个愿意每周花两小时答疑的 TE。给得起这个，我们就能把上面任何一级做成。</div>
+</section>
+
+<!-- ============ SECTION: NAND ============ -->
+<section class="page" id="nand">
+  <div class="sec-head">
+    <div class="kick">纵深案例 · 3D NAND · 从一个环节切入</div>
+    <h1>电梯稿落地为两个可交互 demo</h1>
+    <p class="lead">下面两个模块分别对应电梯稿里的两个切入点 —— 都遵循同一组原则：<b>不连外网、数据不出厂、不换现有软件、小样本也可靠、每次升级需测试+工程师确认</b>。</p>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--cyan)">
+    <h3>电梯稿 · 3D NAND 切入版（60 秒）</h3>
+    <div class="script" style="border:0;padding:6px 2px 2px">
+      「一套部署在半导体工厂内部的 AI 系统，<b>不连接外网、数据不出厂、也不需要替换工厂现有软件</b>。它利用工厂积累的生产和测试数据，结合半导体器件的物理原理，帮助工程师分析问题、预测风险、优化工艺。<b>即使数据不多，也能得到可靠、可解释的结果。</b>AI 会随着新数据不断学习和提升，但<b>每次升级都需要经过测试和工程师确认</b>，确保安全可控。以 3D NAND 为例，可以从一个环节切入：比如 CP Fail Bit Map 失效模式自动分离并回溯到工艺站，或者 retention 和 Vt 漂移的寿命建模与提前预警。希望有机会当面向您汇报，<b>先选一个环节做小规模验证，用数据说话</b>。」
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>N1 · CP Fail Bit Map：失效模式自动分离 → 工艺站回溯<span class="badge sim">示意</span></h3>
+    <p class="hint">左：Fail Bit Map（合成）。AI 自动把失效 bit 按空间签名分成 5 类模式；点击右侧模式卡，高亮对应失效簇并给出「模式 → 工艺站候选 → 建议验证动作」回溯链。</p>
+    <div class="grid2">
+      <div>
+        <svg id="fbmSvg" viewBox="0 0 460 310" role="img" aria-label="Fail Bit Map"></svg>
+        <div class="legend" id="fbmLegend" style="margin-top:8px"></div>
+      </div>
+      <div>
+        <div id="modeCards"></div>
+        <div class="conclusion" id="fbmTrace" style="margin-top:10px">点击右侧失效模式卡片，查看空间签名与工艺站回溯链。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>N2 · Retention / Vt 漂移：寿命建模与提前预警<span class="badge sim">示意</span></h3>
+    <p class="hint">加速烘烤（85/105/125℃）测 Vt margin 衰减 → Arrhenius 物理先验外推到使用温度 → 输出寿命预测 + 置信区间 + 预警判定。拖动「目标使用温度」看外推寿命如何变化。</p>
+    <div class="grid2">
+      <div>
+        <svg id="retSvg" viewBox="0 0 560 280" role="img" aria-label="Vt margin 衰减与寿命外推"></svg>
+        <div class="legend" id="retLegend" style="margin-top:6px">
+          <span><i style="background:#98A2B3;border-color:#98A2B3"></i>烘烤 85℃</span>
+          <span><i style="background:#F2994A;border-color:#F2994A"></i>烘烤 105℃</span>
+          <span><i style="background:#E24B4A;border-color:#E24B4A"></i>烘烤 125℃</span>
+          <span><i style="background:#0F6E56;border-color:#0F6E56"></i>使用温度外推（虚线）</span>
+        </div>
+      </div>
+      <div>
+        <div class="ctl" style="margin-bottom:12px">
+          <label>目标使用温度　<b id="useTempVal">40℃</b>（拖动看外推寿命）</label>
+          <input type="range" id="useTemp" min="30" max="70" step="1" value="40">
+        </div>
+        <div class="kpis" style="grid-template-columns:1fr 1fr">
+          <div class="kpi"><div class="k">预测保持性寿命（示意）</div><div class="v" id="lifeYears">—</div></div>
+          <div class="kpi"><div class="k">置信区间（95%）</div><div class="v" id="lifeCI" style="font-size:15px;line-height:1.5;padding-top:6px">—</div></div>
+        </div>
+        <div class="kpis" style="grid-template-columns:1fr 1fr">
+          <div class="kpi"><div class="k">Spec 判定（≥10 年）</div><div class="v" id="lifeJudge">—</div></div>
+          <div class="kpi"><div class="k">margin 剩余 / 斜率</div><div class="v" id="marginLeft" style="font-size:15px;line-height:1.5;padding-top:6px">—</div></div>
+        </div>
+        <div class="conclusion" id="retCon">—</div>
+        <p style="font-size:11.5px;color:var(--muted);margin:10px 0 0">方法：Arrhenius 加速模型 + 物理先验约束 + 小样本外推置信区间 —— 与 PINN 寿命预测同一思想（物理先验注入），此处为示意实现。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="greenbox"><b>CTA：</b>「先选一个环节做小规模验证，用数据说话。」需要贵司一批脱敏的 CP FBM / bake 数据 + 一个愿意每周答疑的工程师 —— 两周出一份可复核报告。</div>
+</section>
+
+<!-- ============ SECTION: T1 ============ -->
+<section class="page" id="t1">
+  <div class="sec-head">
+    <div class="kick">T1 · L0 只读诊断 · 零产线风险</div>
+    <h1>数据接入与口径诊断<span class="badge sim">合成数据包</span></h1>
+    <p class="lead">「你们能读我们的数据吗？」—— 这一页回答：STDF/ATDF 解析、字段字典、口径对齐、跨工序关联可行性。只读权限即可启动，是会后第一个 POC 的最小形态。点击「开始接入」观看解析流水与诊断报告生成。</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>合成测试数据包</h3>
+      <p class="hint">模拟一个已定型算力芯片产品、近 3 个月、24 个 lot 的脱敏数据包。</p>
+      <div id="filelist"></div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button id="ingestBtn">▶ 开始接入与解析</button>
+        <button class="ghost" id="ingestReset">重置</button>
+      </div>
+      <div class="logbox" id="logbox" style="margin-top:12px"><span class="t">// 等待接入指令 —— 数据包未加载</span></div>
+    </div>
+    <div class="card" id="reportCard" style="display:none">
+      <h3>口径对齐诊断报告</h3>
+      <p class="hint">接入完成后自动生成 —— 口径对不齐，后面任何模型都不可信。</p>
+      <div id="checks"></div>
+      <div class="score"><div class="num" id="scoreNum">0</div><div class="grade">数据可用性评分<br><span id="scoreGrade"></span></div></div>
+      <h3 style="margin-top:16px">数据画像（宽表 · 小样本 · 大文件）</h3>
+      <div class="statgrid">
+        <div class="stat"><div class="k">DUT 样本（颗）</div><div class="v">43,206</div></div>
+        <div class="stat"><div class="k">测试项 / 颗</div><div class="v">1,148</div></div>
+        <div class="stat"><div class="k">PTR/MPR 记录</div><div class="v">≈5,100万</div></div>
+        <div class="stat"><div class="k">原始体积</div><div class="v">38.6 GB</div></div>
+      </div>
+      <div class="conclusion" id="t1con">—</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION: T2 ============ -->
+<section class="page" id="t2">
+  <div class="sec-head">
+    <div class="kick">T2 · L0–L1 · 良率可视化与根因</div>
+    <h1>良率洞察与异常批次<span class="badge sim">示意</span></h1>
+    <p class="lead">AI 接入后的第一屏：把 STDF 还原成 wafer map 与 SoftBin Pareto，沿时间轴找异常批次，输出根因 Top-3 线索。点击 wafer map 任意 die 可查看其分档与坐标。</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>① Wafer map · 失效空间分布<span class="badge sim">示意</span></h3>
+      <p class="hint">边缘环状、簇状缺陷一眼可辨 —— 空间模式本身就是根因线索。</p>
+      <div class="wafer" id="wafer"></div>
+      <div class="legend">
+        <span><i style="background:#E6F1FB;border-color:#B5D4F4"></i>合格</span>
+        <span><i style="background:#F5C4B3;border-color:#D85A30"></i>边缘环异常</span>
+        <span><i style="background:#E24B4A;border-color:#A32D2D"></i>簇状缺陷</span>
+        <span><i style="background:#FAC775;border-color:#BA7517"></i>散点异常</span>
+      </div>
+      <div class="conclusion" id="dieInfo">点击任意 die 查看 SoftBin / 坐标 / 风险标记。</div>
+    </div>
+    <div class="card">
+      <h3>② 失效 Bin Pareto<span class="badge sim">示意</span></h3>
+      <p class="hint">Pass 未入图；只看失效分档，快速定位该先查哪一类。</p>
+      <div id="pareto"></div>
+      <div class="conclusion">口径对齐是第一步：SoftBin 定义、程序版本、lot 归属三者对不上，后面任何模型都不可信。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>③ Lot 良率趋势与异常批次预警<span class="badge sim">示意</span></h3>
+    <p class="hint">12 个 lot 的终测良率序列；红点为 SPC 控制图判定的异常批次（z-score 超限）。悬停查看数值。</p>
+    <svg id="lotChart" viewBox="0 0 860 240" role="img" aria-label="lot 良率趋势图"></svg>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>异常批次清单</h3>
+      <table>
+      <thead><tr><th>Lot</th><th>终测良率</th><th>z-score</th><th>疑似方向（线索）</th><th>状态</th></tr></thead>
+      <tbody id="lotTable"></tbody>
+      </table>
+      <p style="font-size:11.5px;color:var(--muted);margin:6px 0 0">异常批次 = 良率低于控制下限 <b>LCL 96.0%</b>。疑似方向由 SPC + 参数漂移联合给出，<b>仅作排查线索，结论需贵司工程师复核</b>。</p>
+    </div>
+    <div class="card">
+      <h3>根因 Top-3 排序<span class="badge sim">示意</span></h3>
+      <p class="hint">特征贡献度（类 SHAP）排序 —— 告诉工程师「先查什么」，不替工程师下结论。</p>
+      <div id="rootcause"></div>
+      <div class="amber" style="margin-top:10px;font-size:12px">「分不清是 die 还是键合」是 3D 堆叠后的前沿未解问题 —— 我们把它列为<b>联合课题</b>，不作为交付承诺。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION: T3 ============ -->
+<section class="page" id="t3">
+  <div class="sec-head">
+    <div class="kick">T3 · L1 影子建议 · 本会主题最贴</div>
+    <h1>高风险 Die 智能筛选与经济账<span class="badge sim">合成示意</span></h1>
+    <p class="lead">拖动阈值与封装成本，实时观察过杀 / 漏放 / 净收益的权衡 —— 这是 2026 年泰瑞达 × PDF Solutions 公开案例的完整复刻形态：90% 置信度识别、1.6% 过杀、+1% 终测良率、经济账基本持平。默认状态已调到公开案例量级。</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>风险分分布 · 良品 vs 失效件<span class="badge sim">示意</span></h3>
+      <p class="hint">模型输出每颗 die 的风险分（0–1）。红色为终测失效件（共 60 颗示意），蓝色为良品（4,000 颗示意）。竖线 = 当前判定阈值。</p>
+      <svg id="histSvg" viewBox="0 0 460 210" role="img" aria-label="风险分分布直方图"></svg>
+      <div class="legend" style="margin-top:4px">
+        <span><i style="background:#B5D4F4;border-color:#85B7EB"></i>良品风险分</span>
+        <span><i style="background:#E24B4A;border-color:#A32D2D"></i>失效件风险分</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>判定阈值与经济参数</h3>
+      <div class="controls">
+        <div class="ctl">
+          <label>判定阈值（risk score ≥ 此值即拦截）　<b id="tval">0.62</b></label>
+          <input type="range" id="thr" min="0.30" max="0.90" step="0.01" value="0.62">
+        </div>
+        <div class="ctl">
+          <label>封装成本 / 单颗价值 倍数　<b id="rval">2.5×</b></label>
+          <input type="range" id="ratio" min="0.5" max="5" step="0.1" value="2.5">
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin:8px 0">
+        <button id="opt">找净收益最优点</button>
+        <button class="ghost" id="reset">重置</button>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="k">拦截高风险 die</div><div class="v" id="hit">—</div></div>
+        <div class="kpi"><div class="k">误杀良品</div><div class="v neg" id="kill">—</div></div>
+        <div class="kpi"><div class="k">过杀率 / 漏放数</div><div class="v" id="rate">—</div></div>
+        <div class="kpi"><div class="k">净收益（示意单位）</div><div class="v" id="net">—</div></div>
+      </div>
+      <div class="conclusion" id="conclusion">—</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>净收益随阈值变化<span class="badge sim">示意</span></h3>
+      <p class="hint">阈值越低抓得越多、过杀也越多；最优点通常不在「抓得最多」的位置。虚线 = 净收益零轴。</p>
+      <svg viewBox="0 0 620 190" role="img" aria-label="净收益随阈值变化曲线">
+        <line x1="40" y1="152" x2="600" y2="152" stroke="#DDE4EC" stroke-width="1"/>
+        <line id="zeroline" x1="40" y1="100" x2="600" y2="100" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="4 4"/>
+        <text id="zerotext" x="44" y="96" font-size="11" fill="#888780">净收益 = 0</text>
+        <polyline id="curve" points="" fill="none" stroke="#185FA5" stroke-width="2.5"/>
+        <line id="cursor" x1="300" y1="20" x2="300" y2="160" stroke="#A32D2D" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle id="dot" cx="300" cy="100" r="5" fill="#A32D2D"/>
+        <text x="40" y="178" font-size="11" fill="#5F6B7A">阈值 0.30（抓得最多、过杀也最多）</text>
+        <text x="600" y="178" font-size="11" fill="#5F6B7A" text-anchor="end">阈值 0.90（几乎不拦、漏放最多）</text>
+      </svg>
+    </div>
+    <div class="card">
+      <h3>Precision–Recall 权衡<span class="badge sim">示意</span></h3>
+      <p class="hint">类别极不平衡（坏样本仅 1.1%）下，PR 曲线比准确率诚实。红点 = 当前阈值位置。</p>
+      <svg viewBox="0 0 620 190" role="img" aria-label="PR 曲线">
+        <line x1="40" y1="160" x2="600" y2="160" stroke="#DDE4EC"/>
+        <line x1="40" y1="20" x2="40" y2="160" stroke="#DDE4EC"/>
+        <text x="300" y="184" font-size="11" fill="#5F6B7A" text-anchor="middle">Recall（抓住的坏件比例）</text>
+        <text x="14" y="90" font-size="11" fill="#5F6B7A" text-anchor="middle" transform="rotate(-90 14 90)">Precision</text>
+        <polyline id="prCurve" points="" fill="none" stroke="#0F6E56" stroke-width="2.5"/>
+        <circle id="prDot" cx="300" cy="80" r="5" fill="#A32D2D"/>
+      </svg>
+      <div class="conclusion" id="prNote">—</div>
+    </div>
+  </div>
+
+  <div class="grid3">
+    <div class="card"><h3>方法论可信度三件套</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin:0">① <b>保留组 hold-out</b>：20% lot 不参与训练，只走标准程序，专用于下游验证 —— 向质量部门证明「没有自欺」的最低成本手段。</p></div>
+    <div class="card"><h3>共形预测置信区间</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin:0">每颗 die 的风险判定附 90% 置信区间，而非裸分数 —— 小样本下给区间比给点估计更诚实。</p></div>
+    <div class="card"><h3>经济账公式</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin:0">净收益 ≈ 拦截数×封装成本 − 误杀数×单颗价值 − 逃逸风险成本。<b>单颗价值越高、封装越贵越划算</b> —— Chiplet/KGD/HBM 是优先场景。</p></div>
+  </div>
+</section>
+
+<!-- ============ SECTION: T4 ============ -->
+<section class="page" id="t4">
+  <div class="sec-head">
+    <div class="kick">T4 · L2 闭环优化 · 离线影子先行</div>
+    <h1>自适应测试与测试项裁剪<span class="badge sim">示意</span></h1>
+    <p class="lead">「AI 能不能帮我们省测试时间？」—— 测试成本 ≈ 每秒机时成本 × 测试秒数 ÷ 并行 site 数。本页展示逐项耗时分析与影子模式建议表；<b>任何 limit / 程序变更必须走贵司 ECN 与质量签核</b>，本模块只输出建议，不下发机台。</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>逐项耗时剖析（单颗 DUT）<span class="badge sim">示意</span></h3>
+      <p class="hint">算力芯片单颗测试数十分钟 —— 时间集中在少数高成本测试项上，裁剪空间也集中在这里。</p>
+      <div id="itemBars"></div>
+    </div>
+    <div class="card">
+      <h3>影子模式建议表<span class="badge sim">示意</span></h3>
+      <p class="hint">每条建议标注动作、预估节省、风险等级与签核要求 —— 影子模式 = 只输出建议，与现行判定并行对照。</p>
+      <table>
+      <thead><tr><th>测试项</th><th>建议动作</th><th>预估节省</th><th>风险</th><th>签核</th></tr></thead>
+      <tbody id="sugTable"></tbody>
+      </table>
+      <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+        <button id="applySug">应用建议（模拟）</button>
+        <span id="applyState" style="font-size:12px;color:var(--muted)">当前：现行测试程序</span>
+      </div>
+      <div class="conclusion" id="t4con">—</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>测试时长对比<span class="badge sim">示意</span></h3>
+    <p class="hint">蓝色 = 现行程序；绿色 = 应用建议后（模拟）。验收红线：<b>测试时间下降的同时，终测良率与 DPPM/逃逸不劣化</b> —— 时间数字必须实测，不预设。</p>
+    <div class="barrow"><div class="barlabel">现行测试时长</div><div class="bartrack"><div class="barfill" id="tBefore" style="width:100%;background:#85B7EB"></div></div><div class="barval" id="tBeforeV">—</div></div>
+    <div class="barrow"><div class="barlabel">AI 建议后（模拟）</div><div class="bartrack"><div class="barfill" id="tAfter" style="width:100%;background:#57C785"></div></div><div class="barval" id="tAfterV">—</div></div>
+  </div>
+
+  <div class="amber"><b>为什么现场只演示离线回放：</b>「量产机台这一步我不建议做，也不该由我提议——安全边界和质量责任不允许，任何 limit 或程序变更都得走贵司的工程变更与质量签核。我可以做<b>离线回放</b>：用历史数据模拟『如果当时采纳了这个建议会怎样』，效果一样看得见，风险是零。」—— 在线推理需 3–6 个月 + ECN，demo 阶段一律只做影子输出。</div>
+</section>
+
+<!-- ============ SECTION: T5 ============ -->
+<section class="page" id="t5">
+  <div class="sec-head">
+    <div class="kick">T5 · L1 · 最适合做第一个 POC</div>
+    <h1>设备健康 · 预测性维护<span class="badge sim">示意</span></h1>
+    <p class="lead">探针卡针尖磨损、接触电阻漂移、handler 卡料 —— 数据相对易得、不碰测试判定，是落地风险最低的一类。FDC 时序 + 控制图基线 + 时序异常检测 + 剩余寿命估计；<b>预警提前量与虚警率是一对 trade-off，必须主动报虚警率</b>。</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>探针卡 #A17 · 接触电阻趋势（90 天）<span class="badge sim">示意</span></h3>
+      <p class="hint">蓝线 = 实测；灰区 = 控制限；红区 = 漂移超限段；虚线 = 预测失效点。</p>
+      <svg id="fdcChart" viewBox="0 0 520 250" role="img" aria-label="接触电阻时序趋势图"></svg>
+    </div>
+    <div class="card">
+      <h3>剩余寿命与预警权衡</h3>
+      <div class="gauge"><svg viewBox="0 0 150 80" style="width:150px">
+        <path d="M15 70 A60 60 0 0 1 135 70" fill="none" stroke="#DDE4EC" stroke-width="12" stroke-linecap="round"/>
+        <path id="gaugeArc" d="M15 70 A60 60 0 0 1 135 70" fill="none" stroke="#D9A441" stroke-width="12" stroke-linecap="round" stroke-dasharray="188" stroke-dashoffset="60"/>
+        <text x="75" y="66" text-anchor="middle" font-size="20" font-weight="700" fill="#854F0B" id="rulDays">12 天</text>
+        <text x="75" y="80" text-anchor="middle" font-size="9" fill="#5F6B7A">预测剩余寿命</text>
+      </svg></div>
+      <div class="ctl" style="margin-top:12px">
+        <label>预警灵敏度　<b id="sensVal">70%</b>（越高越灵敏）</label>
+        <input type="range" id="sens" min="10" max="100" value="70">
+      </div>
+      <div class="kpis" style="grid-template-columns:1fr 1fr">
+        <div class="kpi"><div class="k">预警提前量（示意）</div><div class="v pos" id="leadT">—</div></div>
+        <div class="kpi"><div class="k">虚警率（示意）</div><div class="v neg" id="faRate">—</div></div>
+      </div>
+      <div class="conclusion" id="t5con">—</div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>设备健康画像（单机台 · 90 天）</h3>
+      <div class="statgrid">
+        <div class="stat"><div class="k">UPH 达成率</div><div class="v">94.2%</div></div>
+        <div class="stat"><div class="k">MTBA（协助次数间隔）</div><div class="v">18.6h</div></div>
+        <div class="stat"><div class="k">接触电阻漂移</div><div class="v" style="color:var(--amber)">+38%</div></div>
+        <div class="stat"><div class="k">温控波动 σ</div><div class="v">0.31℃</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>维护建议（影子输出）</h3>
+      <p style="font-size:12.8px;margin:4px 0">▸ <b>探针卡 #A17</b>：建议 12 天内安排更换窗口，避开 LOT 高峰；更换后复测接触电阻基线。</p>
+      <p style="font-size:12.8px;margin:4px 0">▸ <b>分选机槽位 7</b>：温度偏移 +0.4℃ 已持续 6 天，建议检查热电偶校准。</p>
+      <p style="font-size:12.8px;margin:4px 0">▸ <b>handler 取放机构</b>：contact fail 率周环比 +0.3pt，未达预警线，继续观察。</p>
+      <div class="conclusion" style="margin-top:10px">设备侧指标（UPH / OEE / MTBA）是这类模型最硬的验收口径 —— 预警命中与虚警都可用停机记录复核。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION: T6 ============ -->
+<section class="page" id="t6">
+  <div class="sec-head">
+    <div class="kick">T6 · L1 · 先进封装刚需</div>
+    <h1>AOI 缺陷智能检测<span class="badge sim">合成图像</span></h1>
+    <p class="lead">混合键合 1μm 颗粒即可致失效，缺陷样本极少 —— 走「只学好样本」的异常检测路线（PatchCore/PaDiM 类），同时报<b>漏检率与过杀率</b>并给 PR 曲线。厂商宣传的「&lt;3%」是特定场景实测，不可外推。</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>合成 Die 影像 · AI 检测叠加</h3>
+      <p class="hint">下图为程序绘制的示意 die（凸点阵列 + 注入缺陷），非真实 AOI 图像。切换「AI 检测」查看候选框与置信度。</p>
+      <svg id="dieSvg" viewBox="0 0 460 340" style="background:#101826;border-radius:8px"></svg>
+      <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+        <button id="aoiToggle">开启 AI 检测</button>
+        <span id="aoiState" style="font-size:12px;color:var(--muted)">当前：原始影像</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>检测结果与指标<span class="badge sim">示意</span></h3>
+      <div class="kpis" style="grid-template-columns:1fr 1fr">
+        <div class="kpi"><div class="k">漏检率（示意）</div><div class="v pos">0.8%</div></div>
+        <div class="kpi"><div class="k">过杀率（示意）</div><div class="v">2.1%</div></div>
+        <div class="kpi"><div class="k">检出缺陷</div><div class="v" id="aoiDet">—</div></div>
+        <div class="kpi"><div class="k">误报候选</div><div class="v neg" id="aoiFP">—</div></div>
+      </div>
+      <table>
+      <thead><tr><th>缺陷</th><th>类别</th><th>置信度</th><th>位置</th></tr></thead>
+      <tbody id="defectTable"></tbody>
+      </table>
+      <div class="conclusion" id="t6con">—</div>
+    </div>
+  </div>
+  <div class="amber"><b>冲突裁决规则（必须预先定义）：</b>AI 与 AOI 原判结果冲突时，由「AI 高置信 + 人工复核」仲裁，分歧样本进入主动学习池反哺模型 —— 漏检与过杀的经济权重不同（漏检在混合键合上是灾难），阈值须按贵司风险偏好标定。</div>
+</section>
+
+<!-- ============ SECTION: T7 ============ -->
+<section class="page" id="t7">
+  <div class="sec-head">
+    <div class="kick">T7 · L1 · 数据准备最轻 · 出 demo 最快</div>
+    <h1>只读智能体 · 检索问答与编排回放<span class="badge sim">编排回放</span></h1>
+    <p class="lead">私有化知识库 + RAG + 只读 Agent 编排：查日志、解读故障码、生成方案草稿，<b>所有输出带出处、可复核，绝不写进产线执行路径</b>。本页为编排回放演示 —— 展示真实部署时 Agent 的调用链形态；问答内容基于机台认知手册与应答卡预置。</p>
+  </div>
+  <div class="grid2">
+    <div class="card" style="padding:14px">
+      <div class="chat">
+        <div class="chat-msgs" id="chatMsgs">
+          <div class="msg bot"><div class="who">AI4Chip 助手 · 只读模式</div><div class="bubble">您好。我是测试数据智能体的演示实例。可以问我：overkill 是什么、ECID 为什么重要、D9000 和 V93000 差在哪、1μm 颗粒为什么致命、数据不出域怎么落地…… 或点击下方预置问题。</div></div>
+        </div>
+        <div class="chips" id="chatChips"></div>
+        <div class="chat-input">
+          <input id="chatInput" placeholder="输入问题，回车发送（演示为预置问答匹配）">
+          <button id="chatSend">发送</button>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin:10px 4px 0">⚠ 演示模式：问答为本地预置匹配，不调用任何外部模型；真实部署为私有化 7B–14B 量化模型 + 企业知识库，严禁公网 API。</p>
+    </div>
+    <div>
+      <div class="card">
+        <h3>Agent 调用链回放</h3>
+        <p class="hint">真实部署时每个问题的编排轨迹 —— 只读工具、带出处输出、置信度自评。</p>
+        <div class="trace" id="traceBox"><div class="step">// 等待问题触发编排……</div></div>
+      </div>
+      <div class="card">
+        <h3>知识库与边界</h3>
+        <p style="font-size:12.5px;margin:4px 0">📚 <b>知识源</b>：测试程序文档、SOP/规范、历史调试日志、故障码表、STDF 字段字典（非结构化文本，几十–几百 MB）</p>
+        <p style="font-size:12.5px;margin:4px 0">🔒 <b>权限</b>：只读工具集（文档检索 / 数据字典查询 / 报告草稿生成），无任何写接口</p>
+        <p style="font-size:12.5px;margin:4px 0">📈 <b>收益口径</b>：工程师工时（调试 / 写方案草稿 / 查文档），<b>不是良率</b></p>
+        <p style="font-size:12.5px;margin:4px 0">⛔ <b>红线</b>：不自动生成并直接执行测试程序；所有建议稿需工程师审核后使用</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION: T8 ============ -->
+<section class="page" id="t8">
+  <div class="sec-head">
+    <div class="kick">T8 · L3 · 周期最长 · 最契合「联合体/标准」那张牌</div>
+    <h1>跨厂口径协同沙盘<span class="badge sim">静态沙盘</span></h1>
+    <p class="lead">各方数据口径不一、不能出域，模型无法跨厂复用 —— 技术底座是联邦学习 + 统一字段字典 + 模型版本与数据血缘管理。<b>多方参与复杂度指数级上升，现场只交一页提纲，不承诺联合 demo</b>；本页为静态沙盘，展示口径对齐的形态。</p>
+  </div>
+
+  <div class="card">
+    <h3>失效模式 × 各家 SoftBin 口径 → 统一本体<span class="badge sim">示意</span></h3>
+    <p class="hint">点击任意行：同一物理失效在不同测试机 / 平台里的分档命名完全不同 —— 口径不统一，跨厂建模无从谈起。</p>
+    <table>
+    <thead><tr><th>物理失效模式</th><th>长川 D9000 SoftBin</th><th>泰瑞达 V93000 SoftBin</th><th>良率平台 Tag</th><th>统一本体</th></tr></thead>
+    <tbody id="binMap"></tbody>
+    </table>
+    <div class="conclusion" id="t8note">点击上方任意一行查看口径映射逻辑。</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>联邦协同架构（数据不出域）</h3>
+      <svg viewBox="0 0 520 210" role="img" aria-label="联邦学习架构图">
+        <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#185FA5"/></marker></defs>
+        <rect x="10" y="30" width="130" height="60" rx="8" fill="#E6F1FB" stroke="#85B7EB"/>
+        <text x="75" y="55" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">厂 A 本地</text>
+        <text x="75" y="74" text-anchor="middle" font-size="10.5" fill="#5F6B7A">本地模型 + 原始数据</text>
+        <text x="75" y="88" text-anchor="middle" font-size="10.5" fill="#0F6E56">数据不出域 ✓</text>
+        <rect x="10" y="120" width="130" height="60" rx="8" fill="#E6F1FB" stroke="#85B7EB"/>
+        <text x="75" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#0C447C">厂 B 本地</text>
+        <text x="75" y="164" text-anchor="middle" font-size="10.5" fill="#5F6B7A">本地模型 + 原始数据</text>
+        <text x="75" y="178" text-anchor="middle" font-size="10.5" fill="#0F6E56">数据不出域 ✓</text>
+        <rect x="330" y="70" width="180" height="70" rx="8" fill="#0B1F33"/>
+        <text x="420" y="98" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">联邦聚合层</text>
+        <text x="420" y="118" text-anchor="middle" font-size="10.5" fill="#9FC0E0">只交换模型参数 / 梯度</text>
+        <text x="420" y="133" text-anchor="middle" font-size="10.5" fill="#9FC0E0">加密通道 · 差分隐私可选</text>
+        <line x1="140" y1="60" x2="325" y2="95" stroke="#185FA5" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="140" y1="150" x2="325" y2="115" stroke="#185FA5" stroke-width="1.5" marker-end="url(#arr)"/>
+        <line x1="420" y1="140" x2="200" y2="185" stroke="#185FA5" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+        <text x="290" y="195" text-anchor="middle" font-size="10.5" fill="#5F6B7A">全局模型 / 统一口径规范回发各厂本地验证</text>
+      </svg>
+    </div>
+    <div class="card">
+      <h3>统一字段字典（示例）</h3>
+      <table>
+      <thead><tr><th>本体字段</th><th>长川侧</th><th>泰瑞达侧</th><th>PDF 侧</th></tr></thead>
+      <tbody>
+      <tr><td>失效分档</td><td>SoftBin</td><td>SoftBin</td><td>Fail Category</td></tr>
+      <tr><td>物理落料口</td><td>HardBin</td><td>HardBin</td><td>Handler Bin</td></tr>
+      <tr><td>器件唯一键</td><td>ECID</td><td>Device ID</td><td>DUT UID</td></tr>
+      <tr><td>测试程序版本</td><td>TESTFLOW_VER</td><td>Pattern Rev</td><td>Test Program ID</td></tr>
+      <tr><td>晶圆坐标</td><td>X,Y,Slot</td><td>Row,Col</td><td>DieX,DieY</td></tr>
+      </tbody>
+      </table>
+      <div class="conclusion">口径不统一的联邦模型没有意义 —— <b>先统一字段字典与 bin 映射，再谈建模</b>。这正是「联合体/标准」议题的技术底座。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>会后联合议题提纲（一页）</h3>
+    <div class="grid3">
+      <div class="card" style="margin:0"><p style="font-size:12.8px;margin:0"><b>① 口径先行</b><br>三方各出一份字段字典与 bin 定义样例，2 周内对齐差异清单。</p></div>
+      <div class="card" style="margin:0"><p style="font-size:12.8px;margin:0"><b>② 数据不出域治理</b><br>各方本地部署 + 加密通道 + 审计日志；只交换统计量与模型参数。</p></div>
+      <div class="card" style="margin:0"><p style="font-size:12.8px;margin:0"><b>③ 联合产出</b><br>统一口径规范白皮书 / 联合课题立项 / 数据集共建（学术侧吴汉明团队可接）。</p></div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin:10px 0 0">真实落地周期 6–18 个月；多方利益相关方会让复杂度指数级上升 —— <b>现场只承诺「出提纲 + 会后牵头对表」</b>，不承诺联合 demo 与时间表。</p>
+  </div>
+</section>
+
+<!-- ============ SECTION: GOV ============ -->
+<section class="page" id="gov">
+  <div class="sec-head">
+    <div class="kick">治理 · 分级交付 · 边界</div>
+    <h1>可信交付体系<span class="badge sim">方法论</span></h1>
+    <p class="lead">赢的不是 demo 好不好看，是<b>可不可信</b>。这一节把证据分级、交付路径、模型治理与不能承诺的清单摆在明面上 —— 在一屋子一把手面前，主动划边界比能力清单更值钱。</p>
+  </div>
+
+  <div class="card">
+    <h3>证据分级 · 不冒充</h3>
+    <div class="grid3">
+      <div class="card" style="margin:0;border-left:4px solid var(--green)"><p style="font-size:12.5px;margin:0"><b style="color:var(--green)">silicon_calibrated</b><br>拿贵司真实数据跑通并经贵司复核 —— 唯一算数的级别。本页所有演示均<b>不属于</b>此级。</p></div>
+      <div class="card" style="margin:0;border-left:4px solid var(--amber)"><p style="font-size:12.5px;margin:0"><b style="color:var(--amber)">历史/合成数据验证</b><br>公开案例口径 + 合成示意回放 —— 只能证明「方法可行」，不能证明「贵司有效」。</p></div>
+      <div class="card" style="margin:0;border-left:4px solid var(--red)"><p style="font-size:12.5px;margin:0"><b style="color:var(--red)">结构演示</b><br>本页大部分模块 —— 展示输出形态、交互与编排链路，不构成任何效果证据。</p></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>L0 → L3 分级交付路径</h3>
+    <div class="timeline">
+      <div class="tl"><span class="lv l0">L0 · 2–4 周</span><h4>只读诊断</h4><p>数据质量报告、字段字典、Bin Pareto、异常批次清单、跨工序关联评估。只读权限，零产线风险。</p><div class="per">验收：解析成功率 / 字段覆盖率 / 关联键命中率</div></div>
+      <div class="tl"><span class="lv l1">L1 · 4–8 周</span><h4>影子建议</h4><p>高风险 die 筛查、根因 Top-3、设备健康预警、异常批次提示。只输出建议，不下发机台。</p><div class="per">验收：Top-3 命中率 / 虚警率 / 过杀·漏放对照</div></div>
+      <div class="tl"><span class="lv l2">L2 · 3–6 月</span><h4>闭环优化</h4><p>ATTR 项裁剪、PAT/DPAT 动态 limit、Vmin 窗口优化、跨环节数据前馈。需 ECN 与质量签核。</p><div class="per">验收：测试时间实测 / 良率 / DPPM 不劣化 / 保留组对照</div></div>
+      <div class="tl"><span class="lv l3">L3 · 6–18 月</span><h4>跨厂协同</h4><p>联邦建模、统一口径、跨厂泛化、联合白皮书或标准提案。多方治理机制先行。</p><div class="per">验收：跨厂泛化 gap / 口径覆盖率 / 血缘可追溯</div></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>模型治理四件套</h3>
+      <p style="font-size:12.8px;margin:5px 0">🧬 <b>版本与血缘</b>：每个模型版本绑定训练数据快照与配置，能回答「这颗芯片当时用的是哪个模型」—— 行业合规与长期追溯要求。</p>
+      <p style="font-size:12.8px;margin:5px 0">🧪 <b>保留组验证</b>：专门标记的 lot 只走标准程序、不参与训练，专用于下游效果验证。</p>
+      <p style="font-size:12.8px;margin:5px 0">📡 <b>漂移检测与重训练</b>：边缘部署 + 云端训练 + 现场快速更新；模型漂移自动告警触发重训评估。</p>
+      <p style="font-size:12.8px;margin:5px 0">📝 <b>审计与责任边界</b>：操作审计、数据留存与销毁策略、AI 建议与人工签核的责任划分书面化。</p>
+    </div>
+    <div class="card">
+      <h3>明确不能承诺的清单</h3>
+      <p style="font-size:12.8px;margin:5px 0;color:var(--red)">✕ 不改工艺、不动硬件、不接管测试程序开发环境与协议栈</p>
+      <p style="font-size:12.8px;margin:5px 0;color:var(--red)">✕ 不承诺无人化、不承诺大模型自动写程序直接上机</p>
+      <p style="font-size:12.8px;margin:5px 0;color:var(--red)">✕ 不承诺 DPPM 绝对改善或任何固定的良率/时间百分比</p>
+      <p style="font-size:12.8px;margin:5px 0;color:var(--red)">✕ 不把「die 还是键合」当可交付成果，最多列联合课题</p>
+      <p style="font-size:12.8px;margin:5px 0;color:var(--red)">✕ 不用单一准确率汇报，必须同时给过杀率、漏放率、虚警率与置信区间</p>
+      <p style="font-size:12.8px;margin:5px 0;color:var(--red)">✕ 不承诺跨厂模型未经本地验证即可迁移；不承诺零虚警</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>会后最小 POC · 三样东西 + 三个条件</h3>
+    <div class="grid2">
+      <div>
+        <p style="font-size:13px;margin:6px 0"><b>数据三样：</b></p>
+        <p style="font-size:12.5px;color:var(--muted);margin:3px 0">① 一个已定型、近期不改版产品，近 3 个月 STDF/ATDF（含 retest 与 bin 明细）</p>
+        <p style="font-size:12.5px;color:var(--muted);margin:3px 0">② test limit / spec 表、bin 定义映射、程序版本与 test flow</p>
+        <p style="font-size:12.5px;color:var(--muted);margin:3px 0">③ CP→FT→SLT 关联键（ECID 或 wafer/die 坐标）</p>
+      </div>
+      <div>
+        <p style="font-size:13px;margin:6px 0"><b>条件三个：</b></p>
+        <p style="font-size:12.5px;color:var(--muted);margin:3px 0">① 只读、脱敏（ID 哈希、去客户名与型号）、数据不出域</p>
+        <p style="font-size:12.5px;color:var(--muted);margin:3px 0">② 我方带环境进场，在贵司机房离线跑；不占产线工时</p>
+        <p style="font-size:12.5px;color:var(--muted);margin:3px 0">③ 影子模式 2–4 周 → 一份可复核报告（数据质量诊断 + Pareto + 异常批次 + 过杀/漏放对照）</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:12px"><b>周期分解（给分解表比给日期更专业）：</b>NDA/用途审批 1–4 周（通常最长）→ 数据准备与口径对齐 2–5 天 → 建模与报告 3–10 天 → 贵司工程师复核 3–7 天。「建模本身大概一周，但数据审批和口径对齐要几周 —— 这也是泰瑞达/PDF 案例那句『数据囤积与数据安全是核心难点，难度甚至高于模型搭建本身』的由来。」</div>
+  </div>
+</section>
+
+<!-- ============ SECTION: SCRIPT ============ -->
+<section class="page" id="script">
+  <div class="sec-head">
+    <div class="kick">演示脚本 · 现场使用说明</div>
+    <h1>投屏讲法与应答要点</h1>
+    <p class="lead">本页所有数字均为<b>合成示意</b>。现场第一句必须是免责声明；被问效果时，用公开案例 + 经济账公式回答，不给未实测数字。</p>
+  </div>
+
+  <div class="card">
+    <h3>开场 30 秒（投屏首页后口播）</h3>
+    <div class="script"><span class="lbl">开场</span>「这一页用的是<b>合成示意数据</b>，只展示输出长什么样、交互怎么走，不代表在贵司产品上的效果；真实结论必须拿贵司数据跑过才算。我们不做设备、不做板卡，做的是把 CP、FT、SLT 的 STDF、bin 和机台时序对齐之后，提前圈出高风险 die、给出该做哪些测试项的建议——<b>不改程序、不下发机台、数据不出域</b>。」</div>
+    <div class="script"><span class="lbl">60 秒</span>「按 2026 年泰瑞达和 PDF Solutions 公开案例的量级，终测良率大概能抬 1 个点，代价是接受 1.6% 的过杀，经济账得跟着一起算，封装成本越高的产品越划算。我想拿贵司一批脱敏历史数据做一次离线盲测，两周出一份可复核报告，先看看在你们的产品上这个账划不划算。」</div>
+  </div>
+
+  <div class="card">
+    <h3>电梯稿 · 3D NAND 切入版（完整版见「纵深案例」页首）</h3>
+    <div class="script"><span class="lbl">60 秒</span>「一套部署在半导体工厂内部的 AI 系统，<b>不连接外网、数据不出厂、也不需要替换工厂现有软件</b>。它利用工厂积累的生产和测试数据，结合半导体器件的物理原理，帮助工程师分析问题、预测风险、优化工艺。<b>即使数据不多，也能得到可靠、可解释的结果。</b>AI 会随着新数据不断学习和提升，但<b>每次升级都需要经过测试和工程师确认</b>，确保安全可控。以 3D NAND 为例，可以从一个环节切入：比如 CP Fail Bit Map 失效模式自动分离并回溯到工艺站，或者 retention 和 Vt 漂移的寿命建模与提前预警。希望有机会当面向您汇报，<b>先选一个环节做小规模验证，用数据说话</b>。」</div>
+    <div class="script"><span class="lbl">讲法</span>这版电梯稿的五个钩子按顺序是：①「不连外网 / 数据不出厂 / 不换软件」三连击先拆掉对方的安全顾虑；②「物理原理 + 数据」回答「小样本凭什么可靠」；③「每次升级需测试+工程师确认」回答「AI 失控怎么办」；④ 3D NAND 两个切入点（FBM 回溯 / Vt 寿命预警）给对方具体抓手；⑤「先选一个环节做小规模验证」把 CTA 缩到最小。<b>讲的时候指到「纵深案例」页的 N1/N2 两个 demo —— 让对方亲眼看到「一个环节」长什么样。</b></div>
+  </div>
+
+  <div class="card">
+    <h3>逐模块讲法（60–90 秒/个，按老板兴趣挑着讲）</h3>
+    <table>
+    <thead><tr><th style="width:18%">模块</th><th>一句话讲法</th><th style="width:30%">对应听众</th></tr></thead>
+    <tbody>
+    <tr><td>全景架构</td><td>「机台数据到决策中间断了一层，我们只补这一段；AI 输出的是建议表，签核权在贵司。」</td><td>所有人 · 定调</td></tr>
+    <tr><td>T1 数据接入</td><td>「第一步永远是口径：STDF 解析成功率、bin 版本对齐、ECID 关联键命中率 —— 对不齐，后面都白搭。」</td><td>测试/IT 工程师</td></tr>
+    <tr><td>T2 良率洞察</td><td>「wafer map 空间模式 + 异常批次预警 + 根因 Top-3 —— 根因是线索不是结论，需贵司复核。」</td><td>封测厂良率负责人</td></tr>
+    <tr><td>T3 智能筛选 ★</td><td>「拖这个阈值看：想多抓坏件就必然多误杀好件，1.6% 过杀就能吃掉大部分收益 —— 最优点不在抓得最多的位置。」</td><td>所有人 · 经济账</td></tr>
+    <tr><td>T4 自适应测试</td><td>「测试时间省下来的是真金白银，但 limit 变更走 ECN —— 我们只出影子建议表。」</td><td>长川金睿 / 测试机团队</td></tr>
+    <tr><td>T5 设备健康</td><td>「探针卡还剩几天该换？预警提前量 vs 虚警率自己权衡 —— 这类不碰测试判定，最适合做第一个 POC。」</td><td>设备/运维</td></tr>
+    <tr><td>T6 AOI 检测</td><td>「1μm 颗粒就能毁掉一颗混合键合 —— 缺陷样本少，走只学好样本的异常检测，漏检和过杀一起报。」</td><td>封测 / AOI 相关</td></tr>
+    <tr><td>T7 智能体</td><td>「带出处的只读助手，省的是工程师工时不是良率 —— 一两周就能给您看检索问答的样子。」</td><td>工程效率 / IT</td></tr>
+    <tr><td>T8 协同沙盘</td><td>「各家 bin 叫法不一样，先统一口径再谈建模 —— 联合体那张牌的技术底座。」</td><td>芯谋顾文军 / 赵轶</td></tr>
+    <tr><td>A 技术底座</td><td>「底座是科学智能 RSI 闭环：酶设计、AlphaFold 蛋白设计的方法论，迁移到芯片就是生成-验证-回流。」</td><td>所有一把手 · 建立差异化</td></tr>
+    <tr><td>B 能力版图</td><td>「版图覆盖设计-制造-测试-封装-数据全链路；跑通过的点是器件仿真与知识底座，其余按联合研发切入。」</td><td>展示广度 + 诚实</td></tr>
+    <tr><td>C 商务交付</td><td>「不按效果承诺计价，按可复核里程碑；POC 我方出人出算力、不占产线工时。」</td><td>决策层</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="card">
+    <h3>格物之心身份口径（15 秒版 · 被问「你们是谁/为什么是你们」时用）</h3>
+    <div class="script"><span class="lbl">15 秒</span>「我是格物之心的___，负责把 AI 落到测试/良率/器件仿真环节。公司在科学智能方向做过<b>生物酶设计和蛋白质设计的 RSI 模型</b> —— 芯片测试数据的智能闭环，和那套『生成-验证-回流』方法论是同一个问题结构，只是把湿实验换成了 TCAD 求解器和硅测量。今天带来的不是概念，是已经在器件校准、寿命预测、失效案例库上跑过的工程实现。」</div>
+    <div class="script"><span class="lbl">迁移一句话</span>「RSI 在芯片领域的正确形态不是让 AI 自动改产线，而是让每一次 AI 建议都<b>可验证、可回流、可沉淀</b> —— 影子模式、保留组验证、证据分级、模型血缘，就是这套方法论的工程实现。」</div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>必须背下来的三个数字</h3>
+      <p style="font-size:13px;margin:6px 0">① 公开案例量级：<b>90% 置信度 / 1.6% 过杀 / 终测良率约 +1pt / 经济账基本持平</b></p>
+      <p style="font-size:13px;margin:6px 0">② 数据规模口径：<b>按颗数不按 GB</b> —— 3 个月约 1–10 万颗 DUT、宽表小样本大文件</p>
+      <p style="font-size:13px;margin:6px 0">③ 周期分解：<b>NDA 1–4 周最长 → 口径对齐 2–5 天 → 建模 3–10 天 → 复核 3–7 天</b></p>
+    </div>
+    <div class="card">
+      <h3>四句绝对不要说</h3>
+      <p style="font-size:13px;margin:6px 0;color:var(--red)">① 「AI 可以替代测试程序开发 / 减少测试工程师」</p>
+      <p style="font-size:13px;margin:6px 0;color:var(--red)">② 「大模型自动写测试程序直接上机」</p>
+      <p style="font-size:13px;margin:6px 0;color:var(--red)">③ 「良率能提 5 个点 / 测试时间砍一半」</p>
+      <p style="font-size:13px;margin:6px 0;color:var(--red)">④ 「把你们的数据给我们一份」（改成「数据不出域，我方带环境进场」）</p>
+    </div>
+  </div>
+
+  <div class="warn"><b>万能兜底句（被追问到答不上来时用）：</b>「我不当场给效果数字，只当场给可复核的方法和时间表。这块得拿贵司真实数据、由贵司工程师复核过才算数 —— 我今天能定的是下一步谁跟谁对接、需要哪三样数据。」</div>
+
+  <div class="card">
+    <h3>现场五个该问的问题（问得对比懂得多更重要）</h3>
+    <ol style="font-size:13px;margin:6px 0;padding-left:20px">
+    <li>「贵司 CP 和 FT 的数据现在是同一套 ID 能串起来吗？还是各机台各存各的？」</li>
+    <li>「测试程序版本变更有留痕吗？我们建模得把版本和 lot 对上。」</li>
+    <li>「现在 overkill 和 test escape，质量部门更紧张哪一个？」</li>
+    <li>「D9000 这代在算力芯片上是按多少 site、多大电流配的？测试时长主要堆在哪个环节？」</li>
+    <li>「如果只给一批脱敏 STDF 做离线盲测、不接机台，需要走到哪一层审批？」</li>
+    </ol>
+  </div>
+</section>
+
+</div><!-- /main -->
+
+<div class="foot" style="max-width:1240px;margin:0 auto;padding:0 30px 40px">
+  格物之心 · AI4Chip 智能测试数据中枢 · 全景能力演示 —— 本页全部数值由固定种子在浏览器本地生成，无网络请求、无真实数据、无外部库。<b>合成示意数据仅用于展示输出形态与交互，不得用于任何效果宣称；真实结论须以贵司数据、经贵司工程师复核为准。</b><br>
+  产品矩阵中各项目状态为内部口径（已交付内部 / 内部验证 / 研究验证），对外沟通按实际成熟度；商务计价为框架示意，具体报价按商务政策。<br>
+  配套文件：机台认知与智能化评估手册 · Demo 需求应答卡 · 闭门会作战卡 · 随身示意 Demo。
+</div>
+
+<script>
+/* ============ utils ============ */
+var seed = 20261107;
+function rnd(){ seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+function gauss(){ var u = Math.max(rnd(), 1e-9), v = rnd(); return Math.sqrt(-2*Math.log(u)) * Math.cos(2*Math.PI*v); }
+function clamp(x){ return Math.min(0.995, Math.max(0.005, x)); }
+function fmt(n){ return (n >= 0 ? '+' : '') + Math.round(n).toLocaleString('zh-CN'); }
+function go(id){ document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on')});
+  document.querySelectorAll('.nav a').forEach(function(a){a.classList.toggle('on',a.dataset.sec===id)});
+  var el=document.getElementById(id); if(el){el.classList.add('on'); window.scrollTo(0,0);}
+}
+document.querySelectorAll('.nav a').forEach(function(a){a.addEventListener('click',function(){go(a.dataset.sec)})});
+document.addEventListener('keydown',function(e){
+  var map={'1':'t1','2':'t2','3':'t3','4':'t4','5':'t5','6':'t6','7':'t7','8':'t8','9':'gov','0':'overview','a':'about','b':'products','c':'offer','d':'nand','r':'script'};
+  if(map[e.key] && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) go(map[e.key]);
+});
+
+/* ============ T1 数据接入 ============ */
+(function(){
+  var files=[
+    ['LOT26-0417_2408_CP.STDF','ATE D9000 · 晶圆测试 · 12 sites','4.2 GB'],
+    ['LOT26-0417_2408_FT.STDF','ATE · 终测 · 4 sites','6.8 GB'],
+    ['LOT26-0417_2408_SLT.STDF','分选机 · 系统级测试','3.1 GB'],
+    ['BIN_DEF_V3.2.csv','SoftBin/HardBin 定义与映射','84 KB'],
+    ['LIMIT_TABLE_Rev12.xlsx','测试限值 / spec 表','212 KB'],
+    ['TESTFLOW_CP_V27.def','测试流程与程序版本清单','1.6 MB'],
+    ['ECID_LINK_2408.csv','CP↔FT↔SLT 关联键（ECID 映射）','3.4 MB'],
+    ['FDC_EQUIP_0417.parquet','机台时序 / 报警事件抽样','22 GB']
+  ];
+  var fl=document.getElementById('filelist');
+  fl.innerHTML=files.map(function(f,i){
+    return '<div class="fileitem"><div><b>'+f[0]+'</b><div class="sz">'+f[1]+'</div></div><span class="st st-wait" id="st'+i+'">待接入</span></div>';
+  }).join('');
+  var logs=[
+    ['t','// 建立只读数据通道（SECS/GEM 导出接口 · 只读账号）…… OK'],
+    ['ok','[00:00.4] MIR/PIR/PRR 记录头解析完成，版本 V4，字节序 little-endian'],
+    ['t','[00:01.2] LOT26-0417_2408_CP.STDF ……'],
+    ['ok','[00:01.9] PTR/MPR 测试记录 <b>1,842,376</b> 条 · 解析成功率 99.8%'],
+    ['warn','[00:02.3] ⚠ 检出私有扩展字段 X-TESTER-EXT-07，已按厂商字典降级解析'],
+    ['ok','[00:03.1] wafer map / die 坐标还原 24 lots · 43,206 颗 DUT'],
+    ['ok','[00:03.8] SoftBin 分档 64 类 · 与 BIN_DEF_V3.2 口径比对……'],
+    ['warn','[00:04.2] ⚠ Bin 41/42 在 V3.1→V3.2 间合并，历史数据已按映射表回填'],
+    ['ok','[00:05.0] 程序版本对齐：TESTFLOW_CP_V27 ↔ lot 批次一致率 98.7%'],
+    ['ok','[00:05.6] ECID 关联键命中：CP→FT <b>91.2%</b> · FT→SLT <b>88.4%</b>'],
+    ['warn','[00:06.1] ⚠ 8.8% DUT 缺 SLT 记录 —— 判定为测试超时中断，已标记剔除'],
+    ['ok','[00:06.8] retest 明细 3,117 条 · overkill/underkill 标记归位'],
+    ['ok','[00:07.4] FDC 时序抽样 22 GB → Parquet 列存 · 降采样至分钟级'],
+    ['ok','[00:08.0] 数据画像完成：宽表 1,148 项/颗 · 坏样本（终测 Fail）486 颗 · 比例 1.12%'],
+    ['ok','[00:08.0] ✓ 接入完成，耗时 8.0s（示意）—— 全程只读，无任何写接口']
+  ];
+  var running=false;
+  document.getElementById('ingestBtn').addEventListener('click',function(){
+    if(running)return; running=true;
+    var btn=this; btn.disabled=true; btn.textContent='解析中…';
+    document.getElementById('ingestReset').disabled=true;
+    var box=document.getElementById('logbox'); box.innerHTML='';
+    var i=0;
+    function step(){
+      if(i<logs.length){
+        var l=logs[i];
+        var d=document.createElement('div');
+        d.innerHTML='<span class="t">'+String(i).padStart(2,'0')+'</span> <span class="'+l[0]+'">'+l[1]+'</span>';
+        box.appendChild(d); box.scrollTop=box.scrollHeight;
+        var fi=Math.min(i,files.length-1);
+        document.getElementById('st'+fi).textContent='已接入';
+        document.getElementById('st'+fi).className='st st-ok';
+        i++; setTimeout(step, 260 + Math.random()*220);
+      }else{
+        running=false; btn.disabled=false; btn.textContent='▶ 开始接入与解析';
+        document.getElementById('ingestReset').disabled=false;
+        var rc=document.getElementById('reportCard'); rc.style.display='block';
+        document.getElementById('checks').innerHTML=
+          '<div class="check ok"><div class="ic">✓</div><div class="tx"><b>STDF/ATDF 解析成功率 99.8%</b><span>1,842,376 条 PTR/MPR 记录，仅私有扩展字段降级解析</span></div></div>'+
+          '<div class="check ok"><div class="ic">✓</div><div class="tx"><b>字段覆盖率 96.4%</b><span>1,148 个测试项/颗，缺失字段已建字典标记</span></div></div>'+
+          '<div class="check ok"><div class="ic">✓</div><div class="tx"><b>SoftBin 口径已对齐 V3.2</b><span>Bin 41/42 合并已按映射表回填历史数据</span></div></div>'+
+          '<div class="check ok"><div class="ic">✓</div><div class="tx"><b>程序版本 ↔ lot 对齐率 98.7%</b><span>TESTFLOW_CP_V27 ↔ 24 lots 批次一致</span></div></div>'+
+          '<div class="check warn"><div class="ic">!</div><div class="tx"><b>ECID 关联键命中 CP→FT 91.2% / FT→SLT 88.4%</b><span>缺失 8.8% DUT 判为测试中断，已标记剔除而非强行关联</span></div></div>'+
+          '<div class="check ok"><div class="ic">✓</div><div class="tx"><b>retest / overkill / underkill 标记归位</b><span>3,117 条重测明细已关联原始判定</span></div></div>';
+        var n=0, target=96; var num=document.getElementById('scoreNum');
+        var timer=setInterval(function(){ n+=4; if(n>=target){n=target;clearInterval(timer);} num.textContent=n; },60);
+        document.getElementById('scoreGrade').innerHTML='<b style="color:var(--green)">A- 可建模</b> · 口径已对齐，可进入 T2/T3';
+        document.getElementById('t1con').textContent='结论：数据质量足以支撑建模。三大前提已满足 —— ① 口径对齐（SoftBin V3.2 + 程序版本回填）；② 关联键可用（ECID 命中 91%/88%，缺失部分已标记剔除而非强行关联）；③ 标签可得（终测 Fail 486 颗，可作代理标签，若有 RMA/DPPM 更佳）。下一步：进入「良率洞察」与「智能筛选」模块。（合成示意）';
+      }
+    }
+    step();
+  });
+  document.getElementById('ingestReset').addEventListener('click',function(){
+    if(running)return; running=false;
+    document.getElementById('logbox').innerHTML='<span class="t">// 等待接入指令 —— 数据包未加载</span>';
+    document.getElementById('reportCard').style.display='none';
+    document.querySelectorAll('.st').forEach(function(s){s.textContent='待接入';s.className='st st-wait'});
+    document.getElementById('ingestBtn').disabled=false; document.getElementById('ingestBtn').textContent='▶ 开始接入与解析';
+    document.getElementById('ingestReset').disabled=false;
+  });
+})();
+
+/* ============ T2 良率洞察 ============ */
+(function(){
+  // wafer map：22x22 die，含点击读数
+  var wafer=document.getElementById('wafer'), seedW=seed;
+  (function(){
+    var html='';
+    for(var y=0;y<22;y++)for(var x=0;x<22;x++){
+      var dx=x-10.5,dy=y-10.5,d=Math.sqrt(dx*dx+dy*dy),cls='cell',info=null;
+      if(d>10.4){cls+=' empty';}
+      else{
+        var dc=Math.sqrt((x-7)*(x-7)+(y-8)*(y-8));
+        var r=rnd(),soft='';
+        if(dc<2.3&&r<0.82){cls+=' cluster';soft='Bin 12 Vmin失效';}
+        else if(d>8.9&&r<0.34){cls+=' edge';soft='Bin 21 IDDQ异常';}
+        else if(r<0.014){cls+=' scatter';soft='Bin 45 温控漂移';}
+        else soft='Pass';
+        var risk=(cls.indexOf('cluster')>-1)?(0.62+rnd()*0.3).toFixed(2):(cls.indexOf('edge')>-1?(0.4+rnd()*0.3).toFixed(2):(cls.indexOf('scatter')>-1?(0.5+rnd()*0.35).toFixed(2):(rnd()*0.3).toFixed(2)));
+        info='data-x="'+x+'" data-y="'+y+'" data-bin="'+soft+'" data-risk="'+risk+'"';
+      }
+      html+='<div class="'+cls+'" '+(info||'')+'></div>';
+    }
+    wafer.innerHTML=html;
+  })();
+  wafer.addEventListener('click',function(e){
+    var c=e.target.closest('.cell'); if(!c||!c.dataset.bin)return;
+    document.getElementById('dieInfo').textContent='Die ('+c.dataset.x+','+c.dataset.y+') · '+c.dataset.bin+' · 风险分 '+c.dataset.risk+' → '+(parseFloat(c.dataset.risk)>=0.62?'建议 FT 前拦截复测（影子建议）':'低于阈值，正常流向 FT')+'（示意）';
+  });
+  // pareto
+  var bins=[['Bin 12　Vmin 失效',2.1],['Bin 21　IDDQ 异常',1.6],['Bin 33　SerDes',1.3],['Bin 45　温控漂移',1.0],['Bin 52　时序裕量',0.9],['Bin 60　接触不良',0.7]];
+  var maxv=bins[0][1],p='';
+  bins.forEach(function(b){p+='<div class="barrow"><div class="barlabel">'+b[0]+'</div><div class="bartrack"><div class="barfill" style="width:'+(b[1]/maxv*100).toFixed(1)+'%"></div></div><div class="barval">'+b[1].toFixed(1)+'%</div></div>';});
+  p+='<div class="barrow" style="margin-top:12px"><div class="barlabel">Pass（未入图）</div><div class="bartrack"><div class="barfill" style="width:100%;background:#B5D4F4"></div></div><div class="barval">92.4%</div></div>';
+  document.getElementById('pareto').innerHTML=p;
+
+  // lot 良率趋势图
+  var lots=[['L01',98.2],['L02',97.8],['L03',98.5],['L04',97.1],['L05',96.8],['L06',98.9],['L07',95.2],['L08',98.4],['L09',97.6],['L10',96.3],['L11',98.1],['L12',94.8]];
+  var W=860,H=240,px0=52,px1=828,py0=30,py1=185,ymin=93,ymax=100,LCL=96.0;
+  function X(i){return px0+(px1-px0)*i/(lots.length-1)}
+  function Y(v){return py1-(v-ymin)/(ymax-ymin)*(py1-py0)}
+  var s='<line x1="'+px0+'" y1="'+py1+'" x2="'+px1+'" y2="'+py1+'" stroke="#DDE4EC"/>';
+  s+='<line x1="'+px0+'" y1="'+py0+'" x2="'+px0+'" y2="'+py1+'" stroke="#DDE4EC"/>';
+  [94,95,96,97,98,99,100].forEach(function(v){
+    s+='<line x1="'+px0+'" y1="'+Y(v)+'" x2="'+px1+'" y2="'+Y(v)+'" stroke="#EDF1F6"/>';
+    s+='<text x="'+(px0-8)+'" y="'+(Y(v)+4)+'" font-size="10.5" fill="#5F6B7A" text-anchor="end">'+v+'%</text>';
+  });
+  s+='<line x1="'+px0+'" y1="'+Y(LCL)+'" x2="'+px1+'" y2="'+Y(LCL)+'" stroke="#A32D2D" stroke-width="1.5" stroke-dasharray="6 4"/>';
+  s+='<text x="'+(px1-4)+'" y="'+(Y(LCL)-6)+'" font-size="10.5" fill="#A32D2D" text-anchor="end">LCL 96.0%</text>';
+  var pts=lots.map(function(l,i){return X(i).toFixed(1)+','+Y(l[1]).toFixed(1)});
+  s+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="#185FA5" stroke-width="2"/>';
+  lots.forEach(function(l,i){
+    var bad=l[1]<LCL;
+    s+='<circle cx="'+X(i)+'" cy="'+Y(l[1])+'" r="'+(bad?6:4)+'" fill="'+(bad?'#A32D2D':'#185FA5')+'" stroke="#fff" stroke-width="1.5"><title>'+l[0]+' · '+l[1]+'%</title></circle>';
+    s+='<text x="'+X(i)+'" y="'+(py1+18)+'" font-size="10" fill="'+(bad?'#A32D2D':'#5F6B7A')+'" text-anchor="middle" font-weight="'+(bad?'700':'400')+'">'+l[0]+'</text>';
+  });
+  document.getElementById('lotChart').innerHTML=s;
+
+  // 异常批次表 + 根因
+  document.getElementById('lotTable').innerHTML=
+    '<tr><td>L07</td><td style="color:var(--red);font-weight:700">95.2%</td><td>-2.3σ</td><td>TESTFLOW_CP_V27.1 变更首批</td><td><span class="tag" style="background:var(--red-bg);color:var(--red)">已定位方向</span></td></tr>'+
+    '<tr><td>L10</td><td style="color:var(--red);font-weight:700">96.3%</td><td>-1.6σ</td><td>槽位 7 温控偏移期</td><td><span class="tag" style="background:var(--amber-bg);color:var(--amber)">观察中</span></td></tr>'+
+    '<tr><td>L12</td><td style="color:var(--red);font-weight:700">94.8%</td><td>-2.6σ</td><td>探针卡 #A17 漂移叠加 V27.1</td><td><span class="tag" style="background:var(--red-bg);color:var(--red)">优先排查</span></td></tr>';
+  var rc=[['TESTFLOW_CP_V27.1 程序变更（L07/L10/L12 共用）',0.42,'程序版本'],['分选槽位 7 温控偏移 +0.4℃ 持续 6 天',0.31,'设备 FDC'],['探针卡 #A17 接触电阻漂移 +38%',0.24,'设备健康'],['外延片批次 EO-2291（仅 L12）',0.18,'工艺线索']];
+  var mx=rc[0][1],rh='';
+  rc.forEach(function(r){
+    rh+='<div class="barrow"><div class="barlabel" style="width:230px;font-size:11.5px">'+r[0]+'</div><div class="bartrack"><div class="barfill" style="width:'+(r[1]/mx*100).toFixed(0)+'%;background:'+(r[1]>0.3?'#E24B4A':'#FAC775')+'"></div></div><div class="barval">'+r[1].toFixed(2)+'</div></div>';
+  });
+  document.getElementById('rootcause').innerHTML=rh+'<p style="font-size:11.5px;color:var(--muted);margin:8px 0 0">贡献度为类 SHAP 特征归因（示意）；L12 的叠加因素提示需要 T5 设备健康模块交叉验证。</p>';
+})();
+
+/* ============ T3 智能筛选 ============ */
+(function(){
+  var good=[],bad=[],i;
+  for(i=0;i<4000;i++)good.push(clamp(0.28+gauss()*0.16));
+  for(i=0;i<60;i++)bad.push(clamp(0.60+gauss()*0.17));
+  var DIE_VALUE=100;
+  function calc(t,ratio){
+    var pack=DIE_VALUE*ratio,hit=0,kill=0;
+    for(i=0;i<bad.length;i++)if(bad[i]>=t)hit++;
+    for(i=0;i<good.length;i++)if(good[i]>=t)kill++;
+    return{hit:hit,kill:kill,miss:bad.length-hit,rate:kill/good.length*100,net:hit*pack-kill*DIE_VALUE};
+  }
+  // ---- histogram ----
+  var NB=40,hg=new Array(NB).fill(0),hb=new Array(NB).fill(0);
+  good.forEach(function(v){hg[Math.min(NB-1,Math.floor(v/1*NB))]++});
+  bad.forEach(function(v){hb[Math.min(NB-1,Math.floor(v/1*NB))]++});
+  var hmax=Math.max.apply(null,hg.concat(hb));
+  function hpath(arr,color,op){
+    var d='M20,185 ';
+    for(var b=0;b<NB;b++){
+      var x=20+b*(420/NB),h=arr[b]/hmax*160;
+      d+='L'+x.toFixed(1)+','+(185-h).toFixed(1)+' ';
+    }
+    d+='L'+(20+420).toFixed(1)+',185 Z';
+    return '<path d="'+d+'" fill="'+color+'" fill-opacity="'+op+'" stroke="none"/>';
+  }
+  var hs=hpath(hg,'#85B7EB',0.4)+hpath(hb,'#E24B4A',0.55);
+  hs+='<line id="histThr" x1="20" y1="10" x2="20" y2="185" stroke="#A32D2D" stroke-width="1.5" stroke-dasharray="4 3"/>';
+  hs+='<text x="20" y="200" font-size="10" fill="#5F6B7A" text-anchor="middle">0</text><text x="440" y="200" font-size="10" fill="#5F6B7A" text-anchor="middle">1</text>';
+  hs+='<text x="10" y="20" font-size="10" fill="#5F6B7A">计数</text>';
+  document.getElementById('histSvg').innerHTML=hs;
+  // ---- PR curve ----
+  var prPts=[];
+  for(var t=0.30;t<=0.9001;t+=0.01){
+    var c=calc(t,2.5),den=c.hit+c.kill;
+    var prec=den>0?c.hit/den:1,rec=c.hit/60;
+    prPts.push({t:t,p:prec,r:rec});
+  }
+  function prXY(pt){return (40+pt.r*560).toFixed(1)+','+(160-pt.p*140).toFixed(1)}
+  var prd=prPts.map(prXY).join(' ');
+  document.getElementById('prCurve').setAttribute('points',prd);
+  // ---- net benefit curve ----
+  var curve=document.getElementById('curve'),cursor=document.getElementById('cursor'),dot=document.getElementById('dot');
+  var zeroline=document.getElementById('zeroline'),zerotext=document.getElementById('zerotext');
+  var thr=document.getElementById('thr'),ratioEl=document.getElementById('ratio');
+  function drawCurve(){
+    var ratio=parseFloat(ratioEl.value),pts=[],vals=[],t;
+    for(t=0.30;t<=0.9001;t+=0.02){var cc=calc(t,ratio);vals.push(cc.net);}
+    var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),span=Math.max(mx-mn,1);
+    function Y(v){return 152-(v-mn)/span*122}
+    function X(tt){return 40+(tt-0.30)/0.60*560}
+    for(t=0.30;t<=0.9001;t+=0.02){pts.push(X(t).toFixed(1)+','+Y(calc(t,ratio).net).toFixed(1));}
+    curve.setAttribute('points',pts.join(' '));
+    var zy=Y(0);
+    zeroline.setAttribute('y1',zy.toFixed(1));zeroline.setAttribute('y2',zy.toFixed(1));
+    zerotext.setAttribute('y',(zy-5).toFixed(1));
+    return{X:X,Y:Y};
+  }
+  function render(){
+    var t=parseFloat(thr.value),ratio=parseFloat(ratioEl.value),c=calc(t,ratio);
+    document.getElementById('tval').textContent=t.toFixed(2);
+    document.getElementById('rval').textContent=ratio.toFixed(1)+'×';
+    document.getElementById('hit').textContent=c.hit+' 颗';
+    document.getElementById('kill').textContent=c.kill+' 颗';
+    document.getElementById('rate').textContent=c.rate.toFixed(2)+'% / '+c.miss;
+    var netEl=document.getElementById('net');
+    netEl.textContent=fmt(c.net);netEl.className='v'+(c.net<0?' neg':'');
+    // histogram cursor
+    var hx=20+t*420;
+    document.getElementById('histThr').setAttribute('x1',hx.toFixed(1));
+    document.getElementById('histThr').setAttribute('x2',hx.toFixed(1));
+    // net curve cursor
+    var axes=drawCurve();
+    var cx=axes.X(t),cy=axes.Y(c.net);
+    cursor.setAttribute('x1',cx.toFixed(1));cursor.setAttribute('x2',cx.toFixed(1));
+    dot.setAttribute('cx',cx.toFixed(1));dot.setAttribute('cy',cy.toFixed(1));
+    // PR dot: 找最近阈值点
+    var best=prPts[0],bd=9;
+    prPts.forEach(function(pt){var dd=Math.abs(pt.t-t);if(dd<bd){bd=dd;best=pt;}});
+    document.getElementById('prDot').setAttribute('cx',(40+best.r*560).toFixed(1));
+    document.getElementById('prDot').setAttribute('cy',(160-best.p*140).toFixed(1));
+    document.getElementById('prNote').textContent='当前阈值：Precision '+(best.p*100).toFixed(0)+'% · Recall '+(best.r*100).toFixed(0)+'% —— 阈值越低 Recall 越高但 Precision 跌入误杀区。（示意）';
+    var msg;
+    if(c.rate>4)msg='过杀已升到 '+c.rate.toFixed(2)+'%，误杀成本明显吞噬收益 —— 阈值不是越低越好。';
+    else if(c.miss>40)msg='漏放 '+c.miss+' 颗，测试逃逸风险上升 —— 在算力芯片上这是质量红线，不是经济问题。';
+    else if(c.net<=0)msg='净收益为负：拦截省下的封装成本，盖不住误杀良品的损失。';
+    else msg='当前阈值下净收益为正；但最优点通常不在「抓得最多」的位置 —— 点一下「找净收益最优点」看差别。';
+    document.getElementById('conclusion').textContent=msg+'（示意数据，仅说明权衡关系）';
+  }
+  thr.addEventListener('input',render);
+  ratioEl.addEventListener('input',render);
+  document.getElementById('reset').addEventListener('click',function(){thr.value='0.62';ratioEl.value='2.5';render();});
+  document.getElementById('opt').addEventListener('click',function(){
+    var ratio=parseFloat(ratioEl.value),bestT=0.30,best=-Infinity,t;
+    for(t=0.30;t<=0.9001;t+=0.01){var c=calc(t,ratio);if(c.net>best){best=c.net;bestT=t;}}
+    thr.value=bestT.toFixed(2);render();
+    document.getElementById('conclusion').textContent='示意最优点在阈值 '+bestT.toFixed(2)+'，净收益 '+fmt(best)+'。注意：这个最优点随「封装成本 / 单颗价值」变化而移动 —— 所以必须拿贵司自己的成本结构算，不能套用行业数字。（示意数据）';
+  });
+  render();
+})();
+
+/* ============ T4 自适应测试 ============ */
+(function(){
+  var items=[['Vmin 扫频寻优',52,'#85B7EB'],['Scan 测试',38,'#85B7EB'],['SerDes 眼图/抖动',26,'#85B7EB'],['功能向量',24,'#85B7EB'],['IDDQ 静态电流',14,'#85B7EB'],['DC 参数',12,'#85B7EB'],['温度/杂项',20,'#85B7EB']];
+  var TOTAL=186, mx=items[0][1];
+  var ih='';
+  items.forEach(function(it){
+    ih+='<div class="barrow"><div class="barlabel">'+it[0]+'</div><div class="bartrack"><div class="barfill" style="width:'+(it[1]/mx*100).toFixed(0)+'%;background:'+it[2]+'"></div></div><div class="barval">'+it[1]+'s</div></div>';
+  });
+  ih+='<div class="barrow" style="margin-top:10px;border-top:1px dashed var(--line);padding-top:8px"><div class="barlabel"><b>合计</b></div><div class="bartrack"><div class="barfill" style="width:100%;background:var(--blue)"></div></div><div class="barval"><b>'+TOTAL+'s</b></div></div>';
+  document.getElementById('itemBars').innerHTML=ih;
+  var sugs=[
+    ['Vmin 扫频','动态搜索窗口（IDDQ/漏电预测 Vmin ± 窗口）','-14s','低','影子期免签核'],
+    ['Scan 测试','PAT 标记 die 全扫，其余抽样','-11s','中','落地需 ECN'],
+    ['功能向量','分级向量：高风险 die 加做','-7s','低','影子期免签核'],
+    ['SerDes','速率分档：非满速 lot 降档','-5s','中','落地需 ECN'],
+    ['IDDQ','DPAT 动态限值收紧异常件','-4s','低','影子期免签核']
+  ];
+  var SAVE=41, st='';
+  sugs.forEach(function(s){
+    var risk=s[3]==='中'?'<span style="color:var(--amber);font-weight:700">中</span>':'<span style="color:var(--green);font-weight:700">低</span>';
+    st+='<tr><td>'+s[0]+'</td><td style="font-size:11.8px">'+s[1]+'</td><td style="color:var(--green);font-weight:700">'+s[2]+'</td><td>'+risk+'</td><td style="font-size:11.5px">'+s[4]+'</td></tr>';
+  });
+  document.getElementById('sugTable').innerHTML=st;
+  var applied=false;
+  function renderT4(){
+    var after=applied?TOTAL-SAVE:TOTAL;
+    document.getElementById('tBeforeV').textContent=TOTAL+'s';
+    document.getElementById('tAfterV').textContent=after+'s'+(applied?'（-22%）':'');
+    document.getElementById('tAfter').style.width=(after/TOTAL*100).toFixed(1)+'%';
+    document.getElementById('applyState').textContent=applied?'当前：已应用 AI 建议（模拟回放）':'当前：现行测试程序';
+    document.getElementById('t4con').textContent=applied
+      ?'模拟回放：测试时长 186s → '+after+'s（节省 '+SAVE+'s / -'+Math.round(SAVE/TOTAL*100)+'%）。验收口径：终测良率与 DPPM/逃逸不劣化 + 保留组对照 —— 时间数字上线前必须实测，不预设。（示意）'
+      :'合计节省潜力约 '+SAVE+'s / -'+Math.round(SAVE/TOTAL*100)+'%。所有建议仅为影子输出；中风险项落地必须走贵司 ECN 与质量签核。（示意）';
+  }
+  document.getElementById('applySug').addEventListener('click',function(){applied=!applied;this.textContent=applied?'撤销建议（模拟）':'应用建议（模拟）';renderT4();});
+  renderT4();
+})();
+
+/* ============ T5 设备健康 ============ */
+(function(){
+  // FDC 接触电阻 90 天趋势
+  var N=90,seedF=seed,data=[];
+  for(var d=0;d<N;d++){
+    var base=100+ d*0.12 + (d>65?(d-65)*0.9:0) + gauss()*1.6;
+    data.push(Math.max(60,base));
+  }
+  var W=520,H=250,px0=46,px1=500,py0=20,py1=210,ymin=60,ymax=160,UCL=140,LCL=80;
+  function X(i){return px0+(px1-px0)*i/(N-1)}
+  function Y(v){return py1-(v-ymin)/(ymax-ymin)*(py1-py0)}
+  var s='';
+  [80,100,120,140].forEach(function(v){
+    s+='<line x1="'+px0+'" y1="'+Y(v)+'" x2="'+px1+'" y2="'+Y(v)+'" stroke="#EDF1F6"/>';
+    s+='<text x="'+(px0-6)+'" y="'+(Y(v)+4)+'" font-size="10" fill="#5F6B7A" text-anchor="end">'+v+'</text>';
+  });
+  s+='<line x1="'+px0+'" y1="'+Y(UCL)+'" x2="'+px1+'" y2="'+Y(UCL)+'" stroke="#A32D2D" stroke-width="1.3" stroke-dasharray="6 4"/>';
+  s+='<text x="'+(px1-4)+'" y="'+(Y(UCL)-5)+'" font-size="10" fill="#A32D2D" text-anchor="end">UCL</text>';
+  s+='<line x1="'+px0+'" y1="'+Y(LCL)+'" x2="'+px1+'" y2="'+Y(LCL)+'" stroke="#A32D2D" stroke-width="1.3" stroke-dasharray="6 4"/>';
+  // 漂移区底纹（day 70-90）
+  s+='<rect x="'+X(70)+'" y="'+py0+'" width="'+(X(89)-X(70))+'" height="'+(py1-py0)+'" fill="#FDF3F2" opacity="0.55"/>';
+  s+='<text x="'+((X(70)+X(89))/2)+'" y="'+(py0+14)+'" font-size="10" fill="#A32D2D" text-anchor="middle">漂移超限段</text>';
+  // 数据线
+  var pts=data.map(function(v,i){return X(i).toFixed(1)+','+Y(v).toFixed(1)});
+  s+='<polyline points="'+pts.join(' ')+'" fill="none" stroke="#185FA5" stroke-width="2"/>';
+  // 预测失效点 day ~102（外推）
+  var fx=X(89)+(X(89)-X(88))*13;
+  s+='<line x1="'+X(89)+'" y1="'+Y(data[89])+'" x2="'+Math.min(fx,px1)+'" y2="'+Y(UCL)+'" stroke="#D9A441" stroke-width="1.8" stroke-dasharray="5 3"/>';
+  s+='<circle cx="'+Math.min(fx,px1)+'" cy="'+Y(UCL)+'" r="5" fill="#D9A441" stroke="#fff" stroke-width="1.5"/>';
+  s+='<text x="'+(px1-8)+'" y="'+(Y(UCL)-10)+'" font-size="10" fill="#854F0B" text-anchor="end">预测触限 ≈12天后 →</text>';
+  // x 轴标签
+  [0,30,60,90].forEach(function(dd){s+='<text x="'+X(dd)+'" y="'+(py1+18)+'" font-size="10" fill="#5F6B7A" text-anchor="middle">D'+dd+'</text>';});
+  s+='<text x="'+((px0+px1)/2)+'" y="'+(H-4)+'" font-size="11" fill="#5F6B7A" text-anchor="middle">运行天数</text>';
+  s+='<text x="14" y="'+((py0+py1)/2)+'" font-size="11" fill="#5F6B7A" text-anchor="middle" transform="rotate(-90 14 '+((py0+py1)/2)+')">接触电阻 mΩ</text>';
+  document.getElementById('fdcChart').innerHTML=s;
+  // 灵敏度滑块
+  var sens=document.getElementById('sens');
+  function renderSens(){
+    var sv=parseInt(sens.value);
+    document.getElementById('sensVal').textContent=sv+'%';
+    var lead=(24-sv*0.2).toFixed(0), fa=(sv*0.09).toFixed(1);
+    document.getElementById('leadT').textContent='≈'+lead+' 天';
+    document.getElementById('faRate').textContent=fa+'%';
+    document.getElementById('t5con').textContent='灵敏度 '+sv+'% → 预警提前量约 '+lead+' 天，虚警率约 '+fa+'%。<b>这是一对 trade-off，没有免费午餐</b> —— 建议与设备工程师共同标定阈值，宁可多报一次也不漏掉一次真漂移。（示意）';
+  }
+  sens.addEventListener('input',renderSens);renderSens();
+})();
+
+/* ============ T6 AOI 检测 ============ */
+(function(){
+  var svg=document.getElementById('dieSvg'),NS='http://www.w3.org/2000/svg';
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+  // 基底 + die 框
+  svg.appendChild(el('rect',{x:10,y:10,width:440,height:320,rx:10,fill:'#1B2940',stroke:'#2E4A6B','stroke-width':1.5}));
+  svg.appendChild(el('rect',{x:60,y:40,width:340,height:260,rx:6,fill:'#22314E',stroke:'#3B5578','stroke-width':1}));
+  // 凸点阵列 9x6
+  var bumps=[];
+  for(var r=0;r<6;r++)for(var c=0;c<9;c++){
+    var bx=95+c*34,by=70+r*40;
+    bumps.push({x:bx,y:by});
+    svg.appendChild(el('circle',{cx:bx,cy:by,r:9,fill:'#D9A441',stroke:'#8a6420','stroke-width':1}));
+    svg.appendChild(el('circle',{cx:bx,cy:by,r:4,fill:'#F0C878'}));
+  }
+  // 缺陷（示意）：颗粒、桥接、空洞、偏移、划痕
+  var defects=[
+    {type:'颗粒污染',x:228,y:150,r:5,label:'PARTICLE',conf:'98.2%',box:[212,134,32,32]},
+    {type:'凸点桥接',x:340,y:230,bridge:true,label:'BRIDGE',conf:'96.7%',box:[312,216,64,30]},
+    {type:'空洞 Void',x:129,y:190,label:'VOID',conf:'91.4%',box:[117,178,26,26]},
+    {type:'对准偏差',x:401,y:150,label:'MISALIGN',conf:'88.9%',box:[383,132,38,36]},
+    {type:'表面划痕',x:150,y:265,scratch:true,label:'SCRATCH',conf:'84.3%',box:[120,254,80,18]}
+  ];
+  var overlay=el('g',{id:'aoiOverlay',display:'none'});
+  defects.forEach(function(d){
+    if(d.bridge){
+      svg.appendChild(el('rect',{x:314,y:220,width:62,height:20,rx:9,fill:'#E24B4A',opacity:.85}));
+    }else if(d.scratch){
+      svg.appendChild(el('line',{x1:126,y1:263,x2:222,y2:263,stroke:'#E24B4A','stroke-width':3,'stroke-linecap':'round',opacity:.85}));
+    }else if(d.type==='空洞 Void'){
+      svg.appendChild(el('circle',{cx:129,cy:190,r:4,fill:'#A32D2D'}));
+    }else if(d.type==='对准偏差'){
+      svg.appendChild(el('circle',{cx:401,cy:150,r:9,fill:'#C99A3F',stroke:'#8a6420','stroke-width':1}));
+      svg.appendChild(el('circle',{cx:401,cy:150,r:9.5,fill:'none',stroke:'#E24B4A','stroke-width':1.6,'stroke-dasharray':'3 2'}));
+      svg.appendChild(el('circle',{cx:401,cy:150,r:3,fill:'#A32D2D'}));
+    }else{
+      svg.appendChild(el('circle',{cx:d.x,cy:d.y,r:d.r||4.5,fill:'#5B6675',stroke:'#2A3340','stroke-width':1}));
+    }
+    var b=d.box;
+    overlay.appendChild(el('rect',{x:b[0],y:b[1],width:b[2],height:b[3],fill:'none',stroke:'#22B8CF','stroke-width':1.5,'stroke-dasharray':'5 3',rx:3}));
+    var tx=b[0],ty=b[1]-5;
+    if(ty<20)ty=b[1]+b[3]+12;
+    overlay.appendChild(el('rect',{x:tx,y:ty-11,width:78,height:14,rx:3,fill:'#0B1F33',opacity:.92}));
+    var t=el('text',{x:tx+4,y:ty-1,'font-size':9,fill:'#8FE3F0','font-family':'Consolas,monospace'});
+    t.textContent=d.type+' '+d.conf;
+    overlay.appendChild(t);
+  });
+  svg.appendChild(overlay);
+  // 图例
+  var leg=el('text',{x:70,y:322,'font-size':10,fill:'#7E93B0'});
+  leg.textContent='示意 die：9×6 凸点阵列 · 注入 5 类缺陷（非真实 AOI 图像）';
+  svg.appendChild(leg);
+
+  var on=false;
+  var det=document.getElementById('aoiDet'),fp=document.getElementById('aoiFP');
+  document.getElementById('aoiToggle').addEventListener('click',function(){
+    on=!on;
+    overlay.setAttribute('display',on?'':'none');
+    this.textContent=on?'关闭 AI 检测':'开启 AI 检测';
+    document.getElementById('aoiState').textContent=on?'当前：AI 检测叠加（5 候选框）':'当前：原始影像';
+    det.textContent=on?'5 处':'—';fp.textContent=on?'1 处':'—';
+    var rows='';
+    defects.forEach(function(d){
+      rows+='<tr'+(on?'':' style="opacity:.45"')+'><td>'+d.type+'</td><td style="font-size:11.5px">'+d.label+'</td><td style="color:var(--blue-deep);font-weight:700">'+(on?d.conf:'—')+'</td><td style="font-size:11px">('+d.box[0]+','+d.box[1]+')</td></tr>';
+    });
+    document.getElementById('defectTable').innerHTML=rows;
+    document.getElementById('t6con').textContent=on
+      ?'AI 检出 5 处候选（4 真缺陷 + 1 误报），置信度 84–98%。漏检率 0.8% / 过杀率 2.1% —— <b>两项指标必须同时报</b>，PR 曲线见完整报告。（示意）'
+      :'点击「开启 AI 检测」查看候选框与置信度。验收口径：漏检率 + 过杀率 + PR 曲线三件套，厂商宣传数字不可外推。（示意）';
+  });
+  document.getElementById('defectTable').innerHTML=defects.map(function(d){
+    return '<tr style="opacity:.45"><td>'+d.type+'</td><td style="font-size:11.5px">'+d.label+'</td><td>—</td><td style="font-size:11px">('+d.box[0]+','+d.box[1]+')</td></tr>';
+  }).join('');
+})();
+
+/* ============ T7 只读智能体 ============ */
+(function(){
+  var Q=[
+    {k:['过杀','overkill','underkill','漏放','逃逸','误杀'],a:'<b>Overkill（过杀）</b> = 把好芯片判坏，直接损失单颗价值；<b>Underkill / Escape（漏放/逃逸）</b> = 把坏芯片放走，质量灾难。两者永远是一对 trade-off：阈值越低抓得越多、过杀越高。算力芯片单颗价值高，1.6% 过杀就能吃掉大部分收益 —— 所以任何筛选方案都必须同时报这两个数，不能只报准确率。<span class="cite">手册§02</span><span class="cite">应答卡T3</span>'},
+    {k:['stdf','atdf','测试数据格式','数据格式'],a:'<b>STDF（Standard Test Data Format）</b> 是测试数据交换事实标准，含 MIR（批次信息）、PIR/PRR（每颗 DUT 结果）、PTR/MPR（参数记录）、FTR（功能记录）。不同测试机厂实现细节有差异，还有 CSV 与私有格式 —— <b>解析引擎兼容性往往是接入第一个坑</b>，T1 模块演示的就是这一步。<span class="cite">手册§02–03</span>'},
+    {k:['ecid','关联','跨工序','cp','ft','slt','关联键'],a:'<b>ECID（芯片电子标识）</b> 用来把 CP、FT、SLT 三个测试插入点的数据做一对一关联 —— 没有它，跨工序建模基本无从谈起。T1 诊断报告里 CP→FT 命中 91.2%、FT→SLT 88.4%，缺失部分标记剔除而非强行关联，这就是负责任的做法。<span class="cite">手册§02</span>'},
+    {k:['d9000','v93000','ultraflex','测试机','并行','site','通道'],a:'全球 ATE 双寡头是爱德万 V93000/EXA Scale 与泰瑞达 UltraFLEX；国产代表是长川 D9000（单板 256 数字通道、最多 8 板卡）、华峰 STS8600、悦芯 T800。算力芯片测试时长数十分钟级，<b>并行 site 数直接决定机时成本</b> —— 测试成本 ≈ 每秒机时成本 × 测试秒数 ÷ 并行 site 数。<span class="cite">手册§01</span>'},
+    {k:['颗粒','混合键合','aoi','检测','1μm','1μm','缺陷'],a:'混合键合下 <b>1μm 颗粒即可导致失效</b>，3D 堆叠后良率归因分不清是 die 还是键合问题 —— 这是前沿未解问题，只能列联合课题。检测走「只学好样本」的异常检测路线（PatchCore/PaDiM 类），验收必须同时报漏检率 + 过杀率 + PR 曲线，厂商宣传的「&lt;3%」是特定场景实测不可外推。<span class="cite">手册§04-L4</span><span class="cite">应答卡T6</span>'},
+    {k:['测试时间','省时间','attr','自适应','vmin','测试项','裁剪'],a:'自适应测试三件套：<b>PAT/DPAT</b>（零件平均测试/动态版，规格内但可能早期失效的异常件）、<b>ATTR</b>（自适应缩短测试时间）、近邻残值/双变量异常检测。爱德万公开的 Vmin 智能优化用机器学习预测每颗芯片每核的潜在最小工作电压、缩小扫频窗口 —— 但公开资料未给百分比，<b>时间收益必须实测</b>。所有 limit/程序变更走 ECN 与质量签核。<span class="cite">手册§02/§07</span>'},
+    {k:['不出域','隐私','联邦','脱敏','数据安全','出域'],a:'数据不出域的落地形态：① 数据在贵司机房/边缘侧处理，我方带环境进场只读接入；② ID 哈希脱敏、去客户名与型号；③ 跨厂场景走联邦学习 —— 各方本地训练，只交换模型参数/梯度，全局模型回发本地验证；④ 操作审计 + 数据留存与销毁策略书面化。泰瑞达/PDF 案例原话：「数据囤积与数据安全是核心难点，难度甚至高于模型搭建本身」。<span class="cite">手册§03/§06</span>'},
+    {k:['pat','dpat','零件平均','动态限'],a:'<b>PAT（Part Average Testing）</b> 基于同批器件行为动态收紧某些测试限，筛出「规格内但可能早期失效」的异常件；<b>DPAT</b> 是其动态版本。1990 年代出现、AEC 2011 更新，是自适应测试最成熟的落地形态 —— T4 模块里 IDDQ/Scan 的建议动作就用了它。<span class="cite">手册§02</span>'},
+    {k:['kgd','slt','slT'.toLowerCase(),'插入点','封装前','系统级'],a:'测试链条：<b>CP（晶圆测试）→ KGD 判读 → 封装/3D堆叠 → FT（终测）→ SLT（系统级测试）→ 出货</b>。算力芯片把节点前移：KGD 从可选项变成封装前强制门槛；SLT 作为模拟服务器真实高负载工况的「第二道质量防线」。HBM/CoWoS 还要求单颗 DRAM 的 KGSD 与晶圆级系统级互连验证。<span class="cite">手册§01</span>'},
+    {k:['良率','根因','wafer','异常批次','归因'],a:'良率归因用 wafer map 空间模式（边缘环/簇状/划痕）+ SoftBin Pareto + SPC 异常批次 + 特征贡献度排序（类 SHAP）。输出是 <b>Top-3 根因线索，不是结论</b> —— 「分不清是 die 还是键合」在 3D 堆叠后仍是前沿未解问题。T2 模块演示了完整形态。<span class="cite">手册§04-L2</span>'},
+    {k:['探针卡','设备','健康','fdc','预测','维护','寿命'],a:'设备健康类：FDC 时序 + 控制图基线 + 时序异常检测（TCN/自编码器）+ 剩余寿命估计。数据相对易得、不碰测试判定，<b>最适合做第一个 POC</b>。关键纪律：预警提前量与虚警率是一对 trade-off，必须主动报虚警率，别承诺零误报。<span class="cite">手册§04-L3</span><span class="cite">应答卡T5</span>'},
+    {k:['效果','准确率','数字','多少','提升','demo','效果','结果'],a:'按纪律我不当场给效果数字。公开标杆是泰瑞达×PDF Solutions 2026 案例：缺陷芯片识别置信度 90%、接受 1.6% 晶圆分选过杀、终测良率约 +1pt，<b>经济账基本持平</b>。真正的难点是数据审批与口径对齐（1–4 周），建模本身约一周。正确姿势：拿贵司一批脱敏历史数据做离线盲测，两周出可复核报告。<span class="cite">手册§07</span><span class="cite">应答卡S5</span>'},
+    {k:['你好','hi','hello','你是谁','介绍'],a:'我是 AI4Chip 智能测试数据中枢的演示智能体。我们不做设备、不做板卡，只补「机台数据 → 决策」那一段闭环：数据接入口径诊断、良率洞察、风险筛选、自适应测试建议、设备健康预警、AOI 辅助检测、只读问答 —— 全部影子模式先行，数据不出域，AI 建议不直接下发机台。可以问我任意一个预置问题试试。'}
+  ];
+  var msgs=document.getElementById('chatMsgs'),chips=document.getElementById('chatChips'),
+      input=document.getElementById('chatInput'),trace=document.getElementById('traceBox');
+  var presets=['什么是 overkill 和 test escape？','ECID 为什么是跨工序建模的前提？','D9000 和 V93000 在算力芯片测试上差在哪？','混合键合的 1μm 颗粒为什么致命？','数据不出域怎么落地？','你们的方案能提多少良率？'];
+  chips.innerHTML=presets.map(function(p){return '<span class="chip">'+p+'</span>';}).join('');
+  chips.addEventListener('click',function(e){if(e.target.classList.contains('chip'))ask(e.target.textContent);});
+  document.getElementById('chatSend').addEventListener('click',function(){ask(input.value);input.value='';});
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'){ask(input.value);input.value='';}});
+  function bubble(who,text){
+    var m=document.createElement('div');m.className='msg '+who;
+    m.innerHTML='<div class="who">'+(who==='bot'?'AI4Chip 助手 · 只读模式':'你')+'</div><div class="bubble">'+text+'</div>';
+    msgs.appendChild(m);msgs.scrollTop=msgs.scrollHeight;
+  }
+  function runTrace(q){
+    trace.innerHTML='';
+    var steps=[
+      ['意图识别','意图分类：'+(q.length<12?'简短查询':'领域问答')+' · 命中知识域：测试/良率/设备'],
+      ['tool','kb.search("'+q.slice(0,14).replace(/</g,'&lt;')+'…") → 命中 3 篇文档（手册§/应答卡/作战卡）'],
+      ['tool','stdb.query(字段字典) → 口径映射完成'],
+      ['推理','生成带出处回答 · 置信度评估：高（预置知识域内）'],
+      ['done','✓ 输出已标注引用 · 无写操作 · 未触碰产线执行路径']
+    ];
+    steps.forEach(function(s,i){
+      setTimeout(function(){
+        var d=document.createElement('div');d.className='step '+(i===steps.length-1?'done':'run');
+        d.innerHTML=(s[0]==='tool'?'<span class="tool">⚙ '+s[0]+'</span> ':'<span>'+s[0]+'</span> ')+' '+s[1];
+        trace.appendChild(d);
+      },350+i*650);
+    });
+  }
+  function ask(q){
+    q=(q||'').trim();if(!q)return;
+    bubble('user',q.replace(/</g,'&lt;'));
+    runTrace(q);
+    var best=Q[Q.length-1],bs=-1,ql=q.toLowerCase();
+    Q.forEach(function(item){
+      var sc=0;item.k.forEach(function(k){if(ql.indexOf(k.toLowerCase())>-1)sc+=k.length;});
+      if(sc>bs){bs=sc;best=item;}
+    });
+    setTimeout(function(){bubble('bot',best.a);},3300);
+  }
+})();
+
+/* ============ T8 跨厂口径沙盘 ============ */
+(function(){
+  var rows=[
+    ['凸点桥接 / Bridge','Bin 21','SB-15','CAT-BRG','BRIDGE'],
+    ['空洞 Void','Bin 33','SB-22','CAT-VD','VOID'],
+    ['对准偏差 Misalign','Bin 45','SB-31','CAT-MIS','MISALIGN'],
+    ['颗粒污染 Particle','Bin 52','SB-40','CAT-PRT','PARTICLE'],
+    ['开短路 Open/Short','Bin 12','SB-08','CAT-OS','OPEN_SHORT'],
+    ['参数漂移 Param Drift','Bin 60','SB-55','CAT-DRF','PARAM_DRIFT']
+  ];
+  var tb=document.getElementById('binMap'),html='';
+  rows.forEach(function(r,i){
+    html+='<tr class="clickable" data-i="'+i+'"><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td><b style="color:var(--blue-deep)">'+r[4]+'</b></td></tr>';
+  });
+  tb.innerHTML=html;
+  var notes=[
+    '映射逻辑：物理失效模式（桥接）→ 各家 SoftBin 命名（Bin 21 / SB-15 / CAT-BRG）→ 统一本体 BRIDGE。口径映射表是跨厂建模的第一层地基。',
+    '映射逻辑：空洞在 AOI 侧常与键合界面联动，统一本体 VOID 需关联封装工序段标记。',
+    '映射逻辑：对准偏差在 CP 侧表现为接触不良，在 FT 侧表现为功能失败 —— 本体需带工序段属性。',
+    '映射逻辑：颗粒污染是混合键合 1μm 致失效的主因，本体 PARTICLE 应升级为一等失效类。',
+    '映射逻辑：开短路是最基础的电学失效，各家命名最一致，是口径对齐的锚点类别。',
+    '映射逻辑：参数漂移常是测试限值问题而非器件问题 —— 本体需区分「器件漂移」与「测试系统漂移」。'
+  ];
+  tb.addEventListener('click',function(e){
+    var tr=e.target.closest('tr.clickable');if(!tr)return;
+    tb.querySelectorAll('tr').forEach(function(x){x.classList.remove('hl')});
+    tr.classList.add('hl');
+    document.getElementById('t8note').textContent=notes[parseInt(tr.dataset.i)];
+  });
+})();
+
+/* ============ NAND N1 Fail Bit Map ============ */
+(function(){
+  var COLS=64,ROWS=32,OX=10,OY=34,CW=6.8,CH=7.3;
+  var cells=[];
+  function add(x,y,m){x=Math.round(x);y=Math.round(y);if(x>=0&&x<COLS&&y>=0&&y<ROWS)cells.push({x:x,y:y,m:m});}
+  [9,10,24,25,38,39,52,53].forEach(function(cx){for(var k=0;k<13;k++)add(cx,2+Math.floor(rnd()*28),'wl');});
+  [17,44].forEach(function(cx){for(var k=0;k<8;k++)add(cx,3+Math.floor(rnd()*26),'wl');});
+  [6,7,20,21].forEach(function(cy){for(var k=0;k<20;k++)add(3+Math.floor(rnd()*58),cy,'bl');});
+  for(var k=0;k<34;k++){var px=4+Math.floor(rnd()*58),py=3+Math.floor(rnd()*25);add(px,py,'c2c');add(px+1,py,'c2c');}
+  for(var k=0;k<46;k++){var rx=4+Math.floor(rnd()*56),ry=3+Math.floor(rnd()*26);if(rnd()<0.3){rx+=1;ry+=1;}add(rx,ry,'ret');}
+  for(var k=0;k<26;k++){add(3+Math.floor(rnd()*58),3+Math.floor(rnd()*26),'rnd');}
+  var seen={},uniq=[];
+  cells.forEach(function(c){var key=c.x+','+c.y;if(!seen[key]){seen[key]=1;uniq.push(c);}});
+  cells=uniq;
+  var MC={wl:'#E24B4A',bl:'#F2994A',c2c:'#7A5AF8',ret:'#185FA5',rnd:'#98A2B3'};
+  var counts={wl:0,bl:0,c2c:0,ret:0,rnd:0};
+  cells.forEach(function(c){counts[c.m]++;});
+  var total=cells.length;
+  var svg=document.getElementById('fbmSvg'),NS='http://www.w3.org/2000/svg';
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+  svg.appendChild(el('rect',{x:OX-4,y:OY-4,width:COLS*CW+8,height:ROWS*CH+8,rx:6,fill:'#FDFEFF',stroke:'#DDE4EC'}));
+  for(var g=0;g<=8;g++){svg.appendChild(el('line',{x1:OX+g*8*CW,y1:OY,x2:OX+g*8*CW,y2:OY+ROWS*CH,stroke:'#EDF1F6','stroke-width':1}));}
+  for(var g=0;g<=4;g++){svg.appendChild(el('line',{x1:OX,y1:OY+g*8*CH,x2:OX+COLS*CW,y2:OY+g*8*CH,stroke:'#EDF1F6','stroke-width':1}));}
+  var modeEls={};
+  ['wl','bl','c2c','ret','rnd'].forEach(function(m){modeEls[m]=el('g',{});svg.appendChild(modeEls[m]);});
+  cells.forEach(function(c){
+    var r=el('rect',{x:OX+c.x*CW+0.4,y:OY+c.y*CH+0.4,width:CW-0.8,height:CH-0.8,rx:1,fill:MC[c.m],opacity:0.9});
+    modeEls[c.m].appendChild(r);
+  });
+  svg.appendChild(el('text',{x:OX,y:OY-12,'font-size':10.5,fill:'#5F6B7A'})).textContent='64 × 32 fail bit map（合成）· 色块 = 失效 bit';
+  var lg=document.getElementById('fbmLegend'),lh='';
+  var LGN={wl:'WL 失效簇',bl:'BL 失效带',c2c:'C2C 耦合',ret:'Retention',rnd:'随机缺陷'};
+  ['wl','bl','c2c','ret','rnd'].forEach(function(m){lh+='<span><i style="background:'+MC[m]+';border-color:'+MC[m]+'"></i>'+LGN[m]+'</span>';});
+  lg.innerHTML=lh;
+  var MODES=[
+    {id:'wl',name:'WL 失效簇',sig:'纵向条纹沿 Wordline 聚集',st:[['WL 替换金属刻蚀',0.78],['WL 接触孔',0.55]],act:'调取该站同期 FDC / 量测数据比对，电性复测确认'},
+    {id:'bl',name:'BL 失效带',sig:'横向条带沿 Bitline 聚集',st:[['BL 接触孔 / 刻蚀',0.71],['CMP 平坦化',0.48]],act:'核对 BL 接触电阻趋势与 CMP 颗粒数据'},
+    {id:'c2c',name:'Cell-to-Cell 耦合',sig:'相邻 cell 成对失效',st:[['隧道氧化层',0.66],['充电层 CTF',0.52],['编程算法',0.44]],act:'比对 ISPP / 编程电压窗口与 CTF 均匀性'},
+    {id:'ret',name:'Retention 漂移',sig:'散点 + 温度相关',st:[['隧道氧化质量',0.61],['陷阱密度',0.57]],act:'衔接 N2 寿命模型做 bake 验证'},
+    {id:'rnd',name:'随机缺陷',sig:'孤立散点、无空间规律',st:[['颗粒 / 晶体缺陷',0.40]],act:'纳入 SPC 监控，不单独归因'}
+  ];
+  MODES.forEach(function(md){md.share=(counts[md.id]/total*100).toFixed(0)+'%';});
+  var mc=document.getElementById('modeCards'),mh='';
+  MODES.forEach(function(md,i){
+    mh+='<div class="fbm-mode" data-i="'+i+'" style="border:1px solid var(--line);border-left:3px solid '+MC[md.id]+';border-radius:7px;padding:8px 11px;margin:6px 0;cursor:pointer;background:#fff">'
+      +'<div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:12.5px">'+md.name+'</b><span style="font-size:11.5px;color:var(--muted)">'+md.share+' of fails</span></div>'
+      +'<div style="font-size:11.5px;color:var(--muted);margin:2px 0">空间签名：'+md.sig+'</div>'
+      +'<div style="font-size:11.5px">工艺站候选：'+md.st.map(function(s){return s[0]+' <b>'+s[1].toFixed(2)+'</b>';}).join(' → ')+'</div></div>';
+  });
+  mc.innerHTML=mh;
+  var sel=-1;
+  function highlight(m){
+    ['wl','bl','c2c','ret','rnd'].forEach(function(mm){
+      modeEls[mm].setAttribute('opacity',m===null?1:(mm===m?1:0.1));
+    });
+  }
+  mc.addEventListener('click',function(e){
+    var card=e.target.closest('.fbm-mode');if(!card)return;
+    var i=parseInt(card.dataset.i),md=MODES[i];
+    sel=(sel===i)?-1:i;
+    mc.querySelectorAll('.fbm-mode').forEach(function(c){c.style.background='#fff';});
+    if(sel===-1){highlight(null);document.getElementById('fbmTrace').textContent='点击右侧失效模式卡片，查看空间签名与工艺站回溯链。';return;}
+    highlight(md.id);card.style.background='#EAF2FA';
+    var chain=md.st.map(function(s,j){return (j===0?'① ':'② ')+s[0]+'（置信 '+s[1].toFixed(2)+'）';}).join('；');
+    document.getElementById('fbmTrace').innerHTML=
+      '<b>回溯链（示意）：</b>「'+md.name+'」→ 空间签名：'+md.sig+' → 工艺站候选：'+chain
+      +' → 建议验证：'+md.act+' → <b>归因结论需工艺工程师签核</b>。';
+  });
+})();
+
+/* ============ NAND N2 Retention / Vt ============ */
+(function(){
+  var svg=document.getElementById('retSvg'),NS='http://www.w3.org/2000/svg';
+  function el(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+  var X0=52,X1=540,Y0=20,Y1=215,LT_MIN=-0.3,LT_MAX=5.9;
+  function X(t){return X0+(Math.log10(t)-LT_MIN)/(LT_MAX-LT_MIN)*(X1-X0)}
+  function Y(m){return Y1-(m/100)*(Y1-Y0)}
+  var B=4985,K125=2.75;
+  function kOf(Tc){return K125*Math.exp(B*(1/398.15-1/(Tc+273.15)));}
+  function margin(t,Tc){return Math.max(0,100-kOf(Tc)*Math.pow(t,0.55));}
+  function failT(Tc){return Math.pow(85/kOf(Tc),1/0.55);}
+  [0,20,40,60,80,100].forEach(function(m){
+    svg.appendChild(el('line',{x1:X0,y1:Y(m),x2:X1,y2:Y(m),stroke:m===15?'#A32D2D':'#EDF1F6','stroke-width':m===15?1.4:1,'stroke-dasharray':m===15?'6 4':'0'}));
+    svg.appendChild(el('text',{x:X0-8,y:Y(m)+4,'font-size':10,fill:m===15?'#A32D2D':'#5F6B7A','text-anchor':'end'})).textContent=m+'%';
+  });
+  [0.5,1,10,100,1000,10000,100000,1000000].forEach(function(t){
+    svg.appendChild(el('line',{x1:X(t),y1:Y0,x2:X(t),y2:Y1,stroke:'#EDF1F6'}));
+    svg.appendChild(el('text',{x:X(t),y:Y1+16,'font-size':10,fill:'#5F6B7A','text-anchor':'middle'})).textContent=t>=1000?(t/1000)+'k':t+'h';
+  });
+  svg.appendChild(el('text',{x:(X0+X1)/2,y:262,'font-size':11,fill:'#5F6B7A','text-anchor':'middle'})).textContent='烘烤 / 使用时长（对数轴，小时）';
+  svg.appendChild(el('text',{x:14,y:(Y0+Y1)/2,'font-size':11,fill:'#5F6B7A','text-anchor':'middle',transform:'rotate(-90 14 '+((Y0+Y1)/2)+')'})).textContent='Vt margin %';
+  svg.appendChild(el('text',{x:X1-6,y:Y(15)-6,'font-size':10,fill:'#A32D2D','text-anchor':'end'})).textContent='读出失效判据 margin<15%';
+  var temps=[{T:125,c:'#E24B4A'},{T:105,c:'#F2994A'},{T:85,c:'#98A2B3'}];
+  temps.forEach(function(tp){
+    var tf=failT(tp.T),pts=[],t;
+    for(t=0.5;t<=tf;t*=1.12){pts.push(X(t).toFixed(1)+','+Y(margin(t,tp.T)).toFixed(1));}
+    pts.push(X(tf).toFixed(1)+','+Y(15).toFixed(1));
+    svg.appendChild(el('polyline',{points:pts.join(' '),fill:'none',stroke:tp.c,'stroke-width':2}));
+    svg.appendChild(el('circle',{cx:X(tf),cy:Y(15),r:3.5,fill:tp.c}));
+    svg.appendChild(el('text',{x:X(tf)-4,y:Y(15)-8,'font-size':9.5,fill:tp.c,'text-anchor':'end'})).textContent=tp.T+'℃→'+(tf/24).toFixed(0)+'天';
+  });
+  var useG=el('g',{});svg.appendChild(useG);
+  var lifeMk=el('circle',{r:5,fill:'#0F6E56',stroke:'#fff','stroke-width':1.5,display:'none'});svg.appendChild(lifeMk);
+  var lifeTx=el('text',{'font-size':10.5,fill:'#0F6E56','font-weight':'700','text-anchor':'middle',display:'none'});svg.appendChild(lifeTx);
+  var slider=document.getElementById('useTemp');
+  function drawUse(Tc){
+    useG.innerHTML='';
+    var k=kOf(Tc),lifeH=Math.pow(85/k,1/0.55),lifeY=lifeH/8760;
+    var pts=[],t=8760;
+    while(t<=lifeH*1.0001){pts.push(X(t).toFixed(1)+','+Y(margin(t,Tc)).toFixed(1));t*=1.15;}
+    pts.push(X(lifeH).toFixed(1)+','+Y(15).toFixed(1));
+    useG.appendChild(el('polyline',{points:pts.join(' '),fill:'none',stroke:'#0F6E56','stroke-width':2,'stroke-dasharray':'6 4'}));
+    lifeMk.setAttribute('cx',X(lifeH));lifeMk.setAttribute('cy',Y(15));lifeMk.setAttribute('display','');
+    lifeTx.setAttribute('x',Math.max(X0+60,Math.min(X(lifeH),X1-80)));lifeTx.setAttribute('y',Y(15)-12);lifeTx.setAttribute('display','');
+    lifeTx.textContent='预测寿命 ≈'+lifeY.toFixed(1)+' 年';
+    return{lifeY:lifeY,k:k,lifeH:lifeH};
+  }
+  function render(){
+    var Tc=parseInt(slider.value);
+    document.getElementById('useTempVal').textContent=Tc+'℃';
+    var r=drawUse(Tc);
+    var ciLo=(r.lifeY*0.8).toFixed(1),ciHi=(r.lifeY*1.2).toFixed(1);
+    document.getElementById('lifeYears').textContent=r.lifeY.toFixed(1)+' 年';
+    document.getElementById('lifeCI').textContent='['+ciLo+' – '+ciHi+'] 年';
+    var m1=margin(8760,Tc),m10=margin(87600,Tc);
+    document.getElementById('marginLeft').innerHTML='1 年后 margin '+m1.toFixed(0)+'%<br>10 年后 margin '+m10.toFixed(0)+'%';
+    var jEl=document.getElementById('lifeJudge');
+    var pass=r.lifeY>=10;
+    jEl.textContent=pass?'满足 ≥10 年':'不满足 → 预警';
+    jEl.className='v '+(pass?'pos':'neg');
+    document.getElementById('retCon').textContent=pass
+      ?'使用温度 '+Tc+'℃ 下预测寿命 '+r.lifeY.toFixed(1)+' 年（CI '+ciLo+'–'+ciHi+'），满足 10 年 spec。margin 斜率平缓，建议常规监控；若工艺有变更，重跑外推。（示意）'
+      :'使用温度 '+Tc+'℃ 下预测寿命仅 '+r.lifeY.toFixed(1)+' 年（CI '+ciLo+'–'+ciHi+'），低于 10 年 spec —— <b>触发提前预警</b>：建议回溯隧道氧化 / 充电层工艺站并启动 bake 复测。（示意）';
+  }
+  slider.addEventListener('input',render);
+  render();
+})();
+</script>
+</body>
+</html>
