@@ -156,6 +156,7 @@ body::after {
 }
 
 .dash-metric {
+  min-width: 0;
   padding: 22px 24px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -170,6 +171,8 @@ body::after {
   font-weight: 900;
   line-height: 1;
   font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .dash-metric strong {
@@ -1513,6 +1516,10 @@ code {
   }
 
   .detail-notes h2 {
+    font-size: 30px;
+  }
+
+  .dash-metric__num {
     font-size: 30px;
   }
 }

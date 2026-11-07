@@ -236,8 +236,17 @@
   filter: drop-shadow(0 0 4px rgba(14, 122, 95, 0.55));
 }
 
-/* project tags */
+/* project tags — wrapper overlays the whole card on desktop; pointer-events
+   stay on so the anchors remain clickable while clicks pass through elsewhere */
+.chipmap__tags-mobile {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
 .chipmap__tag {
+  pointer-events: auto;
   position: absolute;
   z-index: 4;
   display: inline-flex;
@@ -291,15 +300,19 @@
   .chipmap__leads { display: none; }
   .chipmap__tag {
     position: static;
-    margin: 8px 6px 0 20px;
+    margin: 0;
+    font-size: 12px;
+    padding: 7px 12px;
   }
   .chipmap__tags-mobile {
     position: relative;
+    inset: auto;
     z-index: 4;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     padding: 0 16px;
+    pointer-events: auto;
   }
 }
 
