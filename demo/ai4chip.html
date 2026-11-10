@@ -200,6 +200,7 @@ svg{width:100%;height:auto;display:block}
 }
 /* products & offer */
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
 .pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .pcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column}
 .pcard .vis{height:72px;background:linear-gradient(135deg,#F6F8FB,#E4EFF9);border:1px solid var(--line);border-radius:7px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;overflow:hidden}
@@ -222,7 +223,7 @@ svg{width:100%;height:auto;display:block}
 .art table{font-size:10.5px;margin:0}
 .art th, .art td{padding:4px 6px}
 @media(max-width:960px){
-  .grid4,.pgrid{grid-template-columns:1fr 1fr}
+  .grid4,.grid5,.pgrid{grid-template-columns:1fr 1fr}
 }
 @media print{
   .sidebar,.topbar,.chips,.chat-input{display:none!important}
@@ -281,7 +282,7 @@ svg{width:100%;height:auto;display:block}
       <a class="btn btn-p" href="#" onclick="go('t3');return false">★ 先看旗舰模块：智能筛选</a>
       <a class="btn btn-g" href="#" onclick="go('gov');return false">查看能力边界与交付分级</a>
     </div>
-    <div class="meta"><span>技术底座：科学智能 RSI 闭环方法论（酶设计 / AlphaFold 蛋白设计已验证）→ 芯片域迁移</span><span>数据规模口径：宽表 · 小样本 · 大文件（按颗数与关联键算，不按 GB 算）</span><span>技术路线：GBDT / 统计过程控制 / 异常检测 / 共形预测 / 只读 Agent</span><span>部署形态：私有化 · 离线 · 数据不出域</span></div>
+    <div class="meta"><span>技术底座：科学智能 RSI 闭环方法论（酶设计 / AlphaFold 蛋白设计已验证）→ 芯片域迁移</span><span>数据规模口径：宽表 · 小样本 · 大文件（按颗数与关联键算，不按 GB 算）</span><span>技术路线：GBDT / 统计过程控制 / 异常检测 / 共形预测 / 只读 Agent</span><span>部署形态：私有化 · 离线 · 数据不出域（可选一体机交付）</span></div>
   </div>
 
   <div class="card">
@@ -517,11 +518,43 @@ svg{width:100%;height:auto;display:block}
     <p class="lead">回答三个问题：<b>交付什么形态的东西、验收看什么、钱怎么算</b>。原则：不按「效果承诺」计价，按「可验证的工作量」计价 —— 与质量部门的验收逻辑一致。</p>
   </div>
 
-  <div class="grid4">
+  <div class="grid5">
     <div class="formcard"><span class="lv" style="background:var(--green-bg);color:var(--green)">POC 项目制</span><h4>L0–L1</h4><p>数据接入诊断 + 高风险筛选/根因/设备健康影子建议。按项目计价，最快 2 周出可复核报告。</p><div class="per">周期 2–8 周 · 我方出人出算力</div></div>
     <div class="formcard"><span class="lv" style="background:var(--blue-bg);color:var(--blue-deep)">私有化平台</span><h4>L1–L2</h4><p>数据中枢 + 智能引擎部署贵司机房/边缘侧：STDF 接入、口径字典、模型服务、建议表回写 MES。</p><div class="per">实施费 + 年费 · 3–6 个月</div></div>
+    <div class="formcard"><span class="lv" style="background:var(--blue-bg);color:var(--blue-deep)">AI 一体机「龙虾盒子」</span><h4>L0–L2</h4><p>半导体领域专用一体机：本地模型 + 口径引擎 + RSI 闭环装箱，插电即用、离线运行，模块按需装载。</p><div class="per">软硬一体 · 详看下方案卡</div></div>
     <div class="formcard"><span class="lv" style="background:var(--amber-bg);color:var(--amber)">联合研发</span><h4>L2</h4><p>共建自适应测试 / 根因归因 / 测试程序·DFT 协同 / 跨环节前馈模块，ECN 与质量签核走贵司既有流程，我们出算法与工程。</p><div class="per">按里程碑 · 6–12 个月</div></div>
     <div class="formcard"><span class="lv" style="background:var(--red-bg);color:var(--red)">联合体 / 标准</span><h4>L3</h4><p>统一口径规范 + 联邦验证 + 联合白皮书/标准提案，多方分摊成本与周期。</p><div class="per">多方分摊 · 6–18 个月</div></div>
+  </div>
+
+  <div class="card" style="margin-top:14px;border:2px solid var(--blue-deep);background:linear-gradient(135deg,#F4F9FF,#fff)">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <h3 style="margin:0">硬件产品 · 半导体领域专用 AI 一体机「龙虾盒子」</h3>
+      <span class="lv" style="background:var(--blue);color:#fff">部署自研技术 · 消费级显卡跑更优模型</span>
+    </div>
+    <p style="margin-top:8px">把「本地模型 + 数据口径引擎 + RSI 闭环」打包成一台设备：推入机房或放在工程师桌面，<b>插电即用、离线运行、数据物理不出域</b>。本页 T1–T8 模块按需装载——先跑 POC 报告验证价值，再决定装哪些模块。</p>
+    <div class="grid2" style="margin-top:10px">
+      <div>
+        <h4 style="margin:0 0 6px;font-size:13px;color:var(--blue-deep)">我们的部署技术优势</h4>
+        <ul style="margin:0;padding-left:18px;font-size:12.5px;line-height:1.7">
+          <li><b>消费级显卡跑更优模型</b>：自研模型压缩与本地推理优化方法，同档任务可用消费级 GPU 运行通常需要数据中心级算力的模型规格 —— <b>硬件成本显著低于同类一体机方案</b>；</li>
+          <li><b>物理隔离即合规</b>：数据不出域从「软件承诺」变成「物理事实」——不接公网、不改造贵司 IT、不占产线工时；</li>
+          <li><b>越用越准</b>：RSI 闭环在盒内运行，每轮验证结果回流升级模型，版本血缘可查、可回滚；</li>
+          <li><b>按需装载</b>：T1–T8 模块按场景选配，先小后大，扩容只加模块不换箱体。</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="margin:0 0 6px;font-size:13px;color:var(--blue-deep)">与同类一体机方案的差异</h4>
+        <table>
+        <thead><tr><th>维度</th><th>常见一体机方案</th><th>龙虾盒子</th></tr></thead>
+        <tbody>
+        <tr><td>硬件档位</td><td>数据中心级 GPU，整机价高</td><td><b>消费级 GPU + 优化栈，性价比高</b></td></tr>
+        <tr><td>模型来源</td><td>通用大模型原厂或套壳</td><td>半导体域专用模型 + 客户私有模型延续</td></tr>
+        <tr><td>持续变准</td><td>出厂即定型，升级靠换机</td><td>RSI 闭环，验证回流持续升级</td></tr>
+        <tr><td>交付起点</td><td>先采购后验证</td><td>先 POC 出报告，再决定装箱</td></tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <div class="grid2" style="margin-top:14px">
@@ -536,6 +569,7 @@ svg{width:100%;height:auto;display:block}
       <tr><td>设备健康预警看板</td><td>看板 + 维护建议工单（影子模式）</td><td>L1</td></tr>
       <tr><td>自适应测试影子建议表</td><td>逐项动作 / 预估节省 / 风险等级 / 签核标记</td><td>L2</td></tr>
       <tr><td>只读智能体知识库 + 问答界面</td><td>私有化部署，输出带出处、可复核</td><td>L1</td></tr>
+      <tr><td>AI 一体机「龙虾盒子」</td><td>硬件 + 预装模型栈与口径引擎，插电即用、离线运行</td><td>L0–L2</td></tr>
       <tr><td>统一口径规范 / 联合白皮书</td><td>文档 + 联合课题提案</td><td>L3</td></tr>
       </tbody>
       </table>
