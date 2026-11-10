@@ -63,6 +63,14 @@ function renderHero() {
     });
   }
 
+  const visual = byId("hero-visual");
+  if (visual && profile.visual) {
+    const stage = makeElement("div", "fx-stage");
+    stage.dataset.fx = profile.visual.fx;
+    visual.appendChild(stage);
+    visual.appendChild(makeElement("span", "hero__visual-cap", profile.visual.caption));
+  }
+
   const facts = byId("profile-facts");
   profile.facts.forEach((item) => {
     const row = makeElement("div");
@@ -72,11 +80,60 @@ function renderHero() {
   });
 }
 
+function renderSpotlight() {
+  const spot = data.spotlight;
+  const grid = byId("spotlight-grid");
+  if (!spot || !grid) return;
+  setText("spotlight-title", spot.title);
+  setText("spotlight-intro", spot.intro);
+  spot.items.forEach((item) => {
+    const card = makeElement("a", "spot-card reveal");
+    card.href = item.href;
+    applyExternalLinkAttrs(card, item.href);
+    const media = makeElement("div", "spot-card__media");
+    if (item.fx) {
+      const stage = makeElement("div", "fx-stage");
+      stage.dataset.fx = item.fx;
+      media.appendChild(stage);
+    } else {
+      const image = makeElement("img");
+      image.src = item.image;
+      image.alt = item.alt;
+      image.loading = "lazy";
+      media.appendChild(image);
+    }
+    card.appendChild(media);
+    const body = makeElement("div", "spot-card__body");
+    const meta = makeElement("div", "spot-card__meta");
+    meta.appendChild(makeElement("b", "", item.no));
+    meta.appendChild(makeElement("span", "", item.tag));
+    body.appendChild(meta);
+    body.appendChild(makeElement("h3", "", item.title));
+    body.appendChild(makeElement("p", "", item.body));
+    body.appendChild(makeElement("p", "spot-card__proof", item.proof));
+    body.appendChild(makeElement("span", "spot-card__cta", `${item.cta} →`));
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+
+  const principles = byId("principles");
+  if (principles && spot.principles) {
+    spot.principles.forEach((item) => {
+      const cell = makeElement("div");
+      cell.appendChild(makeElement("strong", "", item.title));
+      cell.appendChild(makeElement("span", "", item.body));
+      principles.appendChild(cell);
+    });
+  }
+}
+
 function renderProjects() {
-  const grid = byId("project-grid");
+  const coreGrid = byId("project-grid");
+  const moreGrid = byId("project-grid-more");
   const evidence = byId("evidence-links");
 
   data.projects.forEach((project, index) => {
+    const grid = project.more && moreGrid ? moreGrid : coreGrid;
     const card = makeElement("article", `project-card reveal${project.featured ? " project-card--wide" : ""}`);
 
     const media = makeElement("a", "project-card__media");
@@ -119,18 +176,10 @@ function renderProjects() {
     }
 
     if (project.progress) {
-      const wrap = makeElement("div", "project-progress");
-      const head = makeElement("div", "project-progress__head");
-      head.appendChild(makeElement("span", "", "阶段"));
-      head.appendChild(makeElement("strong", "", project.status || ""));
-      const bar = makeElement("div", "project-progress__bar");
-      const fill = makeElement("i");
-      fill.style.setProperty("--pct", `${project.progress.pct}%`);
-      bar.appendChild(fill);
-      wrap.appendChild(head);
-      wrap.appendChild(bar);
-      wrap.appendChild(makeElement("small", "project-progress__note", project.progress.label));
-      body.appendChild(wrap);
+      const stage = makeElement("p", "project-stage");
+      stage.appendChild(makeElement("b", "", "当前阶段　"));
+      stage.appendChild(document.createTextNode(project.progress.label));
+      body.appendChild(stage);
     }
 
     const links = makeElement("div", "project-links");
@@ -139,6 +188,7 @@ function renderProjects() {
     card.appendChild(body);
     grid.appendChild(card);
 
+    if (!evidence) return;
     const evidenceLink = makeElement("a", "evidence-link reveal");
     evidenceLink.href = primaryHref;
     applyExternalLinkAttrs(evidenceLink, primaryHref);
@@ -312,13 +362,7 @@ function renderDashboard() {
     top.appendChild(makeElement("strong", "", row.name));
     const badge = makeElement("span", `dash-badge dash-badge--${row.tone}`, row.status);
     top.appendChild(badge);
-    const bar = makeElement("div", "dash-row__bar");
-    const fill = makeElement("i");
-    fill.style.setProperty("--pct", `${row.pct}%`);
-    fill.className = `dash-fill dash-fill--${row.tone}`;
-    bar.appendChild(fill);
     item.appendChild(top);
-    item.appendChild(bar);
     item.appendChild(makeElement("p", "dash-row__note", row.note));
     pipeline.appendChild(item);
   });
@@ -384,6 +428,7 @@ function initChipmap() {
 function renderPage() {
   if (!data) return;
   renderHero();
+  renderSpotlight();
   initChipmap();
   renderDashboard();
   renderProjects();

@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Kstar (Xiaodan Li / Kairos) 的公开主页：AI4Semi 独立研究者与开发者，聚焦半导体器件可靠性、AI 仿真智能体和自动化数据分析系统。"
+      content="Xiaodan Li (Kairos) 的主页：半导体工程 AI 的研究与工具开发，聚焦器件可靠性与寿命预测、AI 驱动的 TCAD 仿真、失效案例与测试数据智能，面向厂内离线部署。"
     />
-    <title>Kstar | AI4Semi Independent Researcher & Tool Builder</title>
-    <link rel="stylesheet" href="styles.css?v=20261109" />
-    <link rel="stylesheet" href="chipmap.css?v=20261109" />
+    <title>Xiaodan Li (Kairos) | 半导体工程 AI · 器件可靠性与仿真智能体</title>
+    <link rel="stylesheet" href="styles.css?v=20261110" />
+    <link rel="stylesheet" href="chipmap.css?v=20261110" />
   </head>
   <body>
     <div class="progress" id="progress"></div>
     <header class="topbar">
       <a class="brand" id="site-brand" href="#top">柯星澜</a>
       <nav class="nav" aria-label="主导航">
-        <a href="#dashboard">看板</a>
+        <a href="#start">演示</a>
+        <a href="#dashboard">能力</a>
         <a href="#projects">项目</a>
         <a href="#tools">工具</a>
-        <a href="#gallery">图库</a>
         <a href="#resume">履历</a>
         <a href="#notes">分享</a>
         <a href="#research">研究</a>
@@ -39,26 +39,24 @@
           <div class="hero__metrics" id="hero-metrics" aria-label="主页内容摘要"></div>
         </div>
         <aside class="hero__panel reveal" aria-label="个人摘要">
-          <div
-            class="portrait"
-            id="portrait"
-            data-tilt
-            data-spotlight
-            role="button"
-            tabindex="0"
-            aria-pressed="false"
-            aria-label="切换头像聚光灯"
-          >
-            <img src="assets/showcase/hero-ai4semi-cyber-doctor.png" alt="AI4Semi 赛博博士主题海报" />
-            <span class="portrait__spot" aria-hidden="true"></span>
-          </div>
+          <div class="hero__visual" id="hero-visual" aria-hidden="true"></div>
           <dl class="facts" id="profile-facts"></dl>
         </aside>
       </section>
 
+      <section class="section" id="start">
+        <div class="section__head reveal">
+          <p class="eyebrow"><span class="eyebrow__num">00 ·</span> Start Here</p>
+          <h2 id="spotlight-title"></h2>
+          <p id="spotlight-intro"></p>
+        </div>
+        <div class="spotlight-grid" id="spotlight-grid"></div>
+        <div class="principles reveal" id="principles"></div>
+      </section>
+
       <section class="section" id="map">
         <div class="section__head reveal">
-          <p class="eyebrow"><span class="eyebrow__num">00 ·</span> Project Map</p>
+          <p class="eyebrow"><span class="eyebrow__num">01 ·</span> Project Map</p>
           <h2>一颗 die 上的版图：我在做的项目</h2>
           <p>围绕「AI × 芯片研发」这条主线：器件可靠性、数字设计智能体与仿真自动化，点击标签进入对应项目详情。</p>
         </div>
@@ -220,7 +218,7 @@
 
       <section class="section" id="dashboard">
         <div class="section__head reveal">
-          <p class="eyebrow"><span class="eyebrow__num">01 ·</span> Live Dashboard</p>
+          <p class="eyebrow"><span class="eyebrow__num">02 ·</span> Capabilities</p>
           <h2 id="dashboard-title"></h2>
           <p id="dashboard-intro"></p>
         </div>
@@ -230,33 +228,28 @@
 
       <section class="section" id="projects">
         <div class="section__head reveal">
-          <p class="eyebrow"><span class="eyebrow__num">02 ·</span> AI4Semi Tooling Projects</p>
+          <p class="eyebrow"><span class="eyebrow__num">03 ·</span> Projects</p>
           <h2>从物理直觉到可运行系统</h2>
           <p>
-            这些项目连接了材料科研训练、半导体可靠性分析、仿真自动化、知识组织和公开表达，展示从问题理解到工具化产出的能力。
+            每个项目对应芯片研发里的一个具体环节，状态如实标注：线上可用、原型运行中，还是产品雏形。
           </p>
         </div>
         <div class="project-grid" id="project-grid"></div>
+        <details class="more-projects">
+          <summary>更多作品与公开内容</summary>
+          <div class="project-grid" id="project-grid-more"></div>
+        </details>
       </section>
 
       <section class="section" id="tools">
         <div class="section__head reveal">
-          <p class="eyebrow"><span class="eyebrow__num">03 ·</span> Released Tools</p>
+          <p class="eyebrow"><span class="eyebrow__num">04 ·</span> Released Tools</p>
           <h2>可直接运行的桌面工具</h2>
           <p>
             已经打包交付、能在工程师机器上直接跑的工具——不是演示原型。覆盖可靠性认证报告自动审查与 HCI 应力数据处理两条产线。
           </p>
         </div>
         <div class="tool-grid" id="tool-grid"></div>
-      </section>
-
-      <section class="section" id="gallery">
-        <div class="section__head reveal">
-          <p class="eyebrow"><span class="eyebrow__num">04 ·</span> Project Gallery</p>
-          <h2>系统截图、仿真结果与知识图谱</h2>
-          <p>这里汇总可直接访问的项目入口和代表性界面，快速看到每个系统的实际形态。</p>
-        </div>
-        <div class="evidence-links" id="evidence-links"></div>
       </section>
 
       <section class="section" id="resume">
@@ -312,10 +305,10 @@
       <a class="button button--ghost" id="contact-action" href="#top">回到顶部</a>
     </footer>
 
-    <script src="content/site-data.js?v=20261109"></script>
-    <script src="script.js?v=20261109"></script>
-    <script src="motion.js?v=20261109"></script>
-    <script src="fx.js?v=20261109" defer></script>
-    <script src="contact.js?v=20261109" defer></script>
+    <script src="content/site-data.js?v=20261110"></script>
+    <script src="script.js?v=20261110"></script>
+    <script src="motion.js?v=20261110"></script>
+    <script src="fx.js?v=20261110" defer></script>
+    <script src="contact.js?v=20261110" defer></script>
   </body>
 </html>

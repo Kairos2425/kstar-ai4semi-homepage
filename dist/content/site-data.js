@@ -3,31 +3,86 @@ window.HOMEPAGE_DATA = {
     name: "Xiaodan Li",
     nameEn: "Kairos Li",
     initials: "Kstar",
-    eyebrow: "AI4Semi Independent Builder / Reliability / Simulation Agent",
-    headline: "让 AI 进入芯片研发：器件可靠性 × 数字设计智能体。",
+    eyebrow: "AI for Semiconductor · 厂内可部署的工程 AI",
+    headline: "让 AI 在厂内落地：懂器件物理，数据不出厂。",
     intro:
-      "你好，我是 Xiaodan Li（Kairos），一名具备物理化学与微纳材料科研训练背景的 AI4Semi 探索者。我的主线是把大模型真正带进芯片研发流程：一条线做器件可靠性——从数据工作台、寿命预测，到 AI 驱动的 TCAD 仿真与硅数据校准；另一条线做数字芯片设计智能体——让一句功能描述，变成一块能通过验证的电路。",
+      "我是 Xiaodan Li（Kairos），北京大学理学博士，做半导体工程 AI 的研究与工具开发。工作集中在三件事：用物理模型加小样本数据做器件可靠性与寿命预测；让 AI 在人工审批下驱动 TCAD 等专业工具；把失效案例和测试数据沉淀成可检索、可追溯的本地知识库。所有系统都按离线可部署、每个结论有证据链来设计。",
     actions: [
-      { label: "查看 AI4Semi 项目", href: "#projects", variant: "solid" },
-      { label: "工作台实况", href: "#dashboard", variant: "ghost" },
+      { label: "先看精选演示", href: "#start", variant: "solid" },
+      { label: "全部项目", href: "#projects", variant: "ghost" },
       { label: "联系交流", href: "#contact", variant: "ghost" },
     ],
     quicklinks: [
-      { label: "JEDEC 解读库", href: "https://jedec-docs.pages.dev/" },
-      { label: "IC World 2026 汇报", href: "https://ic-world-2026-report.pages.dev/" },
-      { label: "数据看板", href: "#dashboard" },
-      { label: "可靠性工作台", href: "projects/reliability-workbench.html" },
+      { label: "3D NAND 纵深案例", href: "demo/ai4chip.html#nand" },
+      { label: "失效案例检索实拍", href: "demo/failcase-rag.html" },
+      { label: "JEDEC 标准解读库", href: "https://jedec-docs.pages.dev/" },
       { label: "GitHub", href: "https://github.com/kairos2425" },
     ],
     metrics: [
-      { value: "AI4Semi", label: "核心方向" },
-      { value: "HCI/BTI", label: "可靠性场景" },
-      { value: "Agent", label: "仿真智能体" },
+      { value: "10", label: "个可在线交互的演示模块" },
+      { value: "3", label: "款已打包交付的离线工具" },
+      { value: "离线", label: "本地模型，数据不出域" },
     ],
+    visual: { fx: "chip", caption: "PROCESS → DEVICE → AGING → LIFETIME" },
     facts: [
-      { label: "公开身份", value: "AI4Semi 独立研究者与开发者 / 理学博士训练背景" },
-      { label: "能力横跨", value: "从材料科研训练，到 AI4S 与 AI4Semi 工程实现" },
-      { label: "Builder 属性", value: "懂物理底层机制，也能动手造轮子的 Tool Builder" },
+      { label: "背景", value: "北京大学理学博士 · 半导体工程 AI 研究与开发" },
+      { label: "方法", value: "物理机理做骨干，机器学习补残差，结论带不确定度" },
+      { label: "原则", value: "AI 只给建议，关键动作由工程师审批，全程留痕" },
+    ],
+  },
+
+  spotlight: {
+    title: "从这四个演示看起",
+    intro: "每个演示对应芯片研发或制造里的一个具体环节。数据来源和成熟度都如实标在卡片上。",
+    items: [
+      {
+        no: "01",
+        tag: "在线可交互",
+        title: "3D NAND 纵深案例",
+        body: "CP Fail Bit Map 的失效模式自动分离并回溯到工艺站；Retention 与 Vt 漂移的寿命外推和提前预警。",
+        proof: "合成数据，展示方法与输出形态",
+        image: "demo/shots/nand-fbm.png",
+        alt: "3D NAND Fail Bit Map 失效模式分离演示",
+        href: "demo/ai4chip.html#nand",
+        cta: "打开演示",
+      },
+      {
+        no: "02",
+        tag: "本机运行实拍",
+        title: "失效案例智能检索",
+        body: "一句话描述异常，返回相似历史案例、按可能性排序的根因假设和下一步排查动作，结论可追到具体案例。",
+        proof: "单机离线，小模型即可运行",
+        image: "demo/shots/failcase-rag-answer.png",
+        alt: "失效案例检索平台运行截图",
+        href: "demo/failcase-rag.html",
+        cta: "看运行实拍",
+      },
+      {
+        no: "03",
+        tag: "原型运行中",
+        title: "Agentic TCAD 工作台",
+        body: "工程师一句话发起仿真任务，AI 规划并调用求解器，提交前人工审批，每一版结果进入可追溯的台账。",
+        proof: "功率器件工艺到老化全链路已跑通",
+        fx: "chip",
+        href: "demo/tcad-workbench.html",
+        cta: "看工作方式",
+      },
+      {
+        no: "04",
+        tag: "产品雏形",
+        title: "器件寿命预测",
+        body: "把加速应力下的退化数据外推到使用工况。经典加速模型做骨干，神经网络只学残差，输出带不确定度区间。",
+        proof: "退化预测流程在实测数据上做过留出检验",
+        fx: "pinn",
+        href: "projects/pinn-lab.html",
+        cta: "看项目详情",
+      },
+    ],
+    principles: [
+      { title: "数据不出厂", body: "模型、索引、数据全部本地部署，不依赖外网。" },
+      { title: "不替换现有系统", body: "只读接入已有数据，输出是建议表和报告。" },
+      { title: "小样本也能用", body: "物理模型提供约束，不靠堆数据。" },
+      { title: "人始终在环", body: "关键动作需工程师批准，每次模型更新先过验证。" },
     ],
   },
 
@@ -154,6 +209,7 @@ window.HOMEPAGE_DATA = {
     },
     {
       title: "IC World 2026 大会汇报 · 驭智拓芯途",
+      more: true,
       category: "Industry Report",
       status: "线上运行 · 新作",
       image: "assets/showcase/ic-world-2026-cover.svg",
@@ -170,7 +226,7 @@ window.HOMEPAGE_DATA = {
         { label: "直接进入", href: "https://ic-world-2026-report.pages.dev/" },
         { label: "项目详情", href: "projects/ic-world-2026.html" },
       ],
-      featured: true,
+      featured: false,
       progress: { pct: 100, label: "线上可访问" },
     },
     {
@@ -234,6 +290,7 @@ window.HOMEPAGE_DATA = {
     },
     {
       title: "面向半导体器件仿真的大语言模型智能体",
+      more: true,
       category: "Simulation Agent",
       status: "进行中",
       fx: "iv",
@@ -253,6 +310,7 @@ window.HOMEPAGE_DATA = {
     },
     {
       title: "半导体工程效率知识库与计算器",
+      more: true,
       category: "Reliability Knowledge Radar",
       status: "线上运行",
       image: "assets/showcase/reliability-copilot-live.png",
@@ -273,6 +331,7 @@ window.HOMEPAGE_DATA = {
     },
     {
       title: "AI Skill Quest：AI 技能学习平台",
+      more: true,
       category: "AI Learning Platform",
       status: "线上运行",
       image: "assets/showcase/ai-skill-quest-home.png",
@@ -293,6 +352,7 @@ window.HOMEPAGE_DATA = {
     },
     {
       title: "可靠性统计学习型网页开发",
+      more: true,
       category: "Reliability Learning Web",
       status: "可直接体验",
       image: "assets/showcase/reliability-stats-learning-poster.png",
@@ -403,14 +463,14 @@ window.HOMEPAGE_DATA = {
   ],
 
   dashboard: {
-    title: "能力版图",
+    title: "能力版图与成熟度",
     intro:
-      "用 AI 把芯片研发环节做成可复用的基础设施——下面是目前覆盖的能力面与推进方向。",
+      "下面按环节列出目前能做什么、做到哪一步。成熟度按实际情况标注，没做完的不写成做完。",
     metrics: [
       { value: "可靠性×AI", label: "核心方向", note: "器件可靠性与数字设计智能体两条线" },
       { value: "HCI·BTI·TDDB·EM", label: "可靠性场景", note: "覆盖主流失效机理" },
       { value: "物理+ML", label: "寿命预测", note: "加速模型做骨干，带不确定度" },
-      { value: "一句话", label: "驱动方式", note: "中文描述即可发起任务" },
+      { value: "描述即任务", label: "驱动方式", note: "中文描述即可发起任务" },
       { value: "全程留痕", label: "证据链", note: "每个结论可追溯可审计" },
       { value: "桌面+Web", label: "交付形态", note: "离线工具与内测服务并行" },
     ],
@@ -538,7 +598,7 @@ window.HOMEPAGE_DATA = {
   ],
 
   contact: {
-    title: "欢迎围绕 AI4Semi、器件可靠性、仿真智能体和科研工具建设交流。",
+    title: "欢迎就器件可靠性、仿真自动化和厂内 AI 落地交流合作。",
     actionLabel: "发送邮件",
     actionHref: "mailto:akstar2425@gmail.com",
     items: [

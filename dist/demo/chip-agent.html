@@ -3,29 +3,72 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>数字芯片设计智能体 · 界面预览 | AI4Semi Demo</title>
-    <link rel="stylesheet" href="../styles.css?v=20261109" />
+    <title>数字芯片设计智能体 · 实测结果 | AI4Semi Demo</title>
+    <link rel="stylesheet" href="../styles.css?v=20261110" />
   </head>
   <body>
     <main class="detail-page">
       <a class="back-link" href="../index.html#projects">返回首页</a>
       <header class="detail-hero">
-        <p class="eyebrow">Live Preview · 本地原型</p>
-        <h1>数字芯片设计智能体 · 演示台</h1>
-        <p>题库、运行时间线与事件流同屏呈现：每一次设计-验证闭环的每一步都在这里留痕。以下截图来自本机真实运行的演示服务。</p>
+        <p class="eyebrow">实测结果 · 本地模型</p>
+        <h1>数字芯片设计智能体</h1>
+        <p>输入一段功能规格，系统自己写电路、写测试、跑仿真、修缺陷。结果是否通过由一套它看不到的独立测试来判定，模型不能给自己打分。</p>
       </header>
+
+      <ol class="steps">
+        <li><strong>规格解析</strong><span>把功能描述拆成可验证的测试点清单</span></li>
+        <li><strong>电路生成</strong><span>产出 RTL，先过编译和静态检查</span></li>
+        <li><strong>测试生成</strong><span>按测试点清单写测试平台</span></li>
+        <li><strong>仿真与修复</strong><span>失败时按范围逐级扩大修复，卡住会主动停</span></li>
+        <li class="is-gate"><strong>独立判卷</strong><span>留出测试、变异测试、形式等价三道检查</span></li>
+        <li><strong>综合</strong><span>真实综合工具给出门级规模</span></li>
+      </ol>
+
       <figure class="detail-shot detail-shot--wide detail-shot--screen" style="margin-bottom:22px">
-        <img src="shots/chip-agent-main.png" alt="chip-agent 演示台界面截图" />
-        <figcaption>演示台主视图：题库列表、运行状态与实时事件流——agent 每完成一个阶段，这里就多一条证据。</figcaption>
+        <img src="shots/chip-agent-main.png" alt="chip-agent 本机运行界面：发起运行、历次 run 列表与执行时间线" />
+        <figcaption>本机运行界面：选设计题、选模型发起运行，Runs 列表记录历次会话，Run timeline 按阶段展示执行轨迹，KB 查询可以检索智能体沉淀的工程经验。</figcaption>
       </figure>
+
+      <section class="panel">
+        <h2>十道模块级设计题的实测记录</h2>
+        <p>全部由本地部署的开源模型完成，没有调用任何云端服务。「变异杀灭率」衡量智能体自己写的测试能发现多少人为注入的缺陷；「形式等价」是用数学方法证明生成的电路和参考设计行为一致。</p>
+        <div class="table-wrap">
+          <table class="result-table">
+            <thead>
+              <tr><th>设计题</th><th>独立判卷</th><th>功能测试点通过率</th><th>变异杀灭率</th><th>形式等价</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>4 位计数器</td><td><span class="pill pill--ok">通过</span></td><td>100%</td><td>100%</td><td><span class="pill pill--ok">已证明</span></td></tr>
+              <tr><td>序列检测器</td><td><span class="pill pill--ok">通过</span></td><td>100%</td><td>91.7%</td><td><span class="pill pill--ok">已证明</span></td></tr>
+              <tr><td>8 位 ALU</td><td><span class="pill pill--ok">通过</span></td><td>100%</td><td>100%</td><td><span class="pill pill--ok">已证明</span></td></tr>
+              <tr><td>边沿检测</td><td><span class="pill pill--ok">通过</span></td><td>100%</td><td>100%</td><td><span class="pill pill--ok">已证明</span></td></tr>
+              <tr><td>同步 FIFO</td><td><span class="pill pill--ok">通过</span></td><td>100%</td><td>100%</td><td><span class="pill pill--mute">限定深度内未证完</span></td></tr>
+              <tr><td>轮询仲裁器</td><td><span class="pill pill--ok">通过</span></td><td>100%</td><td>100%</td><td><span class="pill pill--ok">已证明</span></td></tr>
+              <tr><td>8 位移位寄存器</td><td><span class="pill pill--ok">通过</span></td><td>100%</td><td>90.0%</td><td><span class="pill pill--ok">已证明</span></td></tr>
+              <tr><td>PWM 发生器</td><td><span class="pill pill--ok">通过</span></td><td>100%</td><td>93.8%</td><td><span class="pill pill--ok">已证明</span></td></tr>
+              <tr><td>按键消抖</td><td><span class="pill pill--ok">通过</span></td><td>100%</td><td>79.2%</td><td><span class="pill pill--ok">已证明</span></td></tr>
+              <tr><td>UART 发送器</td><td><span class="pill pill--ok">通过</span></td><td>100%</td><td>77.8%</td><td><span class="pill pill--mute">限定深度内未证完</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fineprint" style="margin:14px 0 0">十题全部通过独立判卷，其中八题完成形式等价证明；FIFO 和 UART 的状态空间较大，在限定的证明深度内没有证完，也没有找到反例。这些是模块级题目。更复杂的公开基准题目目前通过率明显更低，仍在攻关。</p>
+      </section>
+
+      <section class="panel">
+        <h2>设计上最在意的三件事</h2>
+        <div class="kv-grid">
+          <div><b>不自证</b><span>智能体只能看到规格。判卷用的留出测试和参考设计放在它够不到的地方。</span></div>
+          <div><b>结论分级</b><span>只跑通流程、只过了自测、通过独立判卷，是三个不同的等级，记录里不会混写。</span></div>
+          <div><b>全程可回放</b><span>每次模型调用的完整输入输出、每个阶段的产物版本都落盘，失败可以追到具体哪一步。</span></div>
+        </div>
+      </section>
+
       <section class="detail-notes">
-        <h2>怎么看这张图</h2>
-        <p>左侧是可运行的设计题目，中间是当前运行的阶段时间线，右侧是 agent 的实时事件流。一个任务从规格到验证结论，全部过程可回放、可审计——这正是「不自证清白」的设计意图。</p>
-        <p style="margin-top:14px"><a href="../projects/chip-agent.html" style="border-bottom:2px solid var(--accent);font-weight:900">查看项目详情 →</a></p>
-        <p class="tool-card__access" style="margin-top:18px">本页为本地运行原型的界面截图；完整交互演示需本机环境，欢迎联系交流。</p>
+        <p style="margin-top:0"><a href="../projects/chip-agent.html">查看项目详情 →</a></p>
+        <p class="fineprint" style="margin-top:14px">数据来自本机原型的运行记录。现场演示需要本机环境，欢迎联系交流。</p>
       </section>
     </main>
-    <script src="../motion.js?v=20261109"></script>
-    <script src="../fx.js?v=20261109"></script>
+    <script src="../motion.js?v=20261110"></script>
+    <script src="../fx.js?v=20261110"></script>
   </body>
 </html>
