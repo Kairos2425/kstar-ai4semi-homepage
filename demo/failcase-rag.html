@@ -3,29 +3,43 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>失效案例检索平台 · 界面预览 | AI4Semi Demo</title>
-    <link rel="stylesheet" href="../styles.css?v=20261109" />
+    <title>失效案例检索平台 · 运行实拍 | AI4Semi Demo</title>
+    <link rel="stylesheet" href="../styles.css?v=20261110b" />
   </head>
   <body>
     <main class="detail-page">
-      <a class="back-link" href="../index.html#projects">返回首页</a>
+      <a class="back-link" href="../index.html#start">返回首页</a>
       <header class="detail-hero">
-        <p class="eyebrow">Live Preview · 本地原型</p>
-        <h1>失效案例智能检索平台</h1>
-        <p>历史失效案例与分析报告沉淀为本地知识库：描述异常现象即可检索相似案例、还原时间线、汇总根因线索。以下截图来自本机真实运行的服务。</p>
+        <p class="eyebrow">运行实拍 · 单机离线</p>
+        <h1>失效案例智能检索</h1>
+        <p>工程师用一句话描述异常现象，系统从历史案例库里找出相似案例，给出按可能性排序的根因假设和下一步排查动作，每条结论都标注出自哪个案例。模型、索引和数据全部在本机。</p>
       </header>
+
       <figure class="detail-shot detail-shot--wide detail-shot--screen" style="margin-bottom:22px">
-        <img src="shots/failcase-rag-main.png" alt="失效案例检索平台界面截图" />
-        <figcaption>检索主页：对话式提问框、检索范围与知识库状态同屏——案例越用越全，越问越准。</figcaption>
+        <img src="shots/failcase-rag-answer.png" alt="失效案例检索平台：一次提问的结论、根因假设与下一步动作" />
+        <figcaption>一次真实提问的返回：自动识别出工艺节点和失效类型两条线索，命中 6 条历史案例，给出结论、根因假设排序和排查动作，依据的案例编号可点开核对。</figcaption>
       </figure>
+
+      <figure class="detail-shot detail-shot--wide detail-shot--screen" style="margin-bottom:22px">
+        <img src="shots/failcase-rag-rootcause.png" alt="失效案例检索平台：根因看板" />
+        <figcaption>根因看板：全库根因大类的帕累托分布、措辞不同但机理相同的根因自动归并、失效类型与技术节点的交叉表。</figcaption>
+      </figure>
+
+      <section class="panel">
+        <h2>它解决什么问题</h2>
+        <div class="kv-grid">
+          <div><b>经验留在组织里</b><span>8D 报告和异常案例通常散在个人电脑和邮件里。入库之后，新人也能查到三年前同类问题是怎么定位的。</span></div>
+          <div><b>导入不挑格式</b><span>Excel 按行解析成结构化案例，PDF 和 Word 报告按段入库。表头自动识别，认不出的列会列出来等人确认，不会静默丢弃。</span></div>
+          <div><b>内网可用</b><span>不连外网，小模型在普通工作站上就能跑。拷贝文件夹、双击启动，不需要改动现有系统。</span></div>
+        </div>
+      </section>
+
       <section class="detail-notes">
-        <h2>怎么看这张图</h2>
-        <p>上方是提问入口，中部是检索结果与根因线索，下方是知识库的文件与案例浏览。所有数据留在本机，模型与索引均为离线部署，适合内网与涉密场景。</p>
-        <p style="margin-top:14px"><a href="../projects/failcase-rag.html" style="border-bottom:2px solid var(--accent);font-weight:900">查看项目详情 →</a></p>
-        <p class="tool-card__access" style="margin-top:18px">本页为本地运行原型的界面截图；完整交互演示需本机环境，欢迎联系交流。</p>
+        <p class="fineprint">截图来自本机运行的原型。库中 29 条案例为完全虚构的样例数据，厂区、客户和产品名均为占位符，仅用于展示界面和输出形态；接入真实案例后的检索效果需要用实际数据验证。</p>
+        <p style="margin-top:14px"><a href="../projects/failcase-rag.html">查看项目详情 →</a></p>
       </section>
     </main>
-    <script src="../motion.js?v=20261109"></script>
-    <script src="../fx.js?v=20261109"></script>
+    <script src="../motion.js?v=20261110b"></script>
+    <script src="../fx.js?v=20261110b"></script>
   </body>
 </html>

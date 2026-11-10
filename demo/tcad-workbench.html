@@ -3,29 +3,62 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Agentic TCAD 工作台 · 界面预览 | AI4Semi Demo</title>
-    <link rel="stylesheet" href="../styles.css?v=20261109" />
+    <title>Agentic TCAD 工作台 · 工作方式 | AI4Semi Demo</title>
+    <link rel="stylesheet" href="../styles.css?v=20261110b" />
   </head>
   <body>
     <main class="detail-page">
-      <a class="back-link" href="../index.html#projects">返回首页</a>
+      <a class="back-link" href="../index.html#start">返回首页</a>
       <header class="detail-hero">
-        <p class="eyebrow">Live Preview · 本地原型</p>
+        <p class="eyebrow">工作方式 · 原型运行中</p>
         <h1>Agentic TCAD 工作台</h1>
-        <p>统一的可视化编排台：一句话发起任务，agent 规划调用受控工具链，关键执行步骤需人工批准，全程事件留痕。以下截图来自本机真实运行的工作台。</p>
+        <p>工程师用一句话说明要验证什么，AI 负责把它拆成仿真任务、准备输入、提交求解器、提取指标。凡是会真正占用求解器和许可证的动作，都要先经过人工批准。</p>
       </header>
-      <figure class="detail-shot detail-shot--wide detail-shot--screen" style="margin-bottom:22px">
-        <img src="shots/tcad-workbench-main.png" alt="TCAD Workbench 工作台界面截图" />
-        <figcaption>工作台主视图：会话、审批闸、任务队列与证据台账同屏——AI 调度专业工具，人始终握有闸门。</figcaption>
+
+      <figure class="fx-hero">
+        <div class="fx-stage" data-fx="chip"></div>
+        <figcaption>工艺 → 器件 → 老化 → 寿命：把原本靠资深工程师手工串起来的仿真链路，做成可重复执行、可追溯的流程。</figcaption>
       </figure>
+
+      <ol class="steps">
+        <li><strong>一句话需求</strong><span>例如「扫一下漂移区剂量，看击穿电压和导通电流怎么变」</span></li>
+        <li><strong>计划冻结</strong><span>AI 给出要改哪些参数、跑哪几组，计划定稿后不再改动</span></li>
+        <li class="is-gate"><strong>人工审批</strong><span>提交求解器前工程师确认，可以改、可以拒</span></li>
+        <li><strong>求解器执行</strong><span>商用和开源求解器串行排队，日志与产物逐个记录校验值</span></li>
+        <li><strong>指标提取</strong><span>阈值电压、线性区和饱和区电流、击穿电压等自动提取并与目标比对</span></li>
+        <li><strong>进入台账</strong><span>每一版结构的结果、偏差和结论等级长期留存</span></li>
+      </ol>
+
+      <figure class="detail-shot detail-shot--wide detail-shot--screen" style="margin-bottom:22px">
+        <img src="shots/tcad-workbench-main.png" alt="TCAD Workbench 本机运行界面：会话与 agent 动作流，右侧审批、任务、台账、服务四个页签" />
+        <figcaption>本机运行界面：左侧是会话区和 agent 实时动作流，右侧分审批、任务、台账、服务四个页签。会占用求解器和许可证的动作先进入审批队列，工程师批准后才执行，台账页可回看每一版结果。</figcaption>
+      </figure>
+
+      <section class="panel">
+        <h2>结论分三级，不允许冒充</h2>
+        <p>仿真工作里最常见的问题是把「跑通了」说成「对上了」。工作台把这三件事分开记录，等级只能由规则判定，AI 不能自己升级。</p>
+        <div class="kv-grid">
+          <div><b>假设级</b><span>只是模型或经验给出的判断，还没有经过求解器验证。</span></div>
+          <div><b>求解器验证级</b><span>在真实求解器上收敛并复现，但还没有和硅实测数据比对。</span></div>
+          <div><b>硅校准级</b><span>和实测数据比对，并且通过了留出数据的检验。目前还没有结果被判定到这一级。</span></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>目前做到哪一步</h2>
+        <div class="kv-grid">
+          <div><b>已跑通</b><span>功率器件从工艺流解码、工艺仿真、器件直流特性到热载流子老化的完整链路，在商用求解器上完整执行过。</span></div>
+          <div><b>进行中</b><span>直流特性对标硅数据：阈值电压和饱和电流已接近目标，线性区电流和击穿电压在二维模型下仍有明显差距。</span></div>
+          <div><b>还没做</b><span>存储器件。方法和工具链与器件类型无关，但缺陷物理需要针对具体器件重新建立。</span></div>
+        </div>
+      </section>
+
       <section class="detail-notes">
-        <h2>怎么看这张图</h2>
-        <p>界面中央是对话与任务区，侧边是审批队列与执行台账。凡是会真正调用求解器的动作，都要先过人工闸；每一次调用的输入、输出与结论等级都留在台账里可回放。</p>
-        <p style="margin-top:14px"><a href="../projects/agentic-tcad.html" style="border-bottom:2px solid var(--accent);font-weight:900">查看项目详情 →</a></p>
-        <p class="tool-card__access" style="margin-top:18px">本页为本地运行原型的界面截图；完整交互演示需本机环境与求解器授权，欢迎联系交流。</p>
+        <p style="margin-top:0"><a href="../projects/agentic-tcad.html">查看项目详情 →</a></p>
+        <p class="fineprint" style="margin-top:14px">工作台在本机运行，依赖本地求解器授权，不对公网开放。现场演示欢迎联系交流。</p>
       </section>
     </main>
-    <script src="../motion.js?v=20261109"></script>
-    <script src="../fx.js?v=20261109"></script>
+    <script src="../motion.js?v=20261110b"></script>
+    <script src="../fx.js?v=20261110b"></script>
   </body>
 </html>

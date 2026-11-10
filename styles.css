@@ -8,7 +8,7 @@
   --line: #e3e0d6;
   --accent: #0e7a5f;
   --accent-2: #b45309;
-  --night: #0e1a16;
+  --night: #080e1a;
   --shadow: 0 16px 44px rgba(29, 33, 32, 0.10);
   --radius: 8px;
   --font: Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif;
@@ -558,6 +558,7 @@ body::after {
   inset: 0;
   width: 100%;
   height: 100%;
+  touch-action: manipulation;
 }
 
 .fx-stage canvas {
@@ -571,7 +572,8 @@ body::after {
 }
 
 .project-card__media .fx-stage {
-  background: radial-gradient(ellipse at 50% 40%, rgba(14, 122, 95, 0.10), transparent 70%), var(--night);
+  background: radial-gradient(ellipse at 50% 36%, rgba(45, 90, 160, 0.20), transparent 68%),
+    radial-gradient(ellipse at 50% 105%, rgba(14, 122, 95, 0.12), transparent 60%), var(--night);
 }
 
 /* detail-page hero visual */
@@ -579,7 +581,8 @@ body::after {
   margin: 0 0 34px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: radial-gradient(ellipse at 50% 30%, rgba(14, 122, 95, 0.08), transparent 70%), var(--night);
+  background: radial-gradient(ellipse at 50% 30%, rgba(45, 90, 160, 0.22), transparent 68%),
+    radial-gradient(ellipse at 50% 105%, rgba(14, 122, 95, 0.12), transparent 60%), var(--night);
   box-shadow: var(--shadow);
   overflow: hidden;
 }
@@ -1545,3 +1548,393 @@ code {
 
 
 
+
+/* ---- spotlight: start-here demos ---- */
+.spotlight-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.spot-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.spot-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(14, 122, 95, 0.5);
+}
+
+.spot-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--night);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.spot-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+.spot-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px 20px;
+}
+
+.spot-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--faint);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.spot-card__meta b {
+  color: var(--accent);
+  font-size: 13px;
+}
+
+.spot-card h3 {
+  margin: 0;
+  font-size: 19px;
+}
+
+.spot-card p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.spot-card__proof {
+  margin-top: auto !important;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  color: var(--ink) !important;
+  font-size: 12.5px !important;
+  font-weight: 700;
+}
+
+.spot-card__cta {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.principles {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.principles div {
+  padding: 18px 20px;
+  border-left: 1px solid var(--line);
+}
+
+.principles div:first-child {
+  border-left: 0;
+}
+
+.principles strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.principles span {
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+/* ---- hero visual panel (animated, replaces poster) ---- */
+.hero__visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin-bottom: 22px;
+  border-radius: calc(var(--radius) - 2px);
+  background: radial-gradient(ellipse at 50% 34%, rgba(45, 90, 160, 0.26), transparent 68%),
+    radial-gradient(ellipse at 50% 108%, rgba(14, 122, 95, 0.15), transparent 62%), var(--night);
+  box-shadow: inset 0 0 52px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.hero__visual-cap {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  color: rgba(200, 235, 215, 0.7);
+  font-family: Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+}
+
+/* ---- project stage note (replaces percentage bars) ---- */
+.project-stage {
+  margin: 16px 0 0;
+  color: var(--faint);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.project-stage b {
+  color: var(--accent);
+}
+
+.more-projects {
+  margin-top: 26px;
+}
+
+.more-projects > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  list-style: none;
+}
+
+.more-projects > summary::-webkit-details-marker {
+  display: none;
+}
+
+.more-projects > summary::after {
+  content: "+";
+  color: var(--accent);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.more-projects[open] > summary::after {
+  content: "–";
+}
+
+.more-projects .project-grid {
+  margin-top: 18px;
+}
+
+.dash-row__note {
+  margin: 0;
+}
+
+/* ---- demo detail pages: designed evidence blocks ---- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li {
+  position: relative;
+  padding: 16px 16px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  counter-increment: step;
+}
+
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.steps li.is-gate {
+  border-color: rgba(180, 83, 9, 0.55);
+  background: rgba(242, 184, 75, 0.08);
+}
+
+.steps li.is-gate::before {
+  color: var(--accent-2);
+}
+
+.steps strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.steps span {
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.panel {
+  margin: 0 0 22px;
+  padding: 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.panel h2 {
+  margin-bottom: 6px;
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.panel > p {
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.result-table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.result-table th,
+.result-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.result-table th {
+  color: var(--faint);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.result-table td:first-child {
+  font-weight: 800;
+}
+
+.pill {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.pill--ok {
+  background: rgba(14, 122, 95, 0.12);
+  color: var(--accent);
+}
+
+.pill--warn {
+  background: rgba(180, 83, 9, 0.12);
+  color: var(--accent-2);
+}
+
+.pill--mute {
+  background: rgba(29, 33, 32, 0.07);
+  color: var(--muted);
+}
+
+.kv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.kv-grid div {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(14, 122, 95, 0.04);
+}
+
+.kv-grid b {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 15px;
+}
+
+.kv-grid span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.fineprint {
+  color: var(--faint);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+@media (max-width: 980px) {
+  .spotlight-grid,
+  .principles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .principles div:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .principles div:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 760px) {
+  .spotlight-grid,
+  .principles,
+  .kv-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .principles div {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .principles div:first-child {
+    border-top: 0;
+  }
+
+  .panel {
+    padding: 18px 16px;
+  }
+}
