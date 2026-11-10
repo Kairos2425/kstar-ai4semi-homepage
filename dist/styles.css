@@ -8,7 +8,7 @@
   --line: #e3e0d6;
   --accent: #0e7a5f;
   --accent-2: #b45309;
-  --night: #0e1a16;
+  --night: #080e1a;
   --shadow: 0 16px 44px rgba(29, 33, 32, 0.10);
   --radius: 8px;
   --font: Inter, "Noto Sans SC", "Microsoft YaHei", sans-serif;
@@ -572,7 +572,8 @@ body::after {
 }
 
 .project-card__media .fx-stage {
-  background: radial-gradient(ellipse at 50% 40%, rgba(14, 122, 95, 0.10), transparent 70%), var(--night);
+  background: radial-gradient(ellipse at 50% 36%, rgba(45, 90, 160, 0.20), transparent 68%),
+    radial-gradient(ellipse at 50% 105%, rgba(14, 122, 95, 0.12), transparent 60%), var(--night);
 }
 
 /* detail-page hero visual */
@@ -580,7 +581,8 @@ body::after {
   margin: 0 0 34px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: radial-gradient(ellipse at 50% 30%, rgba(14, 122, 95, 0.08), transparent 70%), var(--night);
+  background: radial-gradient(ellipse at 50% 30%, rgba(45, 90, 160, 0.22), transparent 68%),
+    radial-gradient(ellipse at 50% 105%, rgba(14, 122, 95, 0.12), transparent 60%), var(--night);
   box-shadow: var(--shadow);
   overflow: hidden;
 }
@@ -1638,7 +1640,7 @@ code {
 
 .principles {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 0;
   margin-top: 22px;
   border: 1px solid var(--line);
@@ -1674,7 +1676,9 @@ code {
   aspect-ratio: 4 / 3;
   margin-bottom: 22px;
   border-radius: calc(var(--radius) - 2px);
-  background: radial-gradient(ellipse at 50% 40%, rgba(14, 122, 95, 0.18), transparent 70%), var(--night);
+  background: radial-gradient(ellipse at 50% 34%, rgba(45, 90, 160, 0.26), transparent 68%),
+    radial-gradient(ellipse at 50% 108%, rgba(14, 122, 95, 0.15), transparent 62%), var(--night);
+  box-shadow: inset 0 0 52px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
 
@@ -1905,7 +1909,7 @@ code {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .principles div:nth-child(3) {
+  .principles div:nth-child(odd) {
     border-left: 0;
   }
 

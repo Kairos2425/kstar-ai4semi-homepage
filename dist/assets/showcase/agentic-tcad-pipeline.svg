@@ -15,7 +15,7 @@
   <!-- chain nodes -->
   <g font-family="'Microsoft YaHei',sans-serif" font-weight="700" font-size="15" fill="#e8f4ee">
     <rect x="50" y="110" width="128" height="64" rx="8" fill="url(#box)" stroke="#2c5b46"/>
-    <text x="114" y="136" text-anchor="middle">自然语言</text><text x="114" y="158" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">验证需求描述</text>
+    <text x="114" y="136" text-anchor="middle">一句话需求</text><text x="114" y="158" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">验证需求描述</text>
     <rect x="222" y="110" width="128" height="64" rx="8" fill="url(#box)" stroke="#2c5b46"/>
     <text x="286" y="136" text-anchor="middle">方案规划</text><text x="286" y="158" text-anchor="middle" fill="#7fa896" font-size="11" font-weight="400">器件/应力/指标</text>
     <rect x="394" y="110" width="128" height="64" rx="8" fill="#241d10" stroke="#8a6b2f"/>

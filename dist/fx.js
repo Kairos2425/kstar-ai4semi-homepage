@@ -34,44 +34,19 @@
   const line = (ctx, x1, y1, x2, y2) => { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); };
 
   /* ================= chip — isometric 3D IC stack (SoIC-style layered anatomy) ================= */
-  /* Real package structure: PCB 载板 → ABF 基板 → µBump/C4 → 中介层(TSV+RDL) → 混合键合 → 顶 Die(FEOL/BEOL/Si)。
-     Hover/tap → 爆炸视图；TSV 上行数据脉冲；鼠标视差。 */
-  const fxChip = (env, t) => {
-    const { ctx: x, rect, stage } = env;
-    const { width: w, height: h } = rect();
-    x.clearRect(0, 0, w, h);
+  /* PCB 载板 → ABF 基板 → µBump/C4 → 中介层(TSV+RDL) → 混合键合 → 顶 Die(FEOL/BEOL/Si)。
+     静态场景按爆炸进度量化缓存到离屏画布;每帧仅 blit + 少量动态层(键合呼吸边/TSV脉冲)。
+     悬停/点按 → 爆炸视图;鼠标视差;无 shadowBlur,光晕用透明圆代替。 */
+  const CHIP_LY = [
+    { n: "封装基板 · ABF", s: 5.5, dz: 0.9, z: 0.5, c: { top: "#101A2E", lft: "#0A1220", rgt: "#0E1830", edge: "rgba(124,160,220,.4)" }, feat: "sub" },
+    { n: "µBump · ~40µm", s: 4.9, dz: 0.22, z: 1.4, c: { top: "rgba(20,28,46,.55)", lft: "rgba(14,20,34,.5)", rgt: "rgba(18,26,44,.55)", edge: "rgba(255,197,61,.35)" }, feat: "ubump" },
+    { n: "中介层 · TSV+RDL", s: 5.0, dz: 0.8, z: 1.62, c: { top: "rgba(38,90,160,.34)", lft: "rgba(16,40,80,.5)", rgt: "rgba(24,58,110,.5)", edge: "rgba(124,180,255,.55)" }, feat: "tsv" },
+    { n: "混合键合 · Cu–Cu", s: 4.6, dz: 0.14, z: 2.42, c: { top: "rgba(255,197,61,.10)", lft: "rgba(120,90,20,.4)", rgt: "rgba(140,105,25,.45)", edge: "rgba(255,197,61,.75)" }, feat: "hb" },
+    { n: "顶部 Die · 阵列+BEOL", s: 4.4, dz: 0.62, z: 2.56, c: { top: "rgba(70,150,255,.30)", lft: "rgba(24,60,120,.45)", rgt: "rgba(34,80,150,.5)", edge: "rgba(140,200,255,.8)" }, feat: "die" },
+  ];
 
-    const S = env._iso || (env._iso = (() => {
-      const traces = [];
-      for (let i = 0; i < 22; i++) {
-        const horiz = Math.random() < 0.55, x0 = -7 + Math.random() * 14, y0 = -7 + Math.random() * 14, l = 1 + Math.random() * 4;
-        traces.push(horiz ? { x0, y0, x1: Math.min(7.5, x0 + l), y1: y0, hot: Math.random() < 0.3 }
-                          : { x0, y0, x1: x0, y1: Math.min(7.5, y0 + l), hot: Math.random() < 0.3 });
-      }
-      const pulses = [];
-      for (let i = 0; i < 16; i++) pulses.push({ gx: -3.5 + Math.random() * 7, gy: -3.5 + Math.random() * 7, o: Math.random(), v: 0.0022 + Math.random() * 0.003 });
-      const st = { traces, pulses, exC: 0, exT: 0, ox: 0, oy: 0 };
-      if (stage) {
-        stage.addEventListener("pointermove", (e) => {
-          const r = stage.getBoundingClientRect();
-          const mx = (e.clientX - r.left) / r.width, my = (e.clientY - r.top) / r.height;
-          st.ox = (mx - 0.5) * 0.06; st.oy = (my - 0.5) * 0.04;
-          st.exT = (Math.abs(mx - 0.5) < 0.42 && Math.abs(my - 0.52) < 0.45) ? 1 : 0;
-        });
-        stage.addEventListener("pointerleave", () => { st.exT = 0; st.ox = 0; st.oy = 0; });
-        stage.addEventListener("pointerdown", () => { st.exT = st.exT ? 0 : 1; });
-      }
-      return st;
-    })());
-
-    /* explode: hover 触发 + 缓慢自动呼吸展示 */
-    const auto = 0.30 + 0.30 * Math.sin(t / 2600 - Math.PI / 2);
-    const exTarget = Math.max(S.exT, reducedMotion ? 0 : Math.max(0, auto));
-    S.exC += (exTarget - S.exC) * 0.075;
-    if (Math.abs(exTarget - S.exC) < 0.004) S.exC = exTarget;
-    const ex = S.exC;
-
-    const u = Math.min(w, h) * 0.046, cx = w * (0.5 + S.ox), cy = h * (0.60 + S.oy);
+  const isoScene = (x, w, h, ex, S) => {
+    const u = Math.min(w, h) * 0.046, cx = w * 0.5, cy = h * 0.60;
     const P = (X, Y, Z) => [cx + (X - Y) * 0.866 * u, cy + (X + Y) * 0.5 * u - Z * u];
     const poly = (p, f, s, lw) => { x.beginPath(); p.forEach((q, i) => i ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1])); x.closePath(); if (f) { x.fillStyle = f; x.fill(); } if (s) { x.strokeStyle = s; x.lineWidth = lw || 1; x.stroke(); } };
     const plate = (X0, Y0, Z0, dx, dy, dz, c) => {
@@ -79,38 +54,39 @@
       const a2 = P(X0, Y0, Z0), b2 = P(X0 + dx, Y0, Z0), d2 = P(X0, Y0 + dy, Z0), c3 = P(X0 + dx, Y0 + dy, Z0);
       poly([d, d2, c3, cc], c.rgt, c.edge); poly([cc, c3, b2, b], c.lft, c.edge); poly([a, b, cc, d], c.top, c.edge);
     };
-    const dot = (X, Y, Z, r, c, glow) => { const p = P(X, Y, Z); if (glow) { x.shadowColor = c; x.shadowBlur = 8; } x.fillStyle = c; x.beginPath(); x.arc(p[0], p[1], r, 0, 7); x.fill(); x.shadowBlur = 0; };
+    const dot = (X, Y, Z, r, c, glow) => {
+      const p = P(X, Y, Z);
+      if (glow) { x.globalAlpha = 0.22; x.fillStyle = c; x.beginPath(); x.arc(p[0], p[1], r * 2.8, 0, 7); x.fill(); x.globalAlpha = 1; }
+      x.fillStyle = c; x.beginPath(); x.arc(p[0], p[1], r, 0, 7); x.fill();
+    };
     const vline = (X, Y, Z0, Z1, c, lw) => { const a = P(X, Y, Z0), b = P(X, Y, Z1); x.strokeStyle = c; x.lineWidth = lw || 1; x.beginPath(); x.moveTo(a[0], a[1]); x.lineTo(b[0], b[1]); x.stroke(); };
+
+    /* 底阴影 + 氛围辉光 + 地板等距网格 */
+    const sh = P(0, 0, 0.4);
+    x.fillStyle = "rgba(0,0,0,.42)"; x.beginPath(); x.ellipse(sh[0], sh[1] + u * 0.5, u * 7.4, u * 1.7, 0, 0, 7); x.fill();
+    const g0 = P(0, 0, 2.4), rg = x.createRadialGradient(g0[0], g0[1], 0, g0[0], g0[1], u * 9);
+    rg.addColorStop(0, `rgba(${TEAL}, .09)`); rg.addColorStop(1, "rgba(0,0,0,0)");
+    x.fillStyle = rg; x.fillRect(g0[0] - u * 9, g0[1] - u * 9, u * 18, u * 18);
+    x.strokeStyle = "rgba(124,180,255,.055)"; x.lineWidth = 0.7;
+    for (let k = -8; k <= 8; k += 2) {
+      const a1 = P(k, -8, 0.37), a2 = P(k, 8, 0.37), b1 = P(-8, k, 0.37), b2 = P(8, k, 0.37);
+      x.beginPath(); x.moveTo(a1[0], a1[1]); x.lineTo(a2[0], a2[1]); x.moveTo(b1[0], b1[1]); x.lineTo(b2[0], b2[1]); x.stroke();
+    }
 
     /* PCB 载板 + 走线 */
     plate(-7.5, -7.5, -0.01, 15, 15, 0.35, { top: "#070B13", lft: "#0A1020", rgt: "#0C1322", edge: "rgba(90,140,200,.18)" });
     S.traces.forEach((tr) => {
       const p1 = P(tr.x0, tr.y0, 0.36), p2 = P(tr.x1, tr.y1, 0.36);
-      x.strokeStyle = tr.hot ? `rgba(${CYAN}, .5)` : `rgba(${BLUE}, .22)`;
+      x.strokeStyle = tr.hot ? `rgba(${CYAN}, .5)` : `rgba(${BLUE}, .2)`;
       x.lineWidth = tr.hot ? 1.2 : 0.8;
       x.beginPath(); x.moveTo(p1[0], p1[1]); x.lineTo(p2[0], p2[1]); x.stroke();
       if (tr.hot) dot(tr.x1, tr.y1, 0.36, 1.1, `rgba(${CYAN}, .9)`, 1);
     });
 
-    /* 五层堆叠 */
-    const LY = [
-      { n: "封装基板 · ABF", s: 5.5, dz: 0.9, z: 0.5, c: { top: "#101A2E", lft: "#0A1220", rgt: "#0E1830", edge: "rgba(124,160,220,.4)" }, feat: "sub" },
-      { n: "µBump · ~40µm", s: 4.9, dz: 0.22, z: 1.4, c: { top: "rgba(20,28,46,.55)", lft: "rgba(14,20,34,.5)", rgt: "rgba(18,26,44,.55)", edge: "rgba(255,197,61,.35)" }, feat: "ubump" },
-      { n: "中介层 · TSV+RDL", s: 5.0, dz: 0.8, z: 1.62, c: { top: "rgba(38,90,160,.34)", lft: "rgba(16,40,80,.5)", rgt: "rgba(24,58,110,.5)", edge: "rgba(124,180,255,.55)" }, feat: "tsv" },
-      { n: "混合键合 · Cu–Cu", s: 4.6, dz: 0.14, z: 2.42, c: { top: "rgba(255,197,61,.10)", lft: "rgba(120,90,20,.4)", rgt: "rgba(140,105,25,.45)", edge: "rgba(255,197,61,.75)" }, feat: "hb" },
-      { n: "顶部 Die · 阵列+BEOL", s: 4.4, dz: 0.62, z: 2.56, c: { top: "rgba(70,150,255,.30)", lft: "rgba(24,60,120,.45)", rgt: "rgba(34,80,150,.5)", edge: "rgba(140,200,255,.8)" }, feat: "die" },
-    ];
-    const zp = (i) => LY[i].z * (1 + ex * 0.9) + (i === 4 ? Math.sin(t * 0.018) * 0.05 : 0);
+    const zp = (i) => CHIP_LY[i].z * (1 + ex * 0.9);
     const LAB = [];
 
-    /* 底阴影 + 氛围辉光 */
-    const sh = P(0, 0, 0.55);
-    x.fillStyle = "rgba(0,0,0,.4)"; x.beginPath(); x.ellipse(sh[0], sh[1] + u * 0.4, u * 7, u * 1.6, 0, 0, 7); x.fill();
-    const g0 = P(0, 0, 2.4), rg = x.createRadialGradient(g0[0], g0[1], 0, g0[0], g0[1], u * 9);
-    rg.addColorStop(0, `rgba(${TEAL}, .08)`); rg.addColorStop(1, "rgba(0,0,0,0)");
-    x.fillStyle = rg; x.fillRect(g0[0] - u * 9, g0[1] - u * 9, u * 18, u * 18);
-
-    LY.forEach((L, i) => {
+    CHIP_LY.forEach((L, i) => {
       const z0 = zp(i);
       if (i !== 4) plate(-L.s, -L.s, z0, L.s * 2, L.s * 2, L.dz, L.c);
       if (L.feat === "sub") {
@@ -128,10 +104,6 @@
         for (let ix = 0; ix < n; ix++) for (let iy = 0; iy < n; iy++) {
           const gx = -L.s + L.s * 2 * (ix + 0.5) / n, gy = -L.s + L.s * 2 * (iy + 0.5) / n;
           dot(gx, gy, z0 + L.dz, L.feat === "hb" ? 1.15 : 1.5, "#E8B32C", (ix + iy) % 7 === 0);
-        }
-        if (L.feat === "hb") {
-          const ga = 0.55 + 0.4 * Math.sin(t * 0.05);
-          plate(-L.s, -L.s, z0, L.s * 2, L.s * 2, L.dz, { top: null, lft: null, rgt: null, edge: `rgba(255,214,90,${ga})` });
         }
       }
       if (L.feat === "tsv") {
@@ -202,7 +174,6 @@
       }
     });
 
-    /* 标签统一绘制 + 防重叠 */
     if (LAB.length) {
       LAB.sort((a, b) => a.y - b.y);
       for (let k = 1; k < LAB.length; k++) if (LAB[k].y - LAB[k - 1].y < 17) LAB[k].y = LAB[k - 1].y + 17;
@@ -217,16 +188,87 @@
         x.textAlign = "left";
       });
     }
+  };
 
-    /* 数据脉冲：沿 TSV 上行 → 混合键合面横向扩散 */
+  const fxChip = (env, t) => {
+    const { ctx: x, rect, stage } = env;
+    const { width: w, height: h } = rect();
+
+    const S = env._iso || (env._iso = (() => {
+      const traces = [];
+      for (let i = 0; i < 22; i++) {
+        const horiz = Math.random() < 0.55, x0 = -7 + Math.random() * 14, y0 = -7 + Math.random() * 14, l = 1 + Math.random() * 4;
+        traces.push(horiz ? { x0, y0, x1: Math.min(7.5, x0 + l), y1: y0, hot: Math.random() < 0.3 }
+                          : { x0, y0, x1: x0, y1: Math.min(7.5, y0 + l), hot: Math.random() < 0.3 });
+      }
+      const pulses = [];
+      for (let i = 0; i < 16; i++) pulses.push({ gx: -3.5 + Math.random() * 7, gy: -3.5 + Math.random() * 7, o: Math.random(), v: 0.0022 + Math.random() * 0.003 });
+      const st = { traces, pulses, exC: 0, exT: 0, ox: 0, oy: 0, cache: new Map(), lastT: -100 };
+      if (stage) {
+        stage.addEventListener("pointermove", (e) => {
+          const r = stage.getBoundingClientRect();
+          const mx = (e.clientX - r.left) / r.width, my = (e.clientY - r.top) / r.height;
+          st.ox = (mx - 0.5) * 0.06; st.oy = (my - 0.5) * 0.04;
+          st.exT = (Math.abs(mx - 0.5) < 0.42 && Math.abs(my - 0.52) < 0.45) ? 1 : 0;
+        });
+        stage.addEventListener("pointerleave", () => { st.exT = 0; st.ox = 0; st.oy = 0; });
+        stage.addEventListener("pointerdown", () => { st.exT = st.exT ? 0 : 1; });
+      }
+      return st;
+    })());
+
+    /* ~30fps 节流:复杂场景不必满帧 */
+    const dt = t - (S.lastT || 0);
+    if (!reducedMotion && dt < 33) return;
+    S.lastT = t;
+    x.clearRect(0, 0, w, h);
+
+    const auto = 0.30 + 0.30 * Math.sin(t / 2600 - Math.PI / 2);
+    const exTarget = Math.max(S.exT, reducedMotion ? 0 : Math.max(0, auto));
+    S.exC += (exTarget - S.exC) * 0.075;
+    if (Math.abs(exTarget - S.exC) < 0.004) S.exC = exTarget;
+    const ex = Math.round(S.exC * 24) / 24;
+
+    /* 离屏缓存静态场景:量化 ex + 尺寸为键,LRU 9 帧 */
+    const key = `${Math.round(w)}x${Math.round(h)}:${Math.round(ex * 100)}`;
+    let img = S.cache.get(key);
+    if (!img) {
+      img = document.createElement("canvas");
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      img.width = Math.max(2, Math.round(w * dpr));
+      img.height = Math.max(2, Math.round(h * dpr));
+      const oc = img.getContext("2d");
+      oc.setTransform(dpr, 0, 0, dpr, 0, 0);
+      isoScene(oc, w, h, ex, S);
+      S.cache.set(key, img);
+      if (S.cache.size > 9) S.cache.delete(S.cache.keys().next().value);
+    }
+    x.save();
+    x.translate(S.ox * w * 0.5, S.oy * h * 0.5);
+    x.drawImage(img, 0, 0, w, h);
+    x.restore();
+
+    /* 动态层:混合键合呼吸边 + TSV 上行脉冲 */
+    const u = Math.min(w, h) * 0.046, cx = w * (0.5 + S.ox * 0.5), cy = h * (0.60 + S.oy * 0.5);
+    const P = (X, Y, Z) => [cx + (X - Y) * 0.866 * u, cy + (X + Y) * 0.5 * u - Z * u];
+    const L3 = CHIP_LY[3], zb = L3.z * (1 + ex * 0.9);
+    const ga = 0.35 + 0.3 * Math.sin(t * 0.004);
+    x.strokeStyle = `rgba(255,214,90,${ga})`; x.lineWidth = 1;
+    const hb = [[-L3.s, -L3.s], [L3.s, -L3.s], [L3.s, L3.s], [-L3.s, L3.s]].map(([X, Y]) => P(X, Y, zb + L3.dz));
+    x.beginPath(); hb.forEach((q, i) => i ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1])); x.closePath(); x.stroke();
+
     S.pulses.forEach((p) => {
-      p.o += p.v; if (p.o > 1) p.o = 0;
-      const z0 = LY[2].z * (1 + ex * 0.9) - 0.2, z1 = (LY[3].z + LY[3].dz) * (1 + ex * 0.9);
+      p.o += p.v * (dt / 16.7); if (p.o > 1) p.o = 0;
+      const z0 = CHIP_LY[2].z * (1 + ex * 0.9) - 0.2, z1 = zb + L3.dz;
       if (p.o < 0.7) {
-        dot(p.gx, p.gy, z0 + (z1 - z0) * (p.o / 0.7), 1.7, "#FFD65A", 1);
+        const q = P(p.gx, p.gy, z0 + (z1 - z0) * (p.o / 0.7));
+        x.fillStyle = "rgba(255,214,90,.25)"; x.beginPath(); x.arc(q[0], q[1], 4.6, 0, 7); x.fill();
+        x.fillStyle = "#FFD65A"; x.beginPath(); x.arc(q[0], q[1], 1.7, 0, 7); x.fill();
       } else {
-        const r = (p.o - 0.7) / 0.3 * LY[3].s;
-        dot(p.gx + r * 0.5, p.gy + r * 0.5, z1, 1.5, `rgba(255,214,90,${1 - (p.o - 0.7) / 0.3})`, 1);
+        const r = (p.o - 0.7) / 0.3 * L3.s, fade = 1 - (p.o - 0.7) / 0.3;
+        const q = P(p.gx + r * 0.5, p.gy + r * 0.5, z1);
+        x.fillStyle = `rgba(255,214,90,${0.5 * fade})`; x.beginPath(); x.arc(q[0], q[1], 4.2, 0, 7); x.fill();
+        x.fillStyle = `rgba(255,214,90,${fade})`; x.beginPath(); x.arc(q[0], q[1], 1.5, 0, 7); x.fill();
       }
     });
   };
